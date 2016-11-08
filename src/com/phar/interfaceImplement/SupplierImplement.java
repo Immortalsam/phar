@@ -16,14 +16,12 @@ public class SupplierImplement implements SupplierServices {
 
     static Connection conn;
 
-    public SupplierImplement(){
-        try{
+    public SupplierImplement() {
+        try {
             conn = DatabaseConnection.getConnection();
-        }
-        catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -35,7 +33,7 @@ public class SupplierImplement implements SupplierServices {
         String addquery = "INSERT into supplier (supplier_id, supplier_name, supplier_address, supplier_contact, " +
                 "supplier_category, pan_no) VALUES (?,?,?,?,?,?)";
 
-        try{
+        try {
             PreparedStatement stat = conn.prepareStatement(addquery);
             stat.setString(1, supplier.getSupplierId());
             stat.setString(2, supplier.getSupplierName());
@@ -46,10 +44,8 @@ public class SupplierImplement implements SupplierServices {
             stat.executeUpdate();
             return true;
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
-            e.getCause();
         }
         return false;
     }

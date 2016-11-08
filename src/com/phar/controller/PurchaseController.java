@@ -57,21 +57,25 @@ public class PurchaseController implements Initializable {
         product.setProductPurchaseDate(purchaseDate.getValue().toString());
         product.setPurchaseTax(Integer.valueOf(purchaseTax.getText()));
 
-        System.out.println(product.getSellerID() + " : " + product.getProductId() + " : " + product.getBillNo() + " : " + product.getProductName()
-                + " : " + product.getProductQuantity() + " : " + product.getProductComposition() + " : " + product.getProductBatchNo() + " : " + product.getProductMfdDate()
-                + " : " + product.getProductExpDate() + " : " + product.getProductCostPrice() + " : " + product.getProductSellPrice()
-                + " : " + product.getProductPurchaseDate() + " : " + product.getPurchaseTax());
+//        System.out.println(product.getSellerID() + " : " + product.getProductId() + " : " + product.getBillNo() + " : " + product.getProductName()
+//                + " : " + product.getProductQuantity() + " : " + product.getProductComposition() + " : " + product.getProductBatchNo() + " : " + product.getProductMfdDate()
+//                + " : " + product.getProductExpDate() + " : " + product.getProductCostPrice() + " : " + product.getProductSellPrice()
+//                + " : " + product.getProductPurchaseDate() + " : " + product.getPurchaseTax());
         productImplement = new ProductImplement();
         if (productImplement.addProduct(product)) {
 
             CustomAlert alert = new CustomAlert("Insert Info.", "New Product Saved Successfully");
             alert.withoutHeader();
-
+            clearTextField();
         }
     }
 
     @FXML
     public void clickCancelBtn(ActionEvent event) {
+        clearTextField();
+    }
+
+    private void clearTextField() {
         for (Node node : gridPane.getChildren()) {
             if (node instanceof TextField) {
                 ((TextField) node).clear();

@@ -15,26 +15,25 @@ public class ProductImplement implements ProductInterface {
 
 
     static Connection conn;
+    private Product product;
 
     public ProductImplement() {
         try {
             conn = DatabaseConnection.getConnection();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
     }
 
 
     @Override
-    public boolean addProduct(Product product) {
-
+    public boolean addProduct(Product productt) {
+        this.product = productt;
         String addQuery = "INSERT into product_from_supplier (supplier_id, product_id , product_name, product_quantity, " +
                 "product_composition, product_purchaseDate, product_mfd, product_expd, product_cost, product_sell, bill_no," +
                 "product_batch, tax) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        System.out.println("THIS IS HERE!!");
+        System.out.println("Values Recieved");
         System.out.println(product.getSellerID() + " : " + product.getProductId() + " : " + product.getBillNo() + " : " + product.getProductName()
                 + " : " + product.getProductQuantity() + " : " + product.getProductComposition() + " : " + product.getProductBatchNo() + " : " + product.getProductMfdDate()
                 + " : " + product.getProductExpDate() + " : " + product.getProductCostPrice() + " : " + product.getProductSellPrice()
@@ -60,7 +59,6 @@ public class ProductImplement implements ProductInterface {
 
             //Sql error
         } catch (SQLException e) {
-            //
             e.printStackTrace();
         }
 

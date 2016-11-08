@@ -29,9 +29,6 @@ public class SupplierController {
     private TextField supplierId, supplierName, supplierAddress, supplierContact, supplierCategory, supplierPanNo;
 
     @FXML
-    private DatePicker purchaseDate;
-
-    @FXML
     private AnchorPane pane;
 
     @FXML
@@ -50,11 +47,9 @@ public class SupplierController {
 
             CustomAlert alert = new CustomAlert("Insert info", "New Supplier Saved Successfully");
             alert.withoutHeader();
-            for (Node node : pane.getChildren()) {
-                if (node instanceof TextField) {
-                    ((TextField) node).clear();
-                }
-            }
+            pane.getChildren().stream().filter(node -> node instanceof TextField).forEach(node -> {
+                ((TextField) node).clear();
+            });
         }
     }
 }
