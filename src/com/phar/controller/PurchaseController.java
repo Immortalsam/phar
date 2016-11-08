@@ -20,7 +20,7 @@ public class PurchaseController implements Initializable {
 
     private Product product;
     private ProductImplement productImplement;
-    //For purchaseEntry.fxml
+
     @FXML
     private TextField productBillNo, productId, productName, productComposition, productBatch, productMfdDate, productExpDate, productCostPrice, productSellPrice, productQuantity;
 
