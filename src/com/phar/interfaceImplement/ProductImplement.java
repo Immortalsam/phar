@@ -61,7 +61,8 @@ public class ProductImplement implements ProductInterface {
 
             stat.executeUpdate();
             return true;
-
+            
+        //Sql error
         }catch (SQLException e){
             e.printStackTrace();
         }
