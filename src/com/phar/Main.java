@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("purchaseEntry.fxml"));
         primaryStage.setTitle("Purchase Entry!!");
         primaryStage.setScene(new Scene(root, 600, 575));
         primaryStage.show();
