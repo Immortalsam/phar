@@ -6,8 +6,10 @@ import com.phar.model.Product;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -22,7 +24,10 @@ public class PurchaseController implements Initializable {
     private ProductImplement productImplement;
 
     @FXML
-    private TextField sellerId, productBillNo, productId, productName, productComposition, productBatch, productMfdDate, productExpDate, productCostPrice, productSellPrice, productQuantity;
+    private GridPane gridPane;
+
+    @FXML
+    private TextField sellerId, productBillNo, productId, productName, productComposition, productBatch, productMfdDate, productExpDate, productCostPrice, productSellPrice, productQuantity, purchaseTax;
 
     @FXML
     private DatePicker purchaseDate;
@@ -37,20 +42,25 @@ public class PurchaseController implements Initializable {
     private void purchaseSaveButton(ActionEvent e) {
 
         product = new Product();
+
         product.setSellerID(sellerId.getText());
         product.setProductId(Integer.valueOf(productId.getText()));
         product.setBillNo(Integer.valueOf(productBillNo.getText()));
         product.setProductName(productName.getText());
+        product.setProductQuantity(Integer.valueOf(productQuantity.getText()));
+        product.setProductComposition(productComposition.getText());
         product.setProductBatchNo(Integer.valueOf(productBatch.getText()));
         product.setProductMfdDate(productMfdDate.getText());
         product.setProductExpDate(productExpDate.getText());
         product.setProductCostPrice(Float.valueOf(productCostPrice.getText()));
         product.setProductSellPrice(Float.valueOf(productSellPrice.getText()));
-        product.setProductComposition(productComposition.getText());
-        product.setProductQuantity(Integer.valueOf(productQuantity.getText()));
         product.setProductPurchaseDate(purchaseDate.getValue().toString());
+        product.setPurchaseTax(Integer.valueOf(purchaseTax.getText()));
 
-
+        System.out.println(product.getSellerID() + " : " + product.getProductId() + " : " + product.getBillNo() + " : " + product.getProductName()
+                + " : " + product.getProductQuantity() + " : " + product.getProductComposition() + " : " + product.getProductBatchNo() + " : " + product.getProductMfdDate()
+                + " : " + product.getProductExpDate() + " : " + product.getProductCostPrice() + " : " + product.getProductSellPrice()
+                + " : " + product.getProductPurchaseDate() + " : " + product.getPurchaseTax());
         productImplement = new ProductImplement();
         if (productImplement.addProduct(product)) {
 
@@ -58,7 +68,14 @@ public class PurchaseController implements Initializable {
             alert.withoutHeader();
 
         }
+    }
 
-
+    @FXML
+    public void clickCancelBtn(ActionEvent event) {
+        for (Node node : gridPane.getChildren()) {
+            if (node instanceof TextField) {
+                ((TextField) node).clear();
+            }
+        }
     }
 }

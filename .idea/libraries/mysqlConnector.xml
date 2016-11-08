@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="joda-time-2.8.2">
+  <library name="mysqlConnector">
     <CLASSES>
-      <root url="jar://F:/java-ws/libs/joda-time-2.8.2.jar!/" />
+      <root url="jar://$USER_HOME$/MyFiles/Java Library/mysqlConnector.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

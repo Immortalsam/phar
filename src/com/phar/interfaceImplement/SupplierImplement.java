@@ -49,6 +49,7 @@ public class SupplierImplement implements SupplierServices {
         }
         catch (SQLException e){
             e.printStackTrace();
+            e.getCause();
         }
         return false;
     }

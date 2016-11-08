@@ -4,16 +4,9 @@ import com.phar.database.DatabaseConnection;
 import com.phar.interfaces.ProductInterface;
 import com.phar.model.Product;
 
-import javax.swing.text.DateFormatter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * Created by Sam on 11/7/2016.
@@ -23,13 +16,12 @@ public class ProductImplement implements ProductInterface {
 
     static Connection conn;
 
-    public ProductImplement(){
-        try{
+    public ProductImplement() {
+        try {
             conn = DatabaseConnection.getConnection();
-        }catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -38,32 +30,37 @@ public class ProductImplement implements ProductInterface {
     @Override
     public boolean addProduct(Product product) {
 
-        String addquery = "INSERT into product_from_supplier (supplier_id, product_id , product_name, product_quantity, " +
-                "product_composition, product_purchaseDate, product_mfd, product_expd, product_cost, product_sell, bill_no" +
-                "product_batch, tax ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String addQuery = "INSERT into product_from_supplier (supplier_id, product_id , product_name, product_quantity, " +
+                "product_composition, product_purchaseDate, product_mfd, product_expd, product_cost, product_sell, bill_no," +
+                "product_batch, tax) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
+        System.out.println("THIS IS HERE!!");
+        System.out.println(product.getSellerID() + " : " + product.getProductId() + " : " + product.getBillNo() + " : " + product.getProductName()
+                + " : " + product.getProductQuantity() + " : " + product.getProductComposition() + " : " + product.getProductBatchNo() + " : " + product.getProductMfdDate()
+                + " : " + product.getProductExpDate() + " : " + product.getProductCostPrice() + " : " + product.getProductSellPrice()
+                + " : " + product.getProductPurchaseDate() + " : " + product.getPurchaseTax());
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(addQuery);
+            preparedStatement.setString(1, product.getSellerID().toString());
+            preparedStatement.setInt(2, product.getProductId());
+            preparedStatement.setString(3, product.getProductName());
+            preparedStatement.setInt(4, product.getProductQuantity());
+            preparedStatement.setString(5, product.getProductComposition());
+            preparedStatement.setString(6, product.getProductPurchaseDate());
+            preparedStatement.setString(7, product.getProductMfdDate());
+            preparedStatement.setString(8, product.getProductExpDate());
+            preparedStatement.setFloat(9, product.getProductCostPrice());
+            preparedStatement.setFloat(10, product.getProductSellPrice());
+            preparedStatement.setInt(11, product.getBillNo());
+            preparedStatement.setInt(12, product.getProductBatchNo());
+            preparedStatement.setInt(13, product.getPurchaseTax());
 
-        try{
-            PreparedStatement stat = conn.prepareStatement(addquery);
-            stat.setString(1, product.getSellerID());
-            stat.setInt(2, product.getProductId());
-            stat.setString(3, product.getProductName());
-            stat.setInt(4, product.getProductQuantity());
-            stat.setString(5, product.getProductComposition());
-            stat.setString(6, product.getProductPurchaseDate());
-            stat.setString(7, product.getProductMfdDate());
-            stat.setString(8, product.getProductExpDate());
-            stat.setFloat(9, product.getProductCostPrice());
-            stat.setFloat(10, product.getProductSellPrice());
-            stat.setInt(11, product.getBillNo());
-            stat.setInt(12, product.getProductBatchNo());
-            stat.setInt(13, product.getPurchaseTax());
-
-            stat.executeUpdate();
+            preparedStatement.executeUpdate();
             return true;
 
-        //Sql error
-        }catch (SQLException e){
+            //Sql error
+        } catch (SQLException e) {
+            //
             e.printStackTrace();
         }
 

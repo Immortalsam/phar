@@ -20,12 +20,13 @@ public class Main extends Application {
 
         Screen screen = Screen.getPrimary();
         Rectangle2D bound = screen.getVisualBounds();
+
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setX(bound.getMinX());
         primaryStage.setY(bound.getMinY());
-        primaryStage.setWidth(bound.getWidth());
-        primaryStage.setWidth(bound.getHeight());
+        primaryStage.setHeight(bound.getMaxY());
+        primaryStage.setWidth(bound.getMaxX());
 
         primaryStage.show();
     }

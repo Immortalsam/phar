@@ -5,41 +5,85 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="purhcaseDate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="533.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseController">
-   <children>
-      <TextField fx:id="productId" layoutX="144.0" layoutY="66.0" prefHeight="25.0" prefWidth="89.0" />
-      <TextField fx:id="productQuantity" layoutX="144.0" layoutY="164.0" prefHeight="25.0" prefWidth="89.0" />
-      <TextField fx:id="productName" layoutX="144.0" layoutY="124.0" prefHeight="25.0" prefWidth="89.0" />
-      <TextField fx:id="productMfdDate" layoutX="144.0" layoutY="261.0" prefHeight="25.0" prefWidth="89.0" />
-      <TextField fx:id="productComposition" layoutX="144.0" layoutY="216.0" prefHeight="25.0" prefWidth="89.0" />
-      <TextField fx:id="productExpDate" layoutX="144.0" layoutY="298.0" prefHeight="25.0" prefWidth="89.0" />
-      <TextField fx:id="productCostPrice" layoutX="144.0" layoutY="338.0" prefHeight="25.0" prefWidth="89.0" />
-      <TextField fx:id="productSellPrice" layoutX="144.0" layoutY="393.0" prefHeight="25.0" prefWidth="89.0" />
-      <TextField fx:id="productBillNo" layoutX="144.0" layoutY="94.0" prefHeight="25.0" prefWidth="89.0" />
-      <Label layoutX="53.0" layoutY="98.0" text="Bill No:" />
-      <Label layoutX="61.0" layoutY="128.0" text="Name: " />
-      <Label layoutX="50.0" layoutY="70.0" text="Product Id: " />
-      <Label layoutX="72.0" layoutY="441.0" text="Batch:" />
-      <Label layoutX="55.0" layoutY="265.0" text="Mfd. Date:" />
-      <Label layoutX="62.0" layoutY="302.0" text="Exp. Date:" />
-      <Label layoutX="53.0" layoutY="350.0" text="Cost Price:" />
-      <Label layoutX="54.0" layoutY="397.0" text="Selling Price:" />
-      <Label layoutX="63.0" layoutY="176.0" text="Quantity:" />
-      <Label layoutX="362.0" layoutY="27.0" text="Date:" />
-      <DatePicker fx:id="purchaseDate" layoutX="404.0" layoutY="23.0" prefHeight="25.0" prefWidth="162.0" />
-      <Button layoutX="270.0" layoutY="470.0" mnemonicParsing="false" onAction="#purchaseSaveButton" prefHeight="25.0" prefWidth="61.0" text="Save " />
-      <Label layoutX="374.0" layoutY="249.0" prefHeight="49.0" prefWidth="175.0" text="Purchase Entry">
-         <font>
-            <Font size="23.0" />
-         </font>
-      </Label>
-      <Label layoutX="54.0" layoutY="220.0" text="Composition:" />
-      <TextField fx:id="productBatch" layoutX="144.0" layoutY="437.0" prefHeight="25.0" prefWidth="89.0" />
-      <TextField fx:id="sellerId" layoutX="144.0" layoutY="23.0" prefHeight="25.0" prefWidth="89.0" />
-      <Label layoutX="56.0" layoutY="27.0" text="Seller Id: " />
-      <Label layoutX="368.0" layoutY="433.0" text="tax" />
-      <TextField fx:id="purchaseTax" layoutX="400.0" layoutY="429.0" />
-   </children>
+<AnchorPane fx:id="purhcaseDate" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseController">
+    <children>
+        <GridPane fx:id="gridPane" layoutX="206.0" layoutY="20.0" prefHeight="660.0" prefWidth="191.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <TextField fx:id="sellerId" prefHeight="27.0" prefWidth="191.0" />
+                <TextField fx:id="productId" prefHeight="27.0" prefWidth="191.0" GridPane.rowIndex="1" />
+                <TextField fx:id="productBillNo" prefHeight="27.0" prefWidth="191.0" GridPane.rowIndex="2" />
+                <TextField fx:id="productName" prefHeight="27.0" prefWidth="191.0" GridPane.rowIndex="3" />
+                <TextField fx:id="productQuantity" prefHeight="27.0" prefWidth="191.0" GridPane.rowIndex="4" />
+                <TextField fx:id="productComposition" prefHeight="27.0" prefWidth="191.0" GridPane.rowIndex="5" />
+                <TextField fx:id="productMfdDate" prefHeight="27.0" prefWidth="191.0" GridPane.rowIndex="6" />
+                <TextField fx:id="productExpDate" prefHeight="27.0" prefWidth="191.0" GridPane.rowIndex="7" />
+                <TextField fx:id="productCostPrice" prefHeight="27.0" prefWidth="191.0" GridPane.rowIndex="8" />
+                <TextField fx:id="productSellPrice" prefHeight="27.0" prefWidth="191.0" GridPane.rowIndex="9" />
+                <TextField fx:id="productBatch" prefHeight="0.0" prefWidth="191.0" GridPane.rowIndex="10" />
+            </children>
+        </GridPane>
+        <GridPane layoutX="47.0" layoutY="15.0" prefHeight="664.0" prefWidth="131.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <Label text="Bill No:" GridPane.rowIndex="2" />
+                <Label text="Name: " GridPane.rowIndex="3" />
+                <Label text="Product Id: " GridPane.rowIndex="1" />
+                <Label text="Batch:" GridPane.rowIndex="10" />
+                <Label text="Mfd. Date:" GridPane.rowIndex="6" />
+                <Label text="Exp. Date:" GridPane.rowIndex="7" />
+                <Label text="Cost Price:" GridPane.rowIndex="8" />
+                <Label text="Selling Price:" GridPane.rowIndex="9" />
+                <Label text="Quantity:" GridPane.rowIndex="4" />
+                <Label text="Composition:" GridPane.rowIndex="5" />
+                <Label text="Seller Id: " />
+            </children>
+        </GridPane>
+        <Label layoutX="873.0" layoutY="29.0" text="Date:" />
+        <DatePicker fx:id="purchaseDate" layoutX="943.0" layoutY="25.0" prefHeight="27.0" prefWidth="207.0" />
+        <Button layoutX="450.0" layoutY="625.0" mnemonicParsing="false" onAction="#purchaseSaveButton" prefHeight="27.0" prefWidth="176.0" text="Save " />
+        <Label layoutX="643.0" layoutY="274.0" prefHeight="49.0" prefWidth="175.0" text="Purchase Entry">
+            <font>
+                <Font size="23.0" />
+            </font>
+        </Label>
+        <Label layoutX="465.0" layoutY="581.0" text="Tax" />
+        <TextField fx:id="purchaseTax" layoutX="522.0" layoutY="574.0" prefHeight="27.0" prefWidth="209.0" />
+        <Button fx:id="btnCancel" layoutX="640.0" layoutY="624.0" mnemonicParsing="false" onAction="#clickCancelBtn" prefHeight="27.0" prefWidth="185.0" text="Cancel" />
+    </children>
 </AnchorPane>
