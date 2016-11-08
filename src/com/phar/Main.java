@@ -2,8 +2,10 @@ package com.phar;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
@@ -12,10 +14,19 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("purchaseEntry.fxml"));
         primaryStage.setTitle("Purchase Entry!!");
-        primaryStage.setScene(new Scene(root, 600, 575));
+
+        Screen screen = Screen.getPrimary();
+        Rectangle2D bound = screen.getVisualBounds();
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+        primaryStage.setX(bound.getMinX());
+        primaryStage.setY(bound.getMinY());
+        primaryStage.setWidth(bound.getWidth());
+        primaryStage.setWidth(bound.getHeight());
+
         primaryStage.show();
     }
 
