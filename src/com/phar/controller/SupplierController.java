@@ -21,16 +21,12 @@ import javafx.scene.layout.AnchorPane;
 
 public class SupplierController {
 
-    //New COmmments jhkjhkjhjkhkjhkjhkjhkjh
-    //k comment thapne ta???
+
     private Supplier supplier;
     private SupplierImplement supplierImplement;
 
-
-    //For main.fxml
     @FXML
     private TextField supplierId, supplierName, supplierAddress, supplierContact, supplierCategory, supplierPanNo;
-
 
     @FXML
     private DatePicker purchaseDate;

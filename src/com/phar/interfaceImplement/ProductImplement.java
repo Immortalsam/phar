@@ -38,24 +38,26 @@ public class ProductImplement implements ProductInterface {
     @Override
     public boolean addProduct(Product product) {
 
-        String addquery = "INSERT into product_from_supplier (bill_no, product_id, product_name, product_batch, product_mfd, " +
-                "product_expd, product_cost, product_sell, product_quantity, product_purchaseDate) VALUES (?,?,?,?,?,?,?,?,?,?)";
+        String addquery = "INSERT into product_from_supplier (supplier_id, product_id , product_name, product_quantity, " +
+                "product_composition, product_purchaseDate, product_mfd, product_expd, product_cost, product_sell, bill_no" +
+                "product_batch, tax ) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
         try{
             PreparedStatement stat = conn.prepareStatement(addquery);
-            stat.setString(2, product.getProductId());
+            stat.setString(1, product.getSellerID());
+            stat.setInt(2, product.getProductId());
             stat.setString(3, product.getProductName());
-            stat.setString(4, product.getProductQuantity());
+            stat.setInt(4, product.getProductQuantity());
             stat.setString(5, product.getProductComposition());
             stat.setString(6, product.getProductPurchaseDate());
             stat.setString(7, product.getProductMfdDate());
             stat.setString(8, product.getProductExpDate());
-            stat.setString(9, product.getProductCostPrice());
-            stat.setString(10, product.getProductSellPrice());
-            stat.setString(11, product.getBillNo());
-            stat.setString(12, product.getProductBatchNo());
-            stat.setBoolean(13, product.isPurchaseTax());
+            stat.setFloat(9, product.getProductCostPrice());
+            stat.setFloat(10, product.getProductSellPrice());
+            stat.setInt(11, product.getBillNo());
+            stat.setInt(12, product.getProductBatchNo());
+            stat.setInt(13, product.getPurchaseTax());
 
             stat.executeUpdate();
             return true;

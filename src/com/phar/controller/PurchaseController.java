@@ -20,9 +20,9 @@ public class PurchaseController implements Initializable {
 
     private Product product;
     private ProductImplement productImplement;
-    //For purchaseEntry.fxml
+
     @FXML
-    private TextField productBillNo, productId, productName, productComposition, productBatch, productMfdDate, productExpDate, productCostPrice, productSellPrice, productQuantity;
+    private TextField sellerId, productBillNo, productId, productName, productComposition, productBatch, productMfdDate, productExpDate, productCostPrice, productSellPrice, productQuantity;
 
     @FXML
     private DatePicker purchaseDate;
@@ -37,16 +37,17 @@ public class PurchaseController implements Initializable {
     private void purchaseSaveButton(ActionEvent e) {
 
         product = new Product();
-        product.setBillNo(productBillNo.getText());
-        product.setProductId(productId.getText());
+        product.setSellerID(sellerId.getText());
+        product.setProductId(Integer.valueOf(productId.getText()));
+        product.setBillNo(Integer.valueOf(productBillNo.getText()));
         product.setProductName(productName.getText());
-        product.setProductBatchNo(productBatch.getText());
+        product.setProductBatchNo(Integer.valueOf(productBatch.getText()));
         product.setProductMfdDate(productMfdDate.getText());
         product.setProductExpDate(productExpDate.getText());
-        product.setProductCostPrice(productCostPrice.getText());
-        product.setProductSellPrice(productSellPrice.getText());
+        product.setProductCostPrice(Float.valueOf(productCostPrice.getText()));
+        product.setProductSellPrice(Float.valueOf(productSellPrice.getText()));
         product.setProductComposition(productComposition.getText());
-        product.setProductQuantity(productQuantity.getText());
+        product.setProductQuantity(Integer.valueOf(productQuantity.getText()));
         product.setProductPurchaseDate(purchaseDate.getValue().toString());
 
 

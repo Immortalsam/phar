@@ -7,19 +7,28 @@
 <?import javafx.scene.text.Font?>
 
 <?import javafx.scene.layout.GridPane?>
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SupplierController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SupplierController">
     <children>
-        <TextField fx:id="supplierId" layoutX="203.0" layoutY="85.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Id" />
-        <TextField fx:id="supplierName" layoutX="203.0" layoutY="128.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Name" />
-        <TextField fx:id="supplierAddress" layoutX="203.0" layoutY="169.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Address" />
-        <TextField fx:id="supplierCategory" layoutX="203.0" layoutY="253.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Category" />
-        <TextField fx:id="supplierContact" layoutX="203.0" layoutY="210.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Contact" />
-        <TextField fx:id="supplierPanNo" layoutX="203.0" layoutY="289.0" prefHeight="25.0" prefWidth="234.0" promptText="Pan no" />
+        <TextField fx:id="supplierId" layoutX="203.0" layoutY="85.0" prefHeight="25.0" prefWidth="234.0"
+                   promptText="Supplier Id"/>
+        <TextField fx:id="supplierName" layoutX="203.0" layoutY="128.0" prefHeight="25.0" prefWidth="234.0"
+                   promptText="Supplier Name"/>
+        <TextField fx:id="supplierAddress" layoutX="203.0" layoutY="169.0" prefHeight="25.0" prefWidth="234.0"
+                   promptText="Supplier Address"/>
+        <TextField fx:id="supplierCategory" layoutX="203.0" layoutY="253.0" prefHeight="25.0" prefWidth="234.0"
+                   promptText="Supplier Category"/>
+        <TextField fx:id="supplierContact" layoutX="203.0" layoutY="210.0" prefHeight="25.0" prefWidth="234.0"
+                   promptText="Supplier Contact"/>
+        <TextField fx:id="supplierPanNo" layoutX="203.0" layoutY="289.0" prefHeight="25.0" prefWidth="234.0"
+                   promptText="Pan no"/>
         <Label layoutX="230.0" layoutY="25.0" prefHeight="25.0" prefWidth="218.0" text="New Supplier ">
             <font>
-                <Font size="22.0" />
+                <Font size="22.0"/>
             </font>
         </Label>
-        <Button fx:id="suppSaveButtomn" layoutX="206.0" layoutY="333.0" mnemonicParsing="false" onAction="#onClickSave" prefHeight="34.0" prefWidth="234.0" text="Save Supplier" />
+        <Button fx:id="suppSaveButtomn" layoutX="206.0" layoutY="333.0" mnemonicParsing="false" onAction="#onClickSave"
+                prefHeight="34.0" prefWidth="234.0" text="Save Supplier"/>
     </children>
 </AnchorPane>

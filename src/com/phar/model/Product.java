@@ -7,34 +7,34 @@ import java.util.Date;
  */
 public class Product {
 
-    private String productId;
+    private int productId;
+    private String sellerID;
     private String productName;
-    private String productQuantity;
+    private int productQuantity;
+    private String productComposition;
+    private String productPurchaseDate;
     private String productMfdDate;
     private String productExpDate;
-    private String productBatchNo;
-    private String productCostPrice;
-    private String productSellPrice;
-    private String productPurchaseDate;
-    private String productComposition;
-    private boolean purchaseTax;
-    private String billNo;
+    private float productCostPrice;
+    private float productSellPrice;
+    private int productBatchNo;
+    private int purchaseTax;
+    private int billNo;
 
-
-    public String getProductId() {
+    public int getProductId() {
         return productId;
     }
 
-    public void setProductId(String productId) {
+    public void setProductId(int productId) {
         this.productId = productId;
     }
 
-    public boolean isPurchaseTax() {
-        return purchaseTax;
+    public String getSellerID() {
+        return sellerID;
     }
 
-    public void setPurchaseTax(boolean purchaseTax) {
-        this.purchaseTax = purchaseTax;
+    public void setSellerID(String sellerID) {
+        this.sellerID = sellerID;
     }
 
     public String getProductName() {
@@ -45,12 +45,28 @@ public class Product {
         this.productName = productName;
     }
 
-    public String getProductQuantity() {
+    public int getProductQuantity() {
         return productQuantity;
     }
 
-    public void setProductQuantity(String productQuantity) {
+    public void setProductQuantity(int productQuantity) {
         this.productQuantity = productQuantity;
+    }
+
+    public String getProductComposition() {
+        return productComposition;
+    }
+
+    public void setProductComposition(String productComposition) {
+        this.productComposition = productComposition;
+    }
+
+    public String getProductPurchaseDate() {
+        return productPurchaseDate;
+    }
+
+    public void setProductPurchaseDate(String productPurchaseDate) {
+        this.productPurchaseDate = productPurchaseDate;
     }
 
     public String getProductMfdDate() {
@@ -69,51 +85,43 @@ public class Product {
         this.productExpDate = productExpDate;
     }
 
-    public String getProductBatchNo() {
-        return productBatchNo;
-    }
-
-    public void setProductBatchNo(String productBatchNo) {
-        this.productBatchNo = productBatchNo;
-    }
-
-    public String getProductCostPrice() {
+    public float getProductCostPrice() {
         return productCostPrice;
     }
 
-    public void setProductCostPrice(String productCostPrice) {
+    public void setProductCostPrice(float productCostPrice) {
         this.productCostPrice = productCostPrice;
     }
 
-    public String getProductSellPrice() {
+    public float getProductSellPrice() {
         return productSellPrice;
     }
 
-    public void setProductSellPrice(String productSellPrice) {
+    public void setProductSellPrice(float productSellPrice) {
         this.productSellPrice = productSellPrice;
     }
 
-    public String getProductPurchaseDate() {
-        return productPurchaseDate;
+    public int getProductBatchNo() {
+        return productBatchNo;
     }
 
-    public void setProductPurchaseDate(String productPurchasetDate) {
-        this.productPurchaseDate = productPurchaseDate;
+    public void setProductBatchNo(int productBatchNo) {
+        this.productBatchNo = productBatchNo;
     }
 
-    public String getProductComposition() {
-        return productComposition;
+    public int getPurchaseTax() {
+        return purchaseTax;
     }
 
-    public void setProductComposition(String productComposition) {
-        this.productComposition = productComposition;
+    public void setPurchaseTax(int purchaseTax) {
+        this.purchaseTax = purchaseTax;
     }
 
-    public String getBillNo() {
+    public int getBillNo() {
         return billNo;
     }
 
-    public void setBillNo(String billNo) {
+    public void setBillNo(int billNo) {
         this.billNo = billNo;
     }
 }
