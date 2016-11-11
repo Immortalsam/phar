@@ -1,6 +1,8 @@
 package com.phar.controller;
 
 import com.phar.custom.CustomAlert;
+import com.phar.database.DatabaseConnection;
+import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.interfaceImplement.ProductImplement;
 import com.phar.model.Product;
 import com.phar.model.Supplier;
@@ -8,24 +10,31 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
  * Created by Sam on 11/9/2016.
  */
-public class PurchaseTableController {
+public class PurchaseTableController implements Initializable {
 
+
+    Connection connection;
+
+    private List<String> newList = new ArrayList<String>();
+
+    @FXML
+    private ComboBox searchCombo;
 
     @FXML
     private TableView<Product> purchaseTable;
@@ -63,7 +72,6 @@ public class PurchaseTableController {
     @FXML
     private TableColumn<Product, Integer> billNo;
 
-
     @FXML
     private TableColumn<Product, Integer> batch;
 
@@ -83,12 +91,14 @@ public class PurchaseTableController {
 
 
     //Default Constructor
-    public PurchaseTableController(){
+    public PurchaseTableController() throws SQLException, ClassNotFoundException {
 
     }
 
     @FXML
-    private void initialize(){
+    public void initialize() throws SQLException, ClassNotFoundException {
+
+        searchCombo.getItems().addAll(newList);
         ProductImplement productImplement = new ProductImplement();
         productList = productImplement.listProduct();
         sellerId.setCellValueFactory(new PropertyValueFactory<Product, String>("sellerID"));
@@ -105,10 +115,12 @@ public class PurchaseTableController {
         batch.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productBatchNo"));
         tax.setCellValueFactory(new PropertyValueFactory<Product, Integer>("purchaseTax"));
         purchaseTable.setItems(productList);
+
     }
 
+
     @FXML
-    private void addProduct(ActionEvent e){
+    private void addProduct(ActionEvent e) {
 
         Product p = new Product();
 
@@ -127,10 +139,29 @@ public class PurchaseTableController {
         p.setPurchaseTax(Integer.valueOf(pTax.getText()));
 
         ProductImplement productImplement = new ProductImplement();
-        if(productImplement.addProduct(p)){
+        if (productImplement.addProduct(p)) {
             CustomAlert alert = new CustomAlert("Insert Info.", "New Product Saved Successfully");
             alert.withoutHeader();
         }
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        new CustomComboBox<>(searchCombo);
+
+        try {
+            connection = DatabaseConnection.getConnection();
+            String selectQuery = "SELECT supplier_name FROM supplier";
+            PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                newList.add(resultSet.getString("supplier_name"));
+
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
