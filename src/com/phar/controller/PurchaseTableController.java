@@ -141,13 +141,15 @@ public class PurchaseTableController implements Initializable {
         expDate.setCellValueFactory(new PropertyValueFactory<Product, String>("productExpDate"));
         mfdDate.setCellValueFactory(new PropertyValueFactory<Product, String>("productMfdDate"));
         costPrice.setCellValueFactory(new PropertyValueFactory<Product, Float>("productCostPrice"));
-        sellingPrice.setCellValueFactory(new PropertyValueFactory<Product, Float>("productSellingPrice"));
+        sellingPrice.setCellValueFactory(new PropertyValueFactory<Product, Float>("productSellPrice"));
         batch.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productBatchNo"));
         tax.setCellValueFactory(new PropertyValueFactory<Product, Integer>("purchaseTax"));
         billNo.setCellValueFactory(new PropertyValueFactory<Product, Integer>("billNo"));
 
         purchaseTable.setItems(ObvProductList);
         searchCombo.setDisable(true);
+        sId.setDisable(true);
+        bNo.setDisable(true);
         //Clearing All TextField
         for (Node node : anchorPane.getChildren()
                 ) {
@@ -216,6 +218,7 @@ public class PurchaseTableController implements Initializable {
             preparedStatement.executeUpdate();
         }
 
-
+        searchCombo.setDisable(false);
+        bNo.setDisable(false);
     }
 }
