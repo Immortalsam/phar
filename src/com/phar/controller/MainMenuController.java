@@ -116,10 +116,7 @@ public class MainMenuController implements Initializable {
         newSupplier.setOpacity(1);
     }
 
-    public void hideOption(MouseEvent mouseEvent) {
-        oldSupplier.setOpacity(0);
-        newSupplier.setOpacity(0);
-    }
+
 
     public void onActionNewSupplier(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/phar/newSupplier.fxml"));
