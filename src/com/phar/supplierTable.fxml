@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="supplier" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="968.0"
+            xmlns="http://javafx.com/javafx/8.0.45" fx:controller="com.phar.controller.SupplierTableController">
+    <TextField fx:id="searchField" layoutX="14.0" layoutY="33.0" onKeyReleased="#searchSupplier" prefHeight="25.0"
+               prefWidth="209.0" promptText="Search Supplier"/>
+    <TableView fx:id="supplierTable" layoutX="13.0" layoutY="68.0" prefHeight="298.0" prefWidth="703.0">
+        <columns>
+            <TableColumn fx:id="supplierId" prefWidth="75.0" text="SupplierID"/>
+            <TableColumn fx:id="supplierName" prefWidth="125.0" text="Supplier Name"/>
+            <TableColumn fx:id="supplierAddress" prefWidth="125.0" text="Supplier Address"/>
+            <TableColumn fx:id="supplierContact" prefWidth="125.0" text="Supplier Contact"/>
+            <TableColumn fx:id="supplierCategory" prefWidth="125.0" text="Supplier Category"/>
+            <TableColumn fx:id="supplierPanNo" prefWidth="125.0" text="Supplier Pan No."/>
+        </columns>
+    </TableView>
+</AnchorPane>

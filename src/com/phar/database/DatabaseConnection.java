@@ -1,14 +1,14 @@
 package com.phar.database;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by Sam on 11/6/2016.
  */
 
 public class DatabaseConnection {
+
+    private static Connection conn;
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException
     {

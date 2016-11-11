@@ -3,10 +3,10 @@ package com.phar.interfaceImplement;
 import com.phar.database.DatabaseConnection;
 import com.phar.interfaces.ProductInterface;
 import com.phar.model.Product;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 /**
  * Created by Sam on 11/7/2016.
@@ -27,8 +27,8 @@ public class ProductImplement implements ProductInterface {
 
 
     @Override
-    public boolean addProduct(Product productt) {
-        this.product = productt;
+    public boolean addProduct(Product product) {
+        this.product = product;
         String addQuery = "INSERT into product_from_supplier (supplier_id, product_id , product_name, product_quantity, " +
                 "product_composition, product_purchaseDate, product_mfd, product_expd, product_cost, product_sell, bill_no," +
                 "product_batch, tax) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?)";
@@ -63,6 +63,40 @@ public class ProductImplement implements ProductInterface {
         }
 
         return false;
+    }
+
+    @Override
+    public ObservableList<Product> listProduct() {
+        ObservableList<Product> productData = FXCollections.observableArrayList();
+
+        String query = "SELECT * from product_from_supplier";
+
+        try(Statement stat = conn.createStatement()){
+            ResultSet res = stat.executeQuery(query);
+
+            while(res.next()){
+                Product product = new Product();
+                product.setSellerID(res.getString("supplier_id"));
+                product.setProductId(res.getInt("product_id"));
+                product.setProductName(res.getString("product_name"));
+                product.setProductQuantity(res.getInt("product_quantity"));
+                product.setProductComposition(res.getString("product_composition"));
+                product.setProductPurchaseDate(res.getString("product_purchaseDate"));
+                product.setProductMfdDate(res.getString("product_mfd"));
+                product.setProductExpDate(res.getString("product_expd"));
+                product.setProductCostPrice(res.getFloat("product_cost"));
+                product.setProductSellPrice(res.getFloat("product_sell"));
+                product.setBillNo(res.getInt("bill_no"));
+                product.setProductBatchNo(res.getInt("product_batch"));
+                product.setPurchaseTax(res.getInt("tax"));
+
+                productData.add(product);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return productData;
     }
 
     @Override

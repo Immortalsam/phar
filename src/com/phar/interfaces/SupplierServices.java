@@ -1,6 +1,8 @@
 package com.phar.interfaces;
 
 import com.phar.model.Supplier;
+import javafx.collections.ObservableList;
+
 import java.util.List;
 
 /**
@@ -10,7 +12,8 @@ import java.util.List;
 public interface SupplierServices  {
 
     public boolean addSupplier(Supplier supplier);
+    public ObservableList<Supplier> listSupplier();
     public boolean editSupplier();
     public boolean deleteSupplier();
-    public List<String> listSupplier();
+
 }

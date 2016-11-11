@@ -15,19 +15,11 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("purchaseEntry.fxml"));
-        primaryStage.setTitle("Purchase Entry!!");
-
-        Screen screen = Screen.getPrimary();
-        Rectangle2D bound = screen.getVisualBounds();
+        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        primaryStage.setTitle("Admin Login");
 
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
-        primaryStage.setX(bound.getMinX());
-        primaryStage.setY(bound.getMinY());
-        primaryStage.setHeight(bound.getMaxY());
-        primaryStage.setWidth(bound.getMaxX());
-
         primaryStage.show();
     }
 

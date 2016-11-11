@@ -3,10 +3,10 @@ package com.phar.interfaceImplement;
 import com.phar.database.DatabaseConnection;
 import com.phar.interfaces.SupplierServices;
 import com.phar.model.Supplier;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 /**
@@ -61,7 +61,30 @@ public class SupplierImplement implements SupplierServices {
     }
 
     @Override
-    public List<String> listSupplier() {
-        return null;
+    public ObservableList<Supplier> listSupplier() {
+
+
+        ObservableList<Supplier> supplierData  = FXCollections.observableArrayList();
+        String query = "SELECT * from supplier";
+
+        try(Statement stat = conn.createStatement()){
+            ResultSet res = stat.executeQuery(query);
+
+            while(res.next()){
+                Supplier supplier = new Supplier();
+                supplier.setSupplierId(res.getString("supplier_id"));
+                supplier.setSupplierName(res.getString("supplier_name"));
+                supplier.setSupplierAddress(res.getString("supplier_address"));
+                supplier.setSupplierContact(res.getString("supplier_contact"));
+                supplier.setSupplierCategory(res.getString("supplier_category"));
+                supplier.setPanNo(res.getDouble("pan_no"));
+
+                supplierData.add(supplier);
+            }
+        }
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        return supplierData;
     }
 }
