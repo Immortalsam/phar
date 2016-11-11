@@ -3,23 +3,24 @@ package com.phar.controller;
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CustomComboBox;
+import com.phar.extraFunctionality.DateFormatter;
 import com.phar.interfaceImplement.ProductImplement;
 import com.phar.model.Product;
-import com.phar.model.Supplier;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -31,7 +32,8 @@ public class PurchaseTableController implements Initializable {
 
     Connection connection;
 
-    private List<String> newList = new ArrayList<String>();
+    private List<String> supplierList = new ArrayList<String>();
+    private List<String> completeProductList = new ArrayList<String>();
 
     @FXML
     private ComboBox searchCombo;
@@ -75,7 +77,6 @@ public class PurchaseTableController implements Initializable {
     @FXML
     private TableColumn<Product, Integer> batch;
 
-
     @FXML
     private TableColumn<Product, Integer> tax;
 
@@ -95,35 +96,11 @@ public class PurchaseTableController implements Initializable {
 
     }
 
-    @FXML
-    public void initialize() throws SQLException, ClassNotFoundException {
-
-        searchCombo.getItems().addAll(newList);
-        ProductImplement productImplement = new ProductImplement();
-        productList = productImplement.listProduct();
-        sellerId.setCellValueFactory(new PropertyValueFactory<Product, String>("sellerID"));
-        productId.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productId"));
-        productName.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
-        productQuantity.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productQuantity"));
-        productComposition.setCellValueFactory(new PropertyValueFactory<Product, String>("productComposition"));
-        purchaseDate.setCellValueFactory(new PropertyValueFactory<Product, String>("productPurchaseDate"));
-        expDate.setCellValueFactory(new PropertyValueFactory<Product, String>("productExpDate"));
-        mfdDate.setCellValueFactory(new PropertyValueFactory<Product, String>("productMfdDate"));
-        costPrice.setCellValueFactory(new PropertyValueFactory<Product, Float>("productCostPrice"));
-        sellingPrice.setCellValueFactory(new PropertyValueFactory<Product, Float>("productSellPrice"));
-        billNo.setCellValueFactory(new PropertyValueFactory<Product, Integer>("billNo"));
-        batch.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productBatchNo"));
-        tax.setCellValueFactory(new PropertyValueFactory<Product, Integer>("purchaseTax"));
-        purchaseTable.setItems(productList);
-
-    }
-
 
     @FXML
     private void addProduct(ActionEvent e) {
 
         Product p = new Product();
-
         p.setSellerID(sId.getText());
         p.setProductId(Integer.valueOf(pId.getText()));
         p.setBillNo(Integer.valueOf(bNo.getText()));
@@ -143,11 +120,15 @@ public class PurchaseTableController implements Initializable {
             CustomAlert alert = new CustomAlert("Insert Info.", "New Product Saved Successfully");
             alert.withoutHeader();
         }
+
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         new CustomComboBox<>(searchCombo);
+
+        DateFormatter.dateFormatterForDatePicker(pDate);
+        pDate.setValue(DateFormatter.NOW_LOCAL_DATE());
 
         try {
             connection = DatabaseConnection.getConnection();
@@ -155,13 +136,13 @@ public class PurchaseTableController implements Initializable {
             PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                newList.add(resultSet.getString("supplier_name"));
+                supplierList.add(resultSet.getString("supplier_name"));
 
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
+        searchCombo.getItems().addAll(supplierList);
     }
+
 }
