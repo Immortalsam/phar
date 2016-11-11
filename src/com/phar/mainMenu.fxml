@@ -5,12 +5,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="601.0" style="-fx-background-color: lightgreen;" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.MainMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="401.0" prefWidth="601.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.MainMenuController">
    <children>
       <Button fx:id="main_menu_sButton" layoutX="185.0" layoutY="92.0" mnemonicParsing="false" onAction="#menuSupplierButton" prefHeight="25.0" prefWidth="203.0" style="-fx-background-color: white;" text="Supplier " />
       <Button fx:id="mainMenuPu" layoutX="188.0" layoutY="144.0" mnemonicParsing="false" onAction="#mainPurchaseButton" prefHeight="25.0" prefWidth="203.0" style="-fx-background-color: white;" text="Purchase" />
       <Button layoutX="187.0" layoutY="200.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="203.0" style="-fx-background-color: white;" text="Sales" />
-      <Label layoutX="242.0" layoutY="30.0" style="-fx-background-color: ;" text="MENU ">
+      <Label layoutX="242.0" layoutY="30.0" text="MENU ">
          <font>
             <Font size="28.0" />
          </font>
