@@ -29,7 +29,6 @@
                 <TableColumn fx:id="billNo" prefWidth="60.0" text="Bill No."/>
                 <TableColumn fx:id="batch" prefWidth="70.0" text="Batch"/>
                 <TableColumn fx:id="tax" prefWidth="65.0" text="Tax"/>
-
             </columns>
         </TableView>
         <Group layoutX="25.0" layoutY="118.0">

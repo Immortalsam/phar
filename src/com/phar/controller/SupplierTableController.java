@@ -91,7 +91,7 @@ public class SupplierTableController {
                                 return false;
                             });
                          });
-                SortedList<Supplier> sortedList = new SortedList<Supplier>(filteredList);
+                SortedList<Supplier> sortedList = new SortedList<>(filteredList);
                 sortedList.comparatorProperty().bind(supplierTable.comparatorProperty());
                 supplierTable.setItems(sortedList);
             });

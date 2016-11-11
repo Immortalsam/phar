@@ -141,13 +141,15 @@ public class PurchaseTableController implements Initializable {
         expDate.setCellValueFactory(new PropertyValueFactory<Product, String>("productExpDate"));
         mfdDate.setCellValueFactory(new PropertyValueFactory<Product, String>("productMfdDate"));
         costPrice.setCellValueFactory(new PropertyValueFactory<Product, Float>("productCostPrice"));
-        sellingPrice.setCellValueFactory(new PropertyValueFactory<Product, Float>("productSellingPrice"));
+        sellingPrice.setCellValueFactory(new PropertyValueFactory<Product, Float>("productSellPrice"));
         batch.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productBatchNo"));
         tax.setCellValueFactory(new PropertyValueFactory<Product, Integer>("purchaseTax"));
         billNo.setCellValueFactory(new PropertyValueFactory<Product, Integer>("billNo"));
 
         purchaseTable.setItems(ObvProductList);
         searchCombo.setDisable(true);
+        sId.setDisable(true);
+        bNo.setDisable(true);
         //Clearing All TextField
         for (Node node : anchorPane.getChildren()
                 ) {
@@ -193,6 +195,20 @@ public class PurchaseTableController implements Initializable {
 
             }
         });
+
+        pId.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    pId.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+                else
+                {
+                    System.out.println("Error!!");
+                }
+            }
+        });
+
     }
 
     public void saveToDatabase(ActionEvent event) throws SQLException {
@@ -216,6 +232,11 @@ public class PurchaseTableController implements Initializable {
             preparedStatement.executeUpdate();
         }
 
+        searchCombo.setDisable(false);
+        bNo.setDisable(false);
 
+        CustomAlert alert = new CustomAlert("Insert to database Info", "Save successful");
+        alert.withoutHeader();
     }
+
 }
