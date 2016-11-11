@@ -34,6 +34,7 @@ public class SupplierController {
     @FXML
     private void onClickSave(ActionEvent e) {
 
+        //new supplier Oject
         supplier = new Supplier();
         supplier.setSupplierId(supplierId.getText());
         supplier.setSupplierName(supplierName.getText());
