@@ -14,6 +14,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
@@ -28,11 +29,17 @@ public class MainMenuController implements Initializable {
     private Button main_menu_sButton;
 
     @FXML
+    private Button oldSupplier;
+
+    @FXML
+    private Button newSupplier;
+
+    @FXML
     void menuSupplierButton(ActionEvent event) {
         try {
 
-            CFunctions.session.put("userName","");
-            CFunctions.session.put("passWord","");
+            CFunctions.session.put("userName", "");
+            CFunctions.session.put("passWord", "");
 
 
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/phar/supplierTable.fxml"));
@@ -102,6 +109,42 @@ public class MainMenuController implements Initializable {
         System.out.println("Username : " + CFunctions.session.get("userName", ""));
         System.out.println("Password : " + CFunctions.session.get("passWord", ""));
 
+    }
+
+    public void showOption(MouseEvent mouseEvent) {
+        oldSupplier.setOpacity(1);
+        newSupplier.setOpacity(1);
+    }
+
+    public void hideOption(MouseEvent mouseEvent) {
+        oldSupplier.setOpacity(0);
+        newSupplier.setOpacity(0);
+    }
+
+    public void onActionNewSupplier(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/phar/newSupplier.fxml"));
+        Parent root1 = (Parent) fxmlLoader.load();
+        Stage stage1 = new Stage();
+        stage1.setTitle("Add New Suppliers");
+        stage1.setScene(new Scene(root1));
+        stage1.show();
+        stage1.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/phar/mainMenu.fxml"));
+                Parent root1 = null;
+                try {
+                    root1 = (Parent) fxmlLoader.load();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                Stage stage1 = new Stage();
+                stage1.setTitle("Main Menu");
+                stage1.setScene(new Scene(root1));
+                stage1.show();
+            }
+        });
+        ((Node) (event.getSource())).getScene().getWindow().hide();
     }
 }
 
