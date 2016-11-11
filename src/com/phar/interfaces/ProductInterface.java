@@ -9,9 +9,13 @@ import javafx.collections.ObservableList;
 public interface ProductInterface {
 
     public boolean addProduct(Product product);
+
     public ObservableList<Product> listProduct();
+
     public boolean updateProduct();
+
     public boolean deleteProduct();
+
     public boolean alertWhenAboutToFinish();
 
 }

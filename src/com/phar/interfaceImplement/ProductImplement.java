@@ -16,6 +16,7 @@ public class ProductImplement implements ProductInterface {
 
     static Connection conn;
     private Product product;
+    private Product newProduct;
 
     public ProductImplement() {
         try {
@@ -98,6 +99,7 @@ public class ProductImplement implements ProductInterface {
         }
         return productData;
     }
+
 
     @Override
     public boolean updateProduct() {

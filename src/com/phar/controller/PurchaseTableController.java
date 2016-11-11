@@ -6,12 +6,17 @@ import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DateFormatter;
 import com.phar.interfaceImplement.ProductImplement;
 import com.phar.model.Product;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 
 import java.net.URL;
@@ -34,6 +39,16 @@ public class PurchaseTableController implements Initializable {
 
     private List<String> supplierList = new ArrayList<String>();
     private List<String> completeProductList = new ArrayList<String>();
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
+
+    private ObservableList<Product> ObvProductList = FXCollections.observableArrayList();
+
+    @FXML
+    private Button saveDb;
+
+    @FXML
+    private AnchorPane anchorPane;
 
     @FXML
     private ComboBox searchCombo;
@@ -115,10 +130,30 @@ public class PurchaseTableController implements Initializable {
         p.setProductPurchaseDate(pDate.getValue().toString());
         p.setPurchaseTax(Integer.valueOf(pTax.getText()));
 
-        ProductImplement productImplement = new ProductImplement();
-        if (productImplement.addProduct(p)) {
-            CustomAlert alert = new CustomAlert("Insert Info.", "New Product Saved Successfully");
-            alert.withoutHeader();
+        ObvProductList.add(p);
+
+        sellerId.setCellValueFactory(new PropertyValueFactory<Product, String>("sellerID"));
+        productId.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productId"));
+        productName.setCellValueFactory(new PropertyValueFactory<Product, String>("productName"));
+        productQuantity.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productQuantity"));
+        productComposition.setCellValueFactory(new PropertyValueFactory<Product, String>("productComposition"));
+        purchaseDate.setCellValueFactory(new PropertyValueFactory<Product, String>("productPurchaseDate"));
+        expDate.setCellValueFactory(new PropertyValueFactory<Product, String>("productExpDate"));
+        mfdDate.setCellValueFactory(new PropertyValueFactory<Product, String>("productMfdDate"));
+        costPrice.setCellValueFactory(new PropertyValueFactory<Product, Float>("productCostPrice"));
+        sellingPrice.setCellValueFactory(new PropertyValueFactory<Product, Float>("productSellingPrice"));
+        batch.setCellValueFactory(new PropertyValueFactory<Product, Integer>("productBatchNo"));
+        tax.setCellValueFactory(new PropertyValueFactory<Product, Integer>("purchaseTax"));
+        billNo.setCellValueFactory(new PropertyValueFactory<Product, Integer>("billNo"));
+
+        purchaseTable.setItems(ObvProductList);
+        searchCombo.setDisable(true);
+        //Clearing All TextField
+        for (Node node : anchorPane.getChildren()
+                ) {
+            if (node instanceof TextField) {
+                ((TextField) node).clear();
+            }
         }
 
     }
@@ -126,23 +161,61 @@ public class PurchaseTableController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         new CustomComboBox<>(searchCombo);
-
         DateFormatter.dateFormatterForDatePicker(pDate);
         pDate.setValue(DateFormatter.NOW_LOCAL_DATE());
 
         try {
             connection = DatabaseConnection.getConnection();
             String selectQuery = "SELECT supplier_name FROM supplier";
-            PreparedStatement preparedStatement = connection.prepareStatement(selectQuery);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            preparedStatement = connection.prepareStatement(selectQuery);
+            resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 supplierList.add(resultSet.getString("supplier_name"));
-
             }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         searchCombo.getItems().addAll(supplierList);
+        searchCombo.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + searchCombo.getValue() + "'";
+                System.out.println(idQuery);
+                try {
+                    preparedStatement = connection.prepareStatement(idQuery);
+                    resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        sId.setText(resultSet.getString("supplier_id"));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
     }
 
+    public void saveToDatabase(ActionEvent event) throws SQLException {
+        String insertQuery = "INSERT INTO product_from_supplier VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        for (Product p : ObvProductList
+                ) {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            preparedStatement.setString(1, p.getSellerID().toString());
+            preparedStatement.setInt(2, p.getProductId());
+            preparedStatement.setString(3, p.getProductName());
+            preparedStatement.setInt(4, p.getProductQuantity());
+            preparedStatement.setString(5, p.getProductComposition());
+            preparedStatement.setString(6, p.getProductPurchaseDate());
+            preparedStatement.setString(7, p.getProductMfdDate());
+            preparedStatement.setString(8, p.getProductExpDate());
+            preparedStatement.setFloat(9, p.getProductCostPrice());
+            preparedStatement.setFloat(10, p.getProductSellPrice());
+            preparedStatement.setInt(11, p.getBillNo());
+            preparedStatement.setInt(12, p.getProductBatchNo());
+            preparedStatement.setInt(13, p.getPurchaseTax());
+            preparedStatement.executeUpdate();
+        }
+
+
+    }
 }
