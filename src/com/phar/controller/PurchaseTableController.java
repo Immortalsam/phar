@@ -4,11 +4,11 @@ import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DateFormatter;
-import com.phar.interfaceImplement.ProductImplement;
 import com.phar.model.Product;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,15 +17,15 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.util.StringConverter;
+import javafx.scene.layout.GridPane;
+import org.controlsfx.control.CheckComboBox;
 
 import java.net.URL;
-import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -44,6 +44,8 @@ public class PurchaseTableController implements Initializable {
 
     private ObservableList<Product> ObvProductList = FXCollections.observableArrayList();
 
+    private CheckComboBox itemListComboBox;
+
     @FXML
     private Button saveDb;
 
@@ -51,7 +53,7 @@ public class PurchaseTableController implements Initializable {
     private AnchorPane anchorPane;
 
     @FXML
-    private ComboBox searchCombo;
+    private ComboBox supplierSearchComboBox;
 
     @FXML
     private TableView<Product> purchaseTable;
@@ -102,15 +104,22 @@ public class PurchaseTableController implements Initializable {
     @FXML
     private TextField sId, pId, pName, pQuantity, pComposition, mDate, eDate, cPrice, sPrice, bNo, pBatch, pTax;
 
+
     @FXML
     private DatePicker pDate;
 
+    @FXML
+    private GridPane gridd;
+
+    @FXML
+    private Label compositionLabel;
 
     //Default Constructor
     public PurchaseTableController() throws SQLException, ClassNotFoundException {
 
     }
 
+    private final Label checkedItemsLabel = new Label();
 
     @FXML
     private void addProduct(ActionEvent e) {
@@ -121,7 +130,8 @@ public class PurchaseTableController implements Initializable {
         p.setBillNo(Integer.valueOf(bNo.getText()));
         p.setProductName(pName.getText());
         p.setProductQuantity(Integer.valueOf(pQuantity.getText()));
-        p.setProductComposition(pComposition.getText());
+//        p.setProductComposition(pComposition.getText());
+        p.setProductComposition(compositionLabel.getText());
         p.setProductBatchNo(Integer.valueOf(pBatch.getText()));
         p.setProductMfdDate(mDate.getText());
         p.setProductExpDate(eDate.getText());
@@ -129,6 +139,7 @@ public class PurchaseTableController implements Initializable {
         p.setProductSellPrice(Float.valueOf(sPrice.getText()));
         p.setProductPurchaseDate(pDate.getValue().toString());
         p.setPurchaseTax(Integer.valueOf(pTax.getText()));
+
 
         ObvProductList.add(p);
 
@@ -147,7 +158,7 @@ public class PurchaseTableController implements Initializable {
         billNo.setCellValueFactory(new PropertyValueFactory<Product, Integer>("billNo"));
 
         purchaseTable.setItems(ObvProductList);
-        searchCombo.setDisable(true);
+        supplierSearchComboBox.setDisable(true);
         sId.setDisable(true);
         bNo.setDisable(true);
         //Clearing All TextField
@@ -162,11 +173,75 @@ public class PurchaseTableController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        new CustomComboBox<>(searchCombo);
+
+
+        mDate.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!mDate.getText().contains("/")) {
+                    if (mDate.getText().length() == 4) {
+                        mDate.setText(mDate.getText().concat("/"));
+
+                    }
+                }
+            }
+        });
+
+        eDate.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!eDate.getText().contains("/")) {
+                    if (eDate.getText().length() == 4) {
+                        eDate.setText(eDate.getText().concat("/"));
+
+                    }
+                }
+            }
+        });
+
+
+        new CustomComboBox<>(supplierSearchComboBox);
+
+        final ObservableList<String> strings = FXCollections.observableArrayList();
+        for (
+                int i = 0;
+                i <= 10; i++)
+
+        {
+            strings.add("Composition No " + i);
+
+        }
+
+        itemListComboBox = new CheckComboBox<String>(strings);
+        gridd.add(itemListComboBox, 0, 0);
+
+        itemListComboBox.getCheckModel().getCheckedItems().
+                addListener(new ListChangeListener<String>() {
+                    @Override
+                    public void onChanged(ListChangeListener.Change<? extends String> change) {
+                        updateText(checkedItemsLabel, change.getList());
+                        while (change.next()) {
+                            compositionLabel.setText(change.getList().toString());
+                            compositionLabel.setText(compositionLabel.getText().replace("[", ""));
+                            compositionLabel.setText(compositionLabel.getText().replace("]", ""));
+                            System.out.println(compositionLabel.getText());
+                            System.out.println("============================================");
+                            System.out.println("Change: " + change);
+                            System.out.println("Added sublist " + change.getAddedSubList());
+                            System.out.println("Removed sublist " + change.getRemoved());
+                            System.out.println("List " + change.getList());
+                            System.out.println("============================================");
+                        }
+
+                    }
+                });
+
         DateFormatter.dateFormatterForDatePicker(pDate);
         pDate.setValue(DateFormatter.NOW_LOCAL_DATE());
 
-        try {
+        try
+
+        {
             connection = DatabaseConnection.getConnection();
             String selectQuery = "SELECT supplier_name FROM supplier";
             preparedStatement = connection.prepareStatement(selectQuery);
@@ -174,37 +249,46 @@ public class PurchaseTableController implements Initializable {
             while (resultSet.next()) {
                 supplierList.add(resultSet.getString("supplier_name"));
             }
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException |
+                SQLException e)
+
+        {
             e.printStackTrace();
         }
-        searchCombo.getItems().addAll(supplierList);
-        searchCombo.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + searchCombo.getValue() + "'";
-                System.out.println(idQuery);
-                try {
-                    preparedStatement = connection.prepareStatement(idQuery);
-                    resultSet = preparedStatement.executeQuery();
-                    while (resultSet.next()) {
-                        sId.setText(resultSet.getString("supplier_id"));
+        supplierSearchComboBox.getItems().
+
+                addAll(supplierList);
+        supplierSearchComboBox.valueProperty().
+
+                addListener(new ChangeListener() {
+                    @Override
+                    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                        String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + supplierSearchComboBox.getValue() + "'";
+                        System.out.println(idQuery);
+                        try {
+                            preparedStatement = connection.prepareStatement(idQuery);
+                            resultSet = preparedStatement.executeQuery();
+                            while (resultSet.next()) {
+                                sId.setText(resultSet.getString("supplier_id"));
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
                     }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+                });
 
-            }
-        });
+        pId.textProperty().
 
-        pId.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    pId.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-              
-            }
-        });
+                addListener(new ChangeListener<String>() {
+                    @Override
+                    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                        if (!newValue.matches("\\d*")) {
+                            pId.setText(newValue.replaceAll("[^\\d]", ""));
+                        }
+
+                    }
+                });
 
     }
 
@@ -229,11 +313,28 @@ public class PurchaseTableController implements Initializable {
             preparedStatement.executeUpdate();
         }
 
-        searchCombo.setDisable(false);
+        supplierSearchComboBox.setDisable(false);
         bNo.setDisable(false);
 
         CustomAlert alert = new CustomAlert("Insert to database Info", "Save successful");
         alert.withoutHeader();
+    }
+
+
+    protected void updateText(Label label, ObservableList<? extends String> list) {
+        final StringBuilder sb = new StringBuilder();
+
+        if (list != null) {
+            for (int i = 0, max = list.size(); i < max; i++) {
+                sb.append(list.get(i));
+                if (i < max - 1) {
+                    sb.append(", ");
+                }
+            }
+        }
+
+        final String str = sb.toString();
+        label.setText(str.isEmpty() ? "<empty>" : str);
     }
 
 }

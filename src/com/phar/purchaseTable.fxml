@@ -9,57 +9,65 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="600.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/8.0.65"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseTableController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1250.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseTableController">
     <children>
         <TableView fx:id="purchaseTable" layoutX="27.0" layoutY="153.0" prefHeight="376.0" prefWidth="1164.0">
             <columns>
-                <TableColumn fx:id="sellerId" prefWidth="75.0" text="Seller Id"/>
-                <TableColumn fx:id="productId" prefWidth="75.0" text="Product Id"/>
-                <TableColumn fx:id="productName" prefWidth="97.0" text="Product Name"/>
-                <TableColumn fx:id="productQuantity" prefWidth="106.0" text="Product Quantity"/>
-                <TableColumn fx:id="productComposition" prefWidth="137.0" text="Product Composition"/>
-                <TableColumn fx:id="purchaseDate" prefWidth="100.0" text="Purchase Date"/>
-                <TableColumn fx:id="mfdDate" prefWidth="120.0" text="Manufacture Date"/>
-                <TableColumn fx:id="expDate" prefWidth="95.0" text="Expiring Date"/>
-                <TableColumn fx:id="costPrice" prefWidth="85.0" text="Cost Price"/>
-                <TableColumn fx:id="sellingPrice" prefWidth="85.0" text="Selling Price"/>
-                <TableColumn fx:id="billNo" prefWidth="60.0" text="Bill No."/>
-                <TableColumn fx:id="batch" prefWidth="70.0" text="Batch"/>
-                <TableColumn fx:id="tax" prefWidth="65.0" text="Tax"/>
+                <TableColumn fx:id="sellerId" prefWidth="75.0" text="Seller Id" />
+                <TableColumn fx:id="productId" prefWidth="75.0" text="Product Id" />
+                <TableColumn fx:id="productName" prefWidth="97.0" text="Product Name" />
+                <TableColumn fx:id="productQuantity" prefWidth="106.0" text="Product Quantity" />
+                <TableColumn fx:id="productComposition" prefWidth="137.0" text="Product Composition" />
+                <TableColumn fx:id="purchaseDate" prefWidth="100.0" text="Purchase Date" />
+                <TableColumn fx:id="mfdDate" prefWidth="120.0" text="Manufacture Date" />
+                <TableColumn fx:id="expDate" prefWidth="95.0" text="Expiring Date" />
+                <TableColumn fx:id="costPrice" prefWidth="85.0" text="Cost Price" />
+                <TableColumn fx:id="sellingPrice" prefWidth="85.0" text="Selling Price" />
+                <TableColumn fx:id="billNo" prefWidth="60.0" text="Bill No." />
+                <TableColumn fx:id="batch" prefWidth="70.0" text="Batch" />
+                <TableColumn fx:id="tax" prefWidth="65.0" text="Tax" />
             </columns>
         </TableView>
         <Group layoutX="25.0" layoutY="118.0">
             <children>
-                <TextField fx:id="sId" prefHeight="25.0" prefWidth="75.0"/>
+                <TextField fx:id="sId" disable="true" prefHeight="25.0" prefWidth="75.0" />
             </children>
         </Group>
-        <TextField fx:id="pId" layoutX="100.0" layoutY="118.0" prefHeight="25.0" prefWidth="75.0"/>
-        <TextField fx:id="pName" layoutX="175.0" layoutY="118.0" prefHeight="25.0" prefWidth="96.0"/>
-        <TextField fx:id="pQuantity" layoutX="271.0" layoutY="118.0" prefHeight="25.0" prefWidth="109.0"/>
-        <TextField fx:id="pComposition" layoutX="380.0" layoutY="118.0" prefHeight="25.0" prefWidth="133.0"/>
-        <TextField fx:id="mDate" layoutX="615.0" layoutY="118.0" prefHeight="25.0" prefWidth="120.0"/>
-        <TextField fx:id="eDate" layoutX="735.0" layoutY="118.0" prefHeight="25.0" prefWidth="96.0"/>
-        <TextField fx:id="cPrice" layoutX="831.0" layoutY="118.0" prefHeight="25.0" prefWidth="85.0"/>
-        <TextField fx:id="sPrice" layoutX="916.0" layoutY="118.0" prefHeight="25.0" prefWidth="85.0"/>
+        <TextField fx:id="pId" layoutX="100.0" layoutY="118.0" prefHeight="25.0" prefWidth="75.0" />
+        <TextField fx:id="pName" layoutX="175.0" layoutY="118.0" prefHeight="25.0" prefWidth="96.0" />
+        <TextField fx:id="pQuantity" layoutX="271.0" layoutY="118.0" prefHeight="25.0" prefWidth="109.0" />
+        <TextField fx:id="pComposition" layoutX="380.0" layoutY="118.0" prefHeight="27.0" prefWidth="51.0" />
+        <TextField fx:id="mDate" layoutX="615.0" layoutY="118.0" prefHeight="25.0" prefWidth="120.0" promptText="YYYY/MM" />
+        <TextField fx:id="eDate" layoutX="735.0" layoutY="118.0" prefHeight="25.0" prefWidth="96.0" promptText="YYYY/MM" />
+        <TextField fx:id="cPrice" layoutX="831.0" layoutY="118.0" prefHeight="25.0" prefWidth="85.0" />
+        <TextField fx:id="sPrice" layoutX="916.0" layoutY="118.0" prefHeight="25.0" prefWidth="85.0" />
+
         <Group layoutX="1059.0" layoutY="14.0">
             <children>
-                <TextField fx:id="bNo" prefHeight="27.0" prefWidth="173.0"/>
+                <TextField fx:id="bNo" prefHeight="27.0" prefWidth="173.0" />
             </children>
         </Group>
-        <TextField fx:id="pBatch" layoutX="1060.0" layoutY="118.0" prefHeight="25.0" prefWidth="69.0"/>
-        <TextField fx:id="pTax" layoutX="1129.0" layoutY="118.0" prefHeight="25.0" prefWidth="59.0"/>
-        <Button fx:id="add_button" layoutX="1189.0" layoutY="118.0" mnemonicParsing="false" onAction="#addProduct"
-                prefHeight="25.0" prefWidth="59.0" text="Add"/>
-        <DatePicker fx:id="pDate" layoutX="1059.0" layoutY="52.0" prefHeight="27.0" prefWidth="175.0"/>
-        <Label layoutX="25.0" layoutY="29.0" text="Supplier Name"/>
-        <ComboBox fx:id="searchCombo" editable="true" layoutX="121.0" layoutY="24.0" prefHeight="27.0"
-                  prefWidth="333.0"/>
-        <Label layoutX="990.0" layoutY="21.0" text="Bill No : "/>
-        <Label layoutX="1001.0" layoutY="57.0" text="Date :"/>
-        <Button fx:id="saveDb" layoutX="1049.0" layoutY="546.0" mnemonicParsing="false" onAction="#saveToDatabase"
-                prefHeight="27.0" prefWidth="142.0" text="Save to Database"/>
+        <TextField fx:id="pBatch" layoutX="1060.0" layoutY="118.0" prefHeight="25.0" prefWidth="69.0" />
+        <TextField fx:id="pTax" layoutX="1129.0" layoutY="118.0" prefHeight="25.0" prefWidth="59.0" />
+        <Button fx:id="add_button" layoutX="1189.0" layoutY="118.0" mnemonicParsing="false" onAction="#addProduct" prefHeight="25.0" prefWidth="59.0" text="Add" />
+        <DatePicker fx:id="pDate" layoutX="1059.0" layoutY="52.0" prefHeight="27.0" prefWidth="175.0" />
+        <Label layoutX="25.0" layoutY="29.0" text="Supplier Name" />
+        <ComboBox fx:id="supplierSearchComboBox" editable="true" layoutX="121.0" layoutY="24.0" prefHeight="27.0" prefWidth="333.0" />
+        <Label layoutX="990.0" layoutY="21.0" text="Bill No : " />
+        <Label layoutX="1001.0" layoutY="57.0" text="Date :" />
+        <Button fx:id="saveDb" layoutX="1049.0" layoutY="546.0" mnemonicParsing="false" onAction="#saveToDatabase" prefHeight="27.0" prefWidth="142.0" text="Save to Database" />
+        <GridPane fx:id="gridd" layoutX="431.0" layoutY="117.0" prefHeight="30.0" prefWidth="182.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+        </GridPane>
+        <Label fx:id="compositionLabel" layoutX="292.0" layoutY="100.0" prefHeight="17.0" prefWidth="400.0" text="Comp List :" />
     </children>
 </AnchorPane>
