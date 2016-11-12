@@ -202,10 +202,7 @@ public class PurchaseTableController implements Initializable {
                 if (!newValue.matches("\\d*")) {
                     pId.setText(newValue.replaceAll("[^\\d]", ""));
                 }
-                else
-                {
-                    System.out.println("Error!!");
-                }
+              
             }
         });
 
