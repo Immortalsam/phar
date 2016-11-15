@@ -200,11 +200,7 @@ public class PurchaseTableController implements Initializable {
         new CustomComboBox<>(supplierSearchComboBox);
 
         final ObservableList<String> strings = FXCollections.observableArrayList();
-        for (
-                int i = 0;
-                i <= 10; i++)
-
-        {
+        for (int i = 0; i <= 10; i++) {
             strings.add("Composition No " + i);
 
         }
@@ -254,22 +250,22 @@ public class PurchaseTableController implements Initializable {
         }
         supplierSearchComboBox.getItems().addAll(supplierList);
         supplierSearchComboBox.valueProperty().addListener(new ChangeListener() {
-                    @Override
-                    public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                        String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + supplierSearchComboBox.getValue() + "'";
-                        System.out.println(idQuery);
-                        try {
-                            preparedStatement = connection.prepareStatement(idQuery);
-                            resultSet = preparedStatement.executeQuery();
-                            while (resultSet.next()) {
-                                sId.setText(resultSet.getString("supplier_id"));
-                            }
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + supplierSearchComboBox.getValue() + "'";
+                System.out.println(idQuery);
+                try {
+                    preparedStatement = connection.prepareStatement(idQuery);
+                    resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        sId.setText(resultSet.getString("supplier_id"));
                     }
-                });
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
 
         pId.textProperty().
 

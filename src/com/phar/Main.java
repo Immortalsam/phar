@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("new_purchase_entry.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("productEntry.fxml"));
         primaryStage.setTitle("Admin Login");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
