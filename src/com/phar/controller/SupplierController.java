@@ -1,17 +1,10 @@
 package com.phar.controller;
 
 import com.phar.custom.CustomAlert;
-import com.phar.interfaceImplement.ProductImplement;
 import com.phar.interfaceImplement.SupplierImplement;
-import com.phar.model.Product;
 import com.phar.model.Supplier;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 
@@ -26,7 +19,7 @@ public class SupplierController {
     private SupplierImplement supplierImplement;
 
     @FXML
-    private TextField supplierId, supplierName, supplierAddress, supplierContact, supplierCategory, supplierPanNo;
+    private TextField supplierId, supplierName, supplierAddress, supplierContact, supplierEmail, supplierPanNo;
 
     @FXML
     private AnchorPane pane;
@@ -40,7 +33,7 @@ public class SupplierController {
         supplier.setSupplierName(supplierName.getText());
         supplier.setSupplierAddress(supplierAddress.getText());
         supplier.setSupplierContact(supplierContact.getText());
-        supplier.setSupplierCategory(supplierCategory.getText());
+        supplier.setSupplierCategory(supplierEmail.getText());
         supplier.setPanNo(Double.valueOf(supplierPanNo.getText()));
 
         supplierImplement = new SupplierImplement();
