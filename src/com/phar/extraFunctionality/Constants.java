@@ -6,6 +6,8 @@ package com.phar.extraFunctionality;
 public class Constants {
     static final public String[] productCategoryList = {"General", "Essential", "Narcotic", "Cosmetic"};
     static final public String[] yesNo = {"Yes", "No"};
-    static final public String supplierIDGenQuery = "SELECT * FROM idGen";
-    static final public String supplierIDUpdateQuery = "UPDATE idGen SET supplierIdGenerator ";
+    static final public String supplierIDGenQuery = "SELECT value FROM idGen WHERE ofID = 'supplierIdGen'";
+    static final public String supplierIDUpdateQuery = "UPDATE idGen SET value ='";
+    static final public String getSupplierIDUpdateQueryBack = "' WHERE ofID = 'supplierIdGen'";
+
 }
