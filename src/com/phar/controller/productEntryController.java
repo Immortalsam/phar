@@ -52,7 +52,5 @@ public class productEntryController implements Initializable {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-
-
     }
 }
