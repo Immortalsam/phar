@@ -99,11 +99,9 @@ public class PurchaseTableController implements Initializable {
 
     private ObservableList<Product> productList;
 
-
     //For Adding Product
     @FXML
     private TextField sId, pId, pName, pQuantity, pComposition, mDate, eDate, cPrice, sPrice, bNo, pBatch, pTax;
-
 
     @FXML
     private DatePicker pDate;
@@ -139,7 +137,6 @@ public class PurchaseTableController implements Initializable {
         p.setProductSellPrice(Float.valueOf(sPrice.getText()));
         p.setProductPurchaseDate(pDate.getValue().toString());
         p.setPurchaseTax(Integer.valueOf(pTax.getText()));
-
 
         ObvProductList.add(p);
 
@@ -255,12 +252,8 @@ public class PurchaseTableController implements Initializable {
         {
             e.printStackTrace();
         }
-        supplierSearchComboBox.getItems().
-
-                addAll(supplierList);
-        supplierSearchComboBox.valueProperty().
-
-                addListener(new ChangeListener() {
+        supplierSearchComboBox.getItems().addAll(supplierList);
+        supplierSearchComboBox.valueProperty().addListener(new ChangeListener() {
                     @Override
                     public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                         String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + supplierSearchComboBox.getValue() + "'";
@@ -319,7 +312,6 @@ public class PurchaseTableController implements Initializable {
         CustomAlert alert = new CustomAlert("Insert to database Info", "Save successful");
         alert.withoutHeader();
     }
-
 
     protected void updateText(Label label, ObservableList<? extends String> list) {
         final StringBuilder sb = new StringBuilder();

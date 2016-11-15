@@ -18,7 +18,6 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
         primaryStage.setTitle("Admin Login");
-
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -31,8 +30,3 @@ public class Main extends Application {
         launch(args);
     }
 }
-
-
-
-
-
