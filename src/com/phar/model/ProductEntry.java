@@ -6,6 +6,7 @@ package com.phar.model;
 
 public class ProductEntry {
 
+    private String fisalYear;
     private String productId;
     private String supplierId;
     private String productName;
@@ -18,7 +19,7 @@ public class ProductEntry {
     private float productAmount;
     private float productMrp;
     private String todayDate;
-    private int billNo;
+    private String billNo;
     private String productVat;
     private String productCashCredit;
 
@@ -95,10 +96,6 @@ public class ProductEntry {
         this.productQuantity = productQuantity;
     }
 
-    public float getProductAmount() {
-        return productAmount;
-    }
-
     public void setProductAmount(float productAmount) {
         this.productAmount = productAmount;
     }
@@ -135,11 +132,15 @@ public class ProductEntry {
         this.todayDate = todayDate;
     }
 
-    public int getBillNo() {
+    public String getBillNo() {
         return billNo;
     }
 
-    public void setBillNo(int billNo) {
+    public void setBillNo(String billNo) {
         this.billNo = billNo;
     }
+
+    public String getFisalYear() { return fisalYear;}
+
+    public void setFisalYear(String fisalYear) { this.fisalYear = fisalYear; }
 }

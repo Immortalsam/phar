@@ -29,24 +29,25 @@ public class ProductEntryImplement implements ProductEntryInterface {
     @Override
     public boolean addProduct(ProductEntry product) {
         this.product = product;
-        String addQuery = "INSERT into new_purchase_entry (product_id , supplier_id, product_name, product_batch, " +
-                "product_expdate, product_cccharge, product_qufor, product_rate, product_quantity, product_mrp, product_todaydate, cash_or_credit, product_vat, product_billno) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String addQuery = "INSERT into new_purchase_entry (fiscal_year, product_id , supplier_id, product_name, product_batch, " +
+                "product_expdate, product_cccharge, product_qufor, product_rate, product_quantity, product_mrp, product_todaydate, cash_or_credit, product_vat, product_billno) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try{
             PreparedStatement preparedStatement = conn.prepareStatement(addQuery);
-            preparedStatement.setString(1, product.getProductId());
-            preparedStatement.setString(2, product.getSupplierId());
-            preparedStatement.setString(3, product.getProductName());
-            preparedStatement.setString(4, product.getProductBatch());
-            preparedStatement.setString(5, product.getProductExpDate());
-            preparedStatement.setFloat(6, product.getProductCcCharge());
-            preparedStatement.setInt(7, product.getProductQuFoR());
-            preparedStatement.setFloat(8, product.getProductRate());
-            preparedStatement.setInt(9, product.getProductQuantity());
+            preparedStatement.setString(1,product.getFisalYear());
+            preparedStatement.setString(2, product.getProductId());
+            preparedStatement.setString(3, product.getSupplierId());
+            preparedStatement.setString(4, product.getProductName());
+            preparedStatement.setString(5, product.getProductBatch());
+            preparedStatement.setString(6, product.getProductExpDate());
+            preparedStatement.setFloat(7, product.getProductCcCharge());
+            preparedStatement.setInt(8, product.getProductQuFoR());
+            preparedStatement.setFloat(9, product.getProductRate());
+            preparedStatement.setInt(10, product.getProductQuantity());
             preparedStatement.setFloat(11, product.getProductMrp());
             preparedStatement.setString(12, product.getTodayDate());
             preparedStatement.setString(13, product.getProductCashCredit());
             preparedStatement.setString(14, product.getProductVat());
-            preparedStatement.setInt(15,product.getBillNo());
+            preparedStatement.setString(15,product.getBillNo());
             preparedStatement.executeUpdate();
             return true;
         }catch (SQLException e){

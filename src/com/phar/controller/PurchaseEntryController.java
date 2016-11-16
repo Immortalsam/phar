@@ -3,20 +3,24 @@ package com.phar.controller;
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CustomComboBox;
+import com.phar.extraFunctionality.DateFormatter;
 import com.phar.model.ProductEntry;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
+import java.security.Key;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -63,19 +67,7 @@ public class PurchaseEntryController implements Initializable {
     private ComboBox vat;
 
     @FXML
-    private TableColumn<ProductEntry, String> supplierId;
-
-    @FXML
-    private TableColumn<ProductEntry, String> productId;
-
-    @FXML
-    private TableColumn<ProductEntry, String> productName;
-
-    @FXML
-    private TableColumn<ProductEntry, String> productBatch;
-
-    @FXML
-    private TableColumn<ProductEntry, String> productExpDate;
+    private TableColumn<ProductEntry, String> supplierId, productId, productName, productBatch, productExpDate;
 
     @FXML
     private TableColumn<ProductEntry, Float> productCcharge;
@@ -98,7 +90,7 @@ public class PurchaseEntryController implements Initializable {
     // For adding
 
     @FXML
-    private TextField sid, pid, pname, pbatch, pexpdate, pcccharge, pqufor, prate, pquantity, pamount, pmrp, bNo;
+    private TextField sid, pid, pname, pbatch, pexpdate, pcccharge, pqufor, prate, pquantity, fisYear, pmrp, bNo;
 
     @FXML
     private TextField total;
@@ -119,6 +111,7 @@ public class PurchaseEntryController implements Initializable {
     private void addButton(ActionEvent e) {
 
         ProductEntry p = new ProductEntry();
+        p.setFisalYear(fisYear.getText());
         p.setSupplierId(sid.getText());
         p.setProductId(pid.getText());
         p.setProductName(pname.getText());
@@ -130,7 +123,7 @@ public class PurchaseEntryController implements Initializable {
         p.setProductQuantity(Integer.valueOf(pquantity.getText()));
         p.setProductAmount(Float.valueOf(prate.getText()) * Float.valueOf(pquantity.getText()));
         p.setTodayDate(purchaseDate.getValue().toString());
-        p.setBillNo(Integer.valueOf(bNo.getText()));
+        p.setBillNo(bNo.getText());
         p.setProductCashCredit(cashCredit.getValue().toString());
         p.setProductVat(vat.getValue().toString());
         p.setProductMrp(Float.valueOf(pmrp.getText()));
@@ -151,15 +144,17 @@ public class PurchaseEntryController implements Initializable {
 
         float totalValue = Float.valueOf(prate.getText()) * Float.valueOf(pquantity.getText());
 
-
         //loop
         getAmountValue.add(totalValue);
         newTotalValue += totalValue;
         total.setText(String.valueOf(newTotalValue));
-
+        netTotal.setText(String.valueOf(newTotalValue));
         discount.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (discount.getText() == null || discount.getText().trim().isEmpty()) {
+                    netTotal.setText(String.valueOf(newTotalValue));
+                }
                 float dis = Float.valueOf(discount.getText());
                 newDiscountAmount = newTotalValue - dis;
                 //discount
@@ -182,6 +177,10 @@ public class PurchaseEntryController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        DateFormatter.dateFormatterForDatePicker(purchaseDate);
+        purchaseDate.setValue(DateFormatter.NOW_LOCAL_DATE());
+
         new CustomComboBox<>(supplierSearchName);
         try
         {
@@ -231,25 +230,26 @@ public class PurchaseEntryController implements Initializable {
     @FXML
     void saveToDatabase(ActionEvent event) throws SQLException {
 
-        String insertQuery = "INSERT INTO new_purchase_entry VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO new_purchase_entry VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         for (ProductEntry p : productList) {
             PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
-            preparedStatement.setString(1, p.getProductId());
-            preparedStatement.setString(2, p.getSupplierId());
-            preparedStatement.setString(3, p.getProductName());
-            preparedStatement.setString(4, p.getProductBatch());
-            preparedStatement.setString(5, p.getProductExpDate());
-            preparedStatement.setFloat(6, p.getProductCcCharge());
-            preparedStatement.setInt(7, p.getProductQuFoR());
-            preparedStatement.setFloat(8, p.getProductRate());
-            preparedStatement.setInt(9, p.getProductQuantity());
-            preparedStatement.setFloat(10, p.getProductMrp());
-            preparedStatement.setString(11, p.getTodayDate());
-            preparedStatement.setString(12, p.getProductCashCredit());
-            preparedStatement.setString(13, p.getProductVat());
-            preparedStatement.setInt(14, p.getBillNo());
+            preparedStatement.setString(1, p.getFisalYear());
+            preparedStatement.setString(2, p.getProductId());
+            preparedStatement.setString(3, p.getSupplierId());
+            preparedStatement.setString(4, p.getProductName());
+            preparedStatement.setString(5, p.getProductBatch());
+            preparedStatement.setString(6, p.getProductExpDate());
+            preparedStatement.setFloat(7, p.getProductCcCharge());
+            preparedStatement.setInt(8, p.getProductQuFoR());
+            preparedStatement.setFloat(9, p.getProductRate());
+            preparedStatement.setInt(10, p.getProductQuantity());
+            preparedStatement.setFloat(11, p.getProductMrp());
+            preparedStatement.setString(12, p.getTodayDate());
+            preparedStatement.setString(13, p.getProductCashCredit());
+            preparedStatement.setString(14, p.getProductVat());
+            preparedStatement.setString(15, p.getBillNo());
             preparedStatement.executeUpdate();
-            
+
         }
         supplierSearchName.setDisable(false);
         bNo.setDisable(false);

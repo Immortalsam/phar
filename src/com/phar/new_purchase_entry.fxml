@@ -17,7 +17,7 @@
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseEntryController">
    <children>
       <Label fx:id="fiscalYear" layoutX="26.0" layoutY="22.0" prefHeight="23.0" prefWidth="66.0" text="Fiscal Year:" />
-      <TextField layoutX="117.0" layoutY="21.0" prefHeight="25.0" prefWidth="132.0" />
+      <TextField fx:id="fisYear" layoutX="117.0" layoutY="21.0" prefHeight="25.0" prefWidth="132.0" text="2073/74" />
       <Label layoutX="1119.0" layoutY="41.0" text="Date: " />
       <DatePicker fx:id="purchaseDate" layoutX="1162.0" layoutY="34.0" />
       <Label layoutX="23.0" layoutY="104.0" text="Bill No:" />
@@ -87,9 +87,9 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <TextField fx:id="total" prefHeight="1.0" prefWidth="149.0" text="0.0" />
+            <TextField fx:id="total" editable="false" prefHeight="1.0" prefWidth="149.0" text="0.0" />
             <TextField fx:id="discount" text="0.0" GridPane.rowIndex="1" />
-            <TextField fx:id="netTotal" text="0.0" GridPane.rowIndex="2" />
+            <TextField fx:id="netTotal" editable="false" text="0.0" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <GridPane layoutX="24.0" layoutY="192.0">
@@ -106,7 +106,7 @@
       <TextField fx:id="pid" layoutX="117.0" layoutY="192.0" prefHeight="25.0" prefWidth="93.0" />
       <TextField fx:id="pname" layoutX="210.0" layoutY="192.0" prefHeight="25.0" prefWidth="218.0" />
       <TextField fx:id="pbatch" layoutX="428.0" layoutY="192.0" prefHeight="25.0" prefWidth="93.0" />
-      <TextField fx:id="pexpdate" layoutX="521.0" layoutY="192.0" prefHeight="25.0" prefWidth="132.0" />
+      <TextField fx:id="pexpdate" layoutX="521.0" layoutY="192.0" prefHeight="25.0" prefWidth="132.0" promptText="YYYY/MM" />
       <TextField fx:id="pcccharge" layoutX="653.0" layoutY="192.0" prefHeight="25.0" prefWidth="123.0" />
       <TextField fx:id="pqufor" layoutX="776.0" layoutY="192.0" prefHeight="25.0" prefWidth="106.0" />
       <TextField fx:id="prate" layoutX="882.0" layoutY="192.0" prefHeight="25.0" prefWidth="74.0" />

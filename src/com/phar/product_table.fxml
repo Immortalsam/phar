@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.ProductTableController">
+    <children>
+        <TableView fx:id="pDetailsTable" layoutX="65.0" layoutY="116.0" prefHeight="495.0" prefWidth="1227.0">
+            <columns>
+                <TableColumn fx:id="pid" prefWidth="125.00003051757812" text="Product Id" />
+                <TableColumn fx:id="companyname" minWidth="4.999969482421875" prefWidth="167.0" text="Company Name" />
+                <TableColumn fx:id="pname" prefWidth="146.0" text="Product Name" />
+                <TableColumn fx:id="compositionname" prefWidth="177.0" text="Composition Name " />
+                <TableColumn fx:id="mgroup" prefWidth="150.0" text="Medicine Group" />
+                <TableColumn fx:id="mcategory" prefWidth="157.0" text="Medicine Category" />
+                <TableColumn fx:id="noup" prefWidth="165.0" text="No. of Units/Pack " />
+                <TableColumn fx:id="pvat" prefWidth="138.0" text="VAT" />
+            </columns>
+        </TableView>
+        <TextField fx:id="searchDetails" layoutX="65.0" layoutY="57.0" prefHeight="25.0" prefWidth="336.0" promptText="Enter Search Criteria" />
+    </children>
+</AnchorPane>
