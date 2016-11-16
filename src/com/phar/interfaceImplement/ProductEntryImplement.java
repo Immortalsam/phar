@@ -30,7 +30,7 @@ public class ProductEntryImplement implements ProductEntryInterface {
     public boolean addProduct(ProductEntry product) {
         this.product = product;
         String addQuery = "INSERT into new_purchase_entry (product_id , supplier_id, product_name, product_batch, " +
-                "product_expdate, product_cccharge, product_qufor, product_rate, product_quantity, product_amount, product_mrp, product_todaydate, cash_or_credit, product_vat, product_billno) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                "product_expdate, product_cccharge, product_qufor, product_rate, product_quantity, product_mrp, product_todaydate, cash_or_credit, product_vat, product_billno) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try{
             PreparedStatement preparedStatement = conn.prepareStatement(addQuery);
             preparedStatement.setString(1, product.getProductId());
@@ -42,7 +42,6 @@ public class ProductEntryImplement implements ProductEntryInterface {
             preparedStatement.setInt(7, product.getProductQuFoR());
             preparedStatement.setFloat(8, product.getProductRate());
             preparedStatement.setInt(9, product.getProductQuantity());
-            preparedStatement.setFloat(10, product.getProductAmount());
             preparedStatement.setFloat(11, product.getProductMrp());
             preparedStatement.setString(12, product.getTodayDate());
             preparedStatement.setString(13, product.getProductCashCredit());
