@@ -68,34 +68,34 @@ public class SupplierTableController {
 
 
         public void searchSupplier(KeyEvent keyEvent){
-            FilteredList<Supplier> filteredList = new FilteredList<>(customerList, e -> true);
-            searchField.setOnKeyReleased(e ->{
-                searchField.textProperty().addListener((observedValue, oldValue, newValue) -> {
-                            filteredList.setPredicate((Predicate<? super Supplier>) supplier -> {
-                                if(newValue == null || newValue.isEmpty()){
-                                    return true;
-                                }
-                                String lowerCaseFilter = newValue.toLowerCase();
-                                if(supplier.getSupplierId().contains(newValue)){
-                                    return true;
-                                }
-                                else if(supplier.getSupplierName().toLowerCase().contains(lowerCaseFilter)){
-                                    return true;
-                                }
-                                else if(supplier.getSupplierAddress().toLowerCase().contains(lowerCaseFilter)){
-                                    return true;
-                                }
-                                else if(supplier.getSupplierCategory().toLowerCase().contains(lowerCaseFilter)){
-                                    return true;
-                                }
-                                return false;
-                            });
-                         });
-                SortedList<Supplier> sortedList = new SortedList<>(filteredList);
-                sortedList.comparatorProperty().bind(supplierTable.comparatorProperty());
-                supplierTable.setItems(sortedList);
+        FilteredList<Supplier> filteredList = new FilteredList<>(customerList, e -> true);
+        searchField.setOnKeyReleased(e ->{
+            searchField.textProperty().addListener((observedValue, oldValue, newValue) -> {
+                filteredList.setPredicate((Predicate<? super Supplier>) supplier -> {
+                    if(newValue == null || newValue.isEmpty()){
+                        return true;
+                    }
+                    String lowerCaseFilter = newValue.toLowerCase();
+                    if(supplier.getSupplierId().contains(newValue)){
+                        return true;
+                    }
+                    else if(supplier.getSupplierName().toLowerCase().contains(lowerCaseFilter)){
+                        return true;
+                    }
+                    else if(supplier.getSupplierAddress().toLowerCase().contains(lowerCaseFilter)){
+                        return true;
+                    }
+                    else if(supplier.getSupplierCategory().toLowerCase().contains(lowerCaseFilter)){
+                        return true;
+                    }
+                    return false;
+                });
             });
-        }
+            SortedList<Supplier> sortedList = new SortedList<>(filteredList);
+            sortedList.comparatorProperty().bind(supplierTable.comparatorProperty());
+            supplierTable.setItems(sortedList);
+        });
+    }
     }
 
 

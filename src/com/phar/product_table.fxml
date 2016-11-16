@@ -19,6 +19,6 @@
                 <TableColumn fx:id="pvat" prefWidth="138.0" text="VAT" />
             </columns>
         </TableView>
-        <TextField fx:id="searchDetails" layoutX="65.0" layoutY="57.0" prefHeight="25.0" prefWidth="336.0" promptText="Enter Search Criteria" />
+        <TextField fx:id="searchDetails" layoutX="65.0" layoutY="57.0" onKeyReleased="#searchProductDetails" prefHeight="25.0" prefWidth="336.0" promptText="Enter Search Criteria" />
     </children>
 </AnchorPane>

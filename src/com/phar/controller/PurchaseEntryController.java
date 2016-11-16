@@ -12,12 +12,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -216,6 +221,19 @@ public class PurchaseEntryController implements Initializable {
                 if (!newValue.matches("\\d*")) {
                     pid.setText(newValue.replaceAll("[^\\d]", ""));
                 }
+            }
+        });
+
+        pname.setOnMouseClicked( event -> {
+            try{
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/phar/product_table.fxml"));
+                Parent root1 = (Parent) fxmlLoader.load();
+                Stage stage1 = new Stage();
+                stage1.setTitle("Product Details");
+                stage1.setScene(new Scene(root1));
+                stage1.show();
+            }catch (IOException e){
+                e.printStackTrace();
             }
         });
     }
