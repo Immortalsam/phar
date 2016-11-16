@@ -35,8 +35,9 @@ public class PurchaseEntryController implements Initializable {
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
     private List<String> supplierList = new ArrayList<String>();
-    private ObservableList<ProductEntry> productList = FXCollections.observableArrayList();
     private List<Float> getAmountValue = new ArrayList<>();
+    private ObservableList<ProductEntry> productList = FXCollections.observableArrayList();
+
     private float newTotalValue = 0;
     private float newDiscountAmount = 0;
 

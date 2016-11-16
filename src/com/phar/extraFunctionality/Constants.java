@@ -9,5 +9,9 @@ public class Constants {
     static final public String supplierIDGenQuery = "SELECT value FROM idGen WHERE ofID = 'supplierIdGen'";
     static final public String supplierIDUpdateQuery = "UPDATE idGen SET value ='";
     static final public String getSupplierIDUpdateQueryBack = "' WHERE ofID = 'supplierIdGen'";
+    static final public String productIDGenQuery = "SELECT value FROM idGen WHERE ofID = 'productIdGen'";
+    static final public String productIDUpdateQuery = "UPDATE idGen SET value ='";
+    static final public String getProductIDUpdateQueryBack = "' WHERE ofID = 'productIdGen'";
+    static final public String addNewProduct = "INSERT INTO new_product_entry VALUES (?,?,?,?,?,?,?,?)";
 
 }
