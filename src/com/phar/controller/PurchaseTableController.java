@@ -2,6 +2,7 @@ package com.phar.controller;
 
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
+import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DateFormatter;
 import com.phar.model.Product;
@@ -310,17 +311,8 @@ public class PurchaseTableController implements Initializable {
     }
 
     protected void updateText(Label label, ObservableList<? extends String> list) {
-        final StringBuilder sb = new StringBuilder();
-
-        if (list != null) {
-            for (int i = 0, max = list.size(); i < max; i++) {
-                sb.append(list.get(i));
-                if (i < max - 1) {
-                    sb.append(", ");
-                }
-            }
-        }
-
+        StringBuilder sb = new StringBuilder();
+        sb = CFunctions.duplicateCodeOne(sb,label,list);
         final String str = sb.toString();
         label.setText(str.isEmpty() ? "<empty>" : str);
     }

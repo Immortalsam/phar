@@ -2,6 +2,7 @@ package com.phar.controller;
 
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
+import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.Constants;
 import com.phar.extraFunctionality.CustomComboBox;
 import javafx.collections.FXCollections;
@@ -57,21 +58,30 @@ public class ProductEntryController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        //to generate product group list
         new CustomComboBox<>(newProductGroup);
+        //to generate company name list
         new CustomComboBox<>(newCompanyName);
 
-
+        //make product id uneditable
         newProductId.setEditable(false);
+
+        //generate dummy list on the composition
         for (int i = 1; i <= 5; i++) {
             strings.add("Composition No " + i);
         }
-        // newGenericComposition = new CheckComboBox<String>(strings);
+
+
         newProductCategory.getItems().addAll(Constants.productCategoryList);
         newProductCategory.setValue(Constants.productCategoryList[0]);
         newProductVat.getItems().addAll(Constants.yesNo);
         newProductVat.setValue(Constants.yesNo[1]);
+
+        //Check box and List on Composition Combox Box
         newGenericComposition = new CheckComboBox<String>(strings);
+        //Place CheckComboBox on Grid
         newGenericCompGrid.add(newGenericComposition, 0, 0);
+        //Code for Generating List of clicked items from the list of ComboBox
         newGenericComposition.getCheckModel().getCheckedItems().
                 addListener(new ListChangeListener<String>() {
                     @Override
@@ -90,12 +100,6 @@ public class ProductEntryController implements Initializable {
         selectDatabase();
         productIDIncrement = Integer.valueOf(productIDValueNow.substring(3, productIDValueNow.length()));
         System.out.println(productIDIncrement);
-        productIDIncrement++;
-        System.out.println(productIDIncrement);
-        String newQuery = Constants.productIDUpdateQuery + "PID" + productIDIncrement + Constants.getProductIDUpdateQueryBack;
-        System.out.println(newQuery);
-        updatePID();
-        selectDatabase();
         newProductId.setText(productIDValueNow);
 
         String sql = "SELECT company_name FROM new_product_entry";
@@ -131,6 +135,7 @@ public class ProductEntryController implements Initializable {
         try {
             preparedStatement = connection.prepareStatement(newQuery);
             preparedStatement.executeUpdate();
+            preparedStatement.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -170,18 +175,16 @@ public class ProductEntryController implements Initializable {
                 ((CheckComboBox) node).getItems().clear();
             }
         }
+        productIDIncrement++;
+        System.out.println(productIDIncrement);
+        updatePID();
+        selectDatabase();
         newProductId.setText(productIDValueNow);
     }
 
     protected void updateText(Label label, ObservableList<? extends String> list) {
-        final StringBuilder stringBuilder = new StringBuilder();
-        if (list != null) {
-            for (int i = 0, max = list.size(); i < max; i++) {
-                stringBuilder.append(list.get(i));
-                if (i < max - 1) {
-                    stringBuilder.append(", ");
-                }
-            }
-        }
+        StringBuilder sb = new StringBuilder();
+        sb = CFunctions.duplicateCodeOne(sb,label,list);
+
     }
 }

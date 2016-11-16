@@ -1,7 +1,7 @@
 package com.phar.extraFunctionality;
 
-import javafx.scene.Node;
-import javafx.scene.control.TextField;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 
 import java.util.prefs.Preferences;
 
@@ -19,4 +19,17 @@ public class CFunctions {
 //    public String getSession(String key) {
 //        return session.get(key, "");
 //    }
+
+    public static final StringBuilder duplicateCodeOne(StringBuilder strBuilder, Label label, ObservableList<? extends String> list) {
+        final StringBuilder stringBuilder = strBuilder;
+        if (list != null) {
+            for (int i = 0, max = list.size(); i < max; i++) {
+                stringBuilder.append(list.get(i));
+                if (i < max - 1) {
+                    stringBuilder.append(", ");
+                }
+            }
+        }
+        return stringBuilder;
+    }
 }
