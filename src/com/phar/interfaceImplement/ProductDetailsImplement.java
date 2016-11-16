@@ -5,10 +5,7 @@ import com.phar.model.ProductDetails;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 /**
  * Created by Sam on 11/16/2016.
@@ -23,8 +20,8 @@ public class ProductDetailsImplement implements ProductDetailInterface {
         ObservableList<ProductDetails> productDetails = FXCollections.observableArrayList();
 
         String query = "SELECT * from new_product_entry";
-        try (Statement stat = this.connection.createStatement()) {
-            ResultSet res = stat.executeQuery(query);
+        try (PreparedStatement stat = this.connection.prepareCall(query)) {
+            ResultSet res = stat.executeQuery();
 
             while (res.next()) {
                 ProductDetails pd = new ProductDetails();
