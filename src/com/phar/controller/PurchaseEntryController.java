@@ -248,6 +248,7 @@ public class PurchaseEntryController implements Initializable {
             preparedStatement.setString(13, p.getProductVat());
             preparedStatement.setInt(14, p.getBillNo());
             preparedStatement.executeUpdate();
+            
         }
         supplierSearchName.setDisable(false);
         bNo.setDisable(false);
