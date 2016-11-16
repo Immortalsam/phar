@@ -164,7 +164,7 @@ public class ProductEntryController implements Initializable {
         CustomAlert customAlert = new CustomAlert("Success", "Your Data is Saved!");
         customAlert.withoutHeader();
 
-        //Clearing All TextField
+        //Clearing
         for (Node node : anchorPane.getChildren()
                 ) {
             if (node instanceof TextField) {
@@ -187,6 +187,5 @@ public class ProductEntryController implements Initializable {
     protected void updateText(Label label, ObservableList<? extends String> list) {
         StringBuilder sb = new StringBuilder();
         sb = CFunctions.updateTextCheckComboBox(sb, label, list);
-
     }
 }

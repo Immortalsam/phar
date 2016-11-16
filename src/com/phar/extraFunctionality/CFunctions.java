@@ -2,7 +2,12 @@ package com.phar.extraFunctionality;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.prefs.Preferences;
 
 /**
@@ -31,5 +36,16 @@ public class CFunctions {
             }
         }
         return stringBuilder;
+    }
+
+    public static ResultSet simpleSelectQuery(PreparedStatement preparedStatement, Connection connection, String query, ResultSet resultSet) {
+        try {
+            preparedStatement = connection.prepareStatement(query);
+            resultSet = preparedStatement.executeQuery();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
     }
 }

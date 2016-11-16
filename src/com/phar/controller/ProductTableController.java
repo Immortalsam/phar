@@ -1,5 +1,6 @@
 package com.phar.controller;
 
+import com.phar.database.DatabaseConnection;
 import com.phar.interfaceImplement.ProductDetailsImplement;
 import com.phar.model.ProductDetails;
 import com.phar.model.Supplier;
@@ -13,12 +14,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 /**
  * Created by Sam on 11/16/2016.
  */
 public class ProductTableController{
+    private Connection connection;
 
     @FXML
     private TableView<ProductDetails> pDetailsTable;
@@ -58,9 +62,10 @@ public class ProductTableController{
     }
 
     @FXML
-    private void initialize() {
+    private void initialize() throws SQLException, ClassNotFoundException {
+        connection = DatabaseConnection.getConnection();
         ProductDetailsImplement productDetailsImplement = new ProductDetailsImplement();
-        productList = productDetailsImplement.listSupplier();
+        productList = productDetailsImplement.listSupplier(connection);
         pid.setCellValueFactory(new PropertyValueFactory<ProductDetails, String>("productId"));
         companyname.setCellValueFactory(new PropertyValueFactory<ProductDetails, String>("companyName"));
         pname.setCellValueFactory(new PropertyValueFactory<ProductDetails, String>("productName"));

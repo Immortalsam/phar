@@ -2,6 +2,7 @@ package com.phar.controller;
 
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
+import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DateFormatter;
 import com.phar.model.ProductEntry;
@@ -10,17 +11,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
-import java.security.Key;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,7 +33,7 @@ import java.util.ResourceBundle;
 
 public class PurchaseEntryController implements Initializable {
 
-    Connection conn;
+    private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
     private List<String> supplierList = new ArrayList<String>();
@@ -58,7 +56,7 @@ public class PurchaseEntryController implements Initializable {
     private DatePicker purchaseDate;
 
     @FXML
-    private ComboBox supplierSearchName;
+    private ComboBox<String> supplierSearchName;
 
     @FXML
     private ComboBox cashCredit;
@@ -182,38 +180,34 @@ public class PurchaseEntryController implements Initializable {
         purchaseDate.setValue(DateFormatter.NOW_LOCAL_DATE());
 
         new CustomComboBox<>(supplierSearchName);
-        try
-        {
-            conn = DatabaseConnection.getConnection();
-            String selectQuery = "SELECT supplier_name FROM supplier";
-            preparedStatement = conn.prepareStatement(selectQuery);
-            resultSet = preparedStatement.executeQuery();
+        try {
+            connection = DatabaseConnection.getConnection();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
+        String selectQuery = "SELECT supplier_name FROM supplier";
+        resultSet = CFunctions.simpleSelectQuery(preparedStatement, connection, selectQuery, resultSet);
+        try {
             while (resultSet.next()) {
                 supplierList.add(resultSet.getString("supplier_name"));
             }
-        } catch (ClassNotFoundException |
-                SQLException e)
-
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        supplierSearchName.getItems().addAll(supplierList);
-        supplierSearchName.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + supplierSearchName.getValue() + "'";
-                System.out.println(idQuery);
-                try {
-                    preparedStatement = conn.prepareStatement(idQuery);
-                    resultSet = preparedStatement.executeQuery();
-                    while (resultSet.next()) {
-                        sid.setText(resultSet.getString("supplier_id"));
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
 
+        supplierSearchName.getItems().addAll(supplierList);
+        supplierSearchName.valueProperty().addListener((observable, oldValue, newValue) -> {
+            String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + supplierSearchName.getValue() + "'";
+            System.out.println(idQuery);
+            resultSet = CFunctions.simpleSelectQuery(preparedStatement, connection, idQuery, resultSet);
+            try {
+                while (resultSet.next()){
+                    sid.setText(resultSet.getString("supplier_id"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
+
         });
 
         pid.textProperty().addListener(new ChangeListener<String>() {
@@ -232,7 +226,7 @@ public class PurchaseEntryController implements Initializable {
 
         String insertQuery = "INSERT INTO new_purchase_entry VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         for (ProductEntry p : productList) {
-            PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
+            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
             preparedStatement.setString(1, p.getFisalYear());
             preparedStatement.setString(2, p.getProductId());
             preparedStatement.setString(3, p.getSupplierId());

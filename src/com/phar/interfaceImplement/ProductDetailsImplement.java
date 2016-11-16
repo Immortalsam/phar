@@ -15,18 +15,18 @@ import java.sql.Statement;
  */
 public class ProductDetailsImplement implements ProductDetailInterface {
 
-    static Connection conn;
+    private Connection connection;
 
     @Override
-    public ObservableList<ProductDetails> listSupplier() {
-
+    public ObservableList<ProductDetails> listSupplier(Connection connection) {
+        this.connection = connection;
         ObservableList<ProductDetails> productDetails = FXCollections.observableArrayList();
 
         String query = "SELECT * from new_product_entry";
-        try(Statement stat = conn.createStatement()){
+        try (Statement stat = this.connection.createStatement()) {
             ResultSet res = stat.executeQuery(query);
 
-            while(res.next()){
+            while (res.next()) {
                 ProductDetails pd = new ProductDetails();
                 pd.setProductId(res.getString("product_id"));
                 pd.setProductName(res.getString("product_name"));
@@ -40,7 +40,7 @@ public class ProductDetailsImplement implements ProductDetailInterface {
                 productDetails.add(pd);
             }
 
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return productDetails;
