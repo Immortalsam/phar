@@ -46,8 +46,6 @@ public class PurchaseTableController implements Initializable {
 
     private ObservableList<Product> ObvProductList = FXCollections.observableArrayList();
 
-    private CheckComboBox<String> itemListComboBox;
-
     @FXML
     private Button saveDb;
 
@@ -118,7 +116,6 @@ public class PurchaseTableController implements Initializable {
     public PurchaseTableController() throws SQLException, ClassNotFoundException {
 
     }
-
     private final Label checkedItemsLabel = new Label();
 
     @FXML
@@ -212,7 +209,7 @@ public class PurchaseTableController implements Initializable {
 
         }
 
-        itemListComboBox = new CheckComboBox<String>(strings);
+        CheckComboBox<String> itemListComboBox = new CheckComboBox<String>(strings);
         gridd.add(itemListComboBox, 0, 0);
 
         itemListComboBox.getCheckModel().getCheckedItems().

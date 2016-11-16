@@ -37,7 +37,6 @@ public class ProductEntryController implements Initializable {
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    private CheckComboBox<String> newGenericComposition;
     private final ObservableList<String> compositionDropDownList = FXCollections.observableArrayList();
     private String supplierIDValueNow, productIDValueNow;
     private Integer supplierIDIncrement, productIDIncrement;
@@ -80,7 +79,7 @@ public class ProductEntryController implements Initializable {
         newProductVat.setValue(Constants.yesNo[1]);
 
         //Check box and List on Composition Combox Box
-        newGenericComposition = new CheckComboBox<String>(compositionDropDownList);
+        CheckComboBox<String> newGenericComposition = new CheckComboBox<String>(compositionDropDownList);
         //Place CheckComboBox on Grid
         newGenericCompGrid.add(newGenericComposition, 0, 0);
         //Code for Generating List of clicked items from the list of ComboBox
