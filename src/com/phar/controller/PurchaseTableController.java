@@ -312,7 +312,7 @@ public class PurchaseTableController implements Initializable {
 
     protected void updateText(Label label, ObservableList<? extends String> list) {
         StringBuilder sb = new StringBuilder();
-        sb = CFunctions.duplicateCodeOne(sb,label,list);
+        sb = CFunctions.updateTextCheckComboBox(sb,label,list);
         final String str = sb.toString();
         label.setText(str.isEmpty() ? "<empty>" : str);
     }

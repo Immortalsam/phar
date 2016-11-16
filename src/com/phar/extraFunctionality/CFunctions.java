@@ -20,7 +20,7 @@ public class CFunctions {
 //        return session.get(key, "");
 //    }
 
-    public static final StringBuilder duplicateCodeOne(StringBuilder strBuilder, Label label, ObservableList<? extends String> list) {
+    public static final StringBuilder updateTextCheckComboBox(StringBuilder strBuilder, Label label, ObservableList<? extends String> list) {
         final StringBuilder stringBuilder = strBuilder;
         if (list != null) {
             for (int i = 0, max = list.size(); i < max; i++) {

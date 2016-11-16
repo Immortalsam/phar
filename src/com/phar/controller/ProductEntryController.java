@@ -34,13 +34,13 @@ import java.util.ResourceBundle;
  */
 public class ProductEntryController implements Initializable {
 
-    Connection connection;
-    PreparedStatement preparedStatement;
-    ResultSet resultSet;
-    CheckComboBox<String> newGenericComposition;
-    private final ObservableList<String> strings = FXCollections.observableArrayList();
-    String supplierIDValueNow, productIDValueNow;
-    Integer supplierIDIncrement, productIDIncrement;
+    private Connection connection;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
+    private CheckComboBox<String> newGenericComposition;
+    private final ObservableList<String> compositionDropDownList = FXCollections.observableArrayList();
+    private String supplierIDValueNow, productIDValueNow;
+    private Integer supplierIDIncrement, productIDIncrement;
 
     private List<String> forNewCompanyNameList = new ArrayList<String>();
 
@@ -51,7 +51,9 @@ public class ProductEntryController implements Initializable {
     @FXML
     private GridPane newGenericCompGrid;
     @FXML
-    private ComboBox newProductGroup, newCompanyName, newProductVat, newProductCategory;
+    private ComboBox newProductGroup;
+    @FXML
+    private ComboBox<String> newCompanyName, newProductVat, newProductCategory;
     @FXML
     private TextField newProductId, newProductName, newNumberOfPackPerUnit;
 
@@ -68,7 +70,7 @@ public class ProductEntryController implements Initializable {
 
         //generate dummy list on the composition
         for (int i = 1; i <= 5; i++) {
-            strings.add("Composition No " + i);
+            compositionDropDownList.add("Composition No " + i);
         }
 
 
@@ -78,7 +80,7 @@ public class ProductEntryController implements Initializable {
         newProductVat.setValue(Constants.yesNo[1]);
 
         //Check box and List on Composition Combox Box
-        newGenericComposition = new CheckComboBox<String>(strings);
+        newGenericComposition = new CheckComboBox<String>(compositionDropDownList);
         //Place CheckComboBox on Grid
         newGenericCompGrid.add(newGenericComposition, 0, 0);
         //Code for Generating List of clicked items from the list of ComboBox
@@ -184,7 +186,7 @@ public class ProductEntryController implements Initializable {
 
     protected void updateText(Label label, ObservableList<? extends String> list) {
         StringBuilder sb = new StringBuilder();
-        sb = CFunctions.duplicateCodeOne(sb,label,list);
+        sb = CFunctions.updateTextCheckComboBox(sb, label, list);
 
     }
 }
