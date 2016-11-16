@@ -3,6 +3,7 @@ package com.phar.controller;
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CFunctions;
+import com.phar.extraFunctionality.Constants;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DateFormatter;
 import com.phar.model.Product;
@@ -36,7 +37,7 @@ import java.util.ResourceBundle;
 public class PurchaseTableController implements Initializable {
 
 
-    Connection connection;
+    private Connection connection;
 
     private List<String> supplierList = new ArrayList<String>();
     private List<String> completeProductList = new ArrayList<String>();
@@ -45,7 +46,7 @@ public class PurchaseTableController implements Initializable {
 
     private ObservableList<Product> ObvProductList = FXCollections.observableArrayList();
 
-    private CheckComboBox itemListComboBox;
+    private CheckComboBox<String> itemListComboBox;
 
     @FXML
     private Button saveDb;
@@ -54,7 +55,7 @@ public class PurchaseTableController implements Initializable {
     private AnchorPane anchorPane;
 
     @FXML
-    private ComboBox supplierSearchComboBox;
+    private ComboBox<String> supplierSearchComboBox;
 
     @FXML
     private TableView<Product> purchaseTable;
@@ -129,7 +130,6 @@ public class PurchaseTableController implements Initializable {
         p.setBillNo(Integer.valueOf(bNo.getText()));
         p.setProductName(pName.getText());
         p.setProductQuantity(Integer.valueOf(pQuantity.getText()));
-//        p.setProductComposition(pComposition.getText());
         p.setProductComposition(compositionLabel.getText());
         p.setProductBatchNo(Integer.valueOf(pBatch.getText()));
         p.setProductMfdDate(mDate.getText());
@@ -171,29 +171,35 @@ public class PurchaseTableController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        try {
+            connection = DatabaseConnection.getConnection();
+        } catch (ClassNotFoundException | SQLException e) {
+            e.printStackTrace();
+        }
 
         mDate.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!mDate.getText().contains("/")) {
-                    if (mDate.getText().length() == 4) {
-                        mDate.setText(mDate.getText().concat("/"));
-
-                    }
-                }
+//                if (!mDate.getText().contains("/")) {
+//                    if (mDate.getText().length() == 4) {
+//                        mDate.setText(mDate.getText().concat("/"));
+//
+//                    }
+//                }
+                dateMasking(mDate);
             }
         });
 
         eDate.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!eDate.getText().contains("/")) {
-                    if (eDate.getText().length() == 4) {
-                        eDate.setText(eDate.getText().concat("/"));
-
-                    }
-                }
+//                if (!eDate.getText().contains("/")) {
+//                    if (eDate.getText().length() == 4) {
+//                        eDate.setText(eDate.getText().concat("/"));
+//
+//                    }
+//                }
+                dateMasking(eDate);
             }
         });
 
@@ -232,62 +238,45 @@ public class PurchaseTableController implements Initializable {
 
         DateFormatter.dateFormatterForDatePicker(pDate);
         pDate.setValue(DateFormatter.NOW_LOCAL_DATE());
-
-        try
-
-        {
-            connection = DatabaseConnection.getConnection();
-            String selectQuery = "SELECT supplier_name FROM supplier";
-            preparedStatement = connection.prepareStatement(selectQuery);
-            resultSet = preparedStatement.executeQuery();
+        resultSet = CFunctions.executeQuery(preparedStatement, connection, Constants.selectSupplierFromSupplier, resultSet);
+        try {
             while (resultSet.next()) {
                 supplierList.add(resultSet.getString("supplier_name"));
             }
-        } catch (ClassNotFoundException |
-                SQLException e)
-
-        {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        supplierSearchComboBox.getItems().addAll(supplierList);
-        supplierSearchComboBox.valueProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + supplierSearchComboBox.getValue() + "'";
-                System.out.println(idQuery);
-                try {
-                    preparedStatement = connection.prepareStatement(idQuery);
-                    resultSet = preparedStatement.executeQuery();
-                    while (resultSet.next()) {
-                        sId.setText(resultSet.getString("supplier_id"));
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
 
+        supplierSearchComboBox.getItems().addAll(supplierList);
+        supplierSearchComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            System.out.println(Constants.selectSupplierIDFromSupplierWhereSupplierName + supplierSearchComboBox.getValue() + "'");
+            try {
+                resultSet = CFunctions.executeQuery(preparedStatement, connection, Constants.selectSupplierIDFromSupplierWhereSupplierName + supplierSearchComboBox.getValue() + "'", resultSet);
+                while (resultSet.next()) {
+                    sId.setText(resultSet.getString("supplier_id"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         });
 
         pId.textProperty().
-
                 addListener(new ChangeListener<String>() {
                     @Override
                     public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                         if (!newValue.matches("\\d*")) {
                             pId.setText(newValue.replaceAll("[^\\d]", ""));
                         }
-
                     }
                 });
 
     }
 
     public void saveToDatabase(ActionEvent event) throws SQLException {
-        String insertQuery = "INSERT INTO product_from_supplier VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         for (Product p : ObvProductList
                 ) {
-            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-            preparedStatement.setString(1, p.getSellerID().toString());
+            PreparedStatement preparedStatement = connection.prepareStatement(Constants.insertToProductFromSupplier);
+            preparedStatement.setString(1, p.getSellerID());
             preparedStatement.setInt(2, p.getProductId());
             preparedStatement.setString(3, p.getProductName());
             preparedStatement.setInt(4, p.getProductQuantity());
@@ -310,11 +299,19 @@ public class PurchaseTableController implements Initializable {
         alert.withoutHeader();
     }
 
-    protected void updateText(Label label, ObservableList<? extends String> list) {
+    private void updateText(Label label, ObservableList<? extends String> list) {
         StringBuilder sb = new StringBuilder();
-        sb = CFunctions.updateTextCheckComboBox(sb,label,list);
+        sb = CFunctions.updateTextCheckComboBox(sb, label, list);
         final String str = sb.toString();
         label.setText(str.isEmpty() ? "<empty>" : str);
+    }
+
+    private void dateMasking(TextField textField){
+        if (!textField.getText().contains("/")) {
+            if (textField.getText().length() == 4) {
+                textField.setText(textField.getText().concat("/"));
+            }
+        }
     }
 
 }

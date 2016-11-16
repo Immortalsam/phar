@@ -103,10 +103,8 @@ public class ProductEntryController implements Initializable {
         productIDIncrement = Integer.valueOf(productIDValueNow.substring(3, productIDValueNow.length()));
         System.out.println(productIDIncrement);
         newProductId.setText(productIDValueNow);
-
-        String sql = "SELECT company_name FROM new_product_entry";
         try {
-            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement = connection.prepareStatement(Constants.selectCompanyNameFromNewProductEntry);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 forNewCompanyNameList.add(resultSet.getString("company_name"));
@@ -147,15 +145,15 @@ public class ProductEntryController implements Initializable {
     }
 
     public void addProductBtnClick(ActionEvent event) throws SQLException {
-        preparedStatement = connection.prepareStatement(Constants.addNewProduct);
+        preparedStatement = connection.prepareStatement(Constants.insertToNewProductEntry);
         preparedStatement.setString(1, newProductId.getText());
         preparedStatement.setString(2, newProductName.getText());
         preparedStatement.setString(3, newDisplayComposition.getText());
         preparedStatement.setString(4, newCompanyName.getEditor().getText());
         preparedStatement.setString(5, newProductGroup.getEditor().getText());
-        preparedStatement.setString(6, newProductCategory.getValue().toString());
+        preparedStatement.setString(6, newProductCategory.getValue());
         preparedStatement.setInt(7, Integer.valueOf(newNumberOfPackPerUnit.getText()));
-        if (newProductVat.getValue().toString().equals("Yes")) {
+        if (newProductCategory.getValue().equals("Yes")) {
             preparedStatement.setInt(8, 0);
         } else {
             preparedStatement.setInt(8, 1);
@@ -184,7 +182,7 @@ public class ProductEntryController implements Initializable {
         newProductId.setText(productIDValueNow);
     }
 
-    protected void updateText(Label label, ObservableList<? extends String> list) {
+    private void updateText(Label label, ObservableList<? extends String> list) {
         StringBuilder sb = new StringBuilder();
         sb = CFunctions.updateTextCheckComboBox(sb, label, list);
     }

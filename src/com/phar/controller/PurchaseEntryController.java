@@ -186,7 +186,7 @@ public class PurchaseEntryController implements Initializable {
             e.printStackTrace();
         }
         String selectQuery = "SELECT supplier_name FROM supplier";
-        resultSet = CFunctions.simpleSelectQuery(preparedStatement, connection, selectQuery, resultSet);
+        resultSet = CFunctions.executeQuery(preparedStatement, connection, selectQuery, resultSet);
         try {
             while (resultSet.next()) {
                 supplierList.add(resultSet.getString("supplier_name"));
@@ -199,7 +199,7 @@ public class PurchaseEntryController implements Initializable {
         supplierSearchName.valueProperty().addListener((observable, oldValue, newValue) -> {
             String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + supplierSearchName.getValue() + "'";
             System.out.println(idQuery);
-            resultSet = CFunctions.simpleSelectQuery(preparedStatement, connection, idQuery, resultSet);
+            resultSet = CFunctions.executeQuery(preparedStatement, connection, idQuery, resultSet);
             try {
                 while (resultSet.next()){
                     sid.setText(resultSet.getString("supplier_id"));

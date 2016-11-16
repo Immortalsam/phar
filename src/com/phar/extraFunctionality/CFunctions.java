@@ -2,7 +2,6 @@ package com.phar.extraFunctionality;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,32 +16,22 @@ public class CFunctions {
 
     public static final Preferences session = Preferences.userNodeForPackage(com.phar.extraFunctionality.CFunctions.class);
 
-//    public void setSession(String key, String value) {
-//        session.put(key, value);
-//    }
-//
-//    public String getSession(String key) {
-//        return session.get(key, "");
-//    }
-
-    public static final StringBuilder updateTextCheckComboBox(StringBuilder strBuilder, Label label, ObservableList<? extends String> list) {
-        final StringBuilder stringBuilder = strBuilder;
+    public static StringBuilder updateTextCheckComboBox(StringBuilder strBuilder, Label label, ObservableList<? extends String> list) {
         if (list != null) {
             for (int i = 0, max = list.size(); i < max; i++) {
-                stringBuilder.append(list.get(i));
+                strBuilder.append(list.get(i));
                 if (i < max - 1) {
-                    stringBuilder.append(", ");
+                    strBuilder.append(", ");
                 }
             }
         }
-        return stringBuilder;
+        return strBuilder;
     }
 
-    public static ResultSet simpleSelectQuery(PreparedStatement preparedStatement, Connection connection, String query, ResultSet resultSet) {
+    public static ResultSet executeQuery(PreparedStatement preparedStatement, Connection connection, String query, ResultSet resultSet) {
         try {
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
