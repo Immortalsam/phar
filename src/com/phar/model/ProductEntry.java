@@ -22,6 +22,7 @@ public class ProductEntry {
     private String productVat;
     private String productCashCredit;
 
+
     public String getProductId() {
         return productId;
     }

@@ -3,7 +3,12 @@ package com.phar.controller;
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CustomComboBox;
+import com.phar.interfaceImplement.ProductEntryImplement;
+import com.phar.model.Product;
 import com.phar.model.ProductEntry;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.FloatBinding;
+import javafx.beans.binding.IntegerBinding;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,7 +16,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
@@ -22,6 +29,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.Callable;
+import java.util.function.ToLongFunction;
+import java.util.stream.Collectors;
 
 /**
  * Created by Sam on 11/15/2016.
@@ -29,161 +39,207 @@ import java.util.ResourceBundle;
 
 public class PurchaseEntryController implements Initializable {
 
-        Connection conn;
-        private PreparedStatement preparedStatement;
-        private ResultSet resultSet;
-        private List<String> supplierList = new ArrayList<String>();
-        private ObservableList<ProductEntry> productList = FXCollections.observableArrayList();
+    Connection conn;
+    private PreparedStatement preparedStatement;
+    private ResultSet resultSet;
+    private List<String> supplierList = new ArrayList<String>();
+    private ObservableList<ProductEntry> productList = FXCollections.observableArrayList();
 
-        @FXML
-        private AnchorPane anchorPane;
+    @FXML
+    private AnchorPane anchorPane;
 
-        @FXML
-        private TableView<ProductEntry> purchaseTable;
+    @FXML
+    private TableView<ProductEntry> purchaseTable;
 
-        @FXML
-        private Label fiscalYear;
+    @FXML
+    private Label fiscalYear;
 
-        @FXML
-        private DatePicker purchaseDate;
+    @FXML
+    private DatePicker purchaseDate;
 
-        @FXML
-        private TextField billNo;
+    @FXML
+    private ComboBox supplierSearchName;
 
-        @FXML
-        private ComboBox supplierSearchName;
+    @FXML
+    private ComboBox cashCredit;
 
-        @FXML
-        private ComboBox cashCredit;
+    @FXML
+    private ComboBox vat;
 
-        @FXML
-        private ComboBox vat;
+    @FXML
+    private TableColumn<ProductEntry, String> supplierId;
 
-        @FXML
-        private TableColumn<ProductEntry, String> supplierId;
+    @FXML
+    private TableColumn<ProductEntry, String> productId;
 
-        @FXML
-        private TableColumn<ProductEntry, String> productId;
+    @FXML
+    private TableColumn<ProductEntry, String> productName;
 
-        @FXML
-        private TableColumn<ProductEntry, String > productName;
+    @FXML
+    private TableColumn<ProductEntry, String> productBatch;
 
-        @FXML
-        private TableColumn<ProductEntry, String> productBatch;
+    @FXML
+    private TableColumn<ProductEntry, String> productExpDate;
 
-        @FXML
-        private TableColumn<ProductEntry, String> productExpDate;
+    @FXML
+    private TableColumn<ProductEntry, Float> productCcharge;
 
-        @FXML
-        private TableColumn<ProductEntry, Float> productCcharge;
+    @FXML
+    private TableColumn<ProductEntry, Integer> productQcfor;
 
-        @FXML
-        private TableColumn<ProductEntry, Integer> productQcfor;
+    @FXML
+    private TableColumn<ProductEntry, Float> productRate;
 
-        @FXML
-        private TableColumn<ProductEntry, Float> productRate;
+    @FXML
+    private TableColumn<ProductEntry, Integer> productQuantity;
 
-        @FXML
-        private TableColumn<ProductEntry, Integer> productQuantity;
+    @FXML
+    private TableColumn<ProductEntry, Float> productAmount;
 
-        @FXML
-        private TableColumn<ProductEntry, Float> productAmount;
+    @FXML
+    private TableColumn<ProductEntry, Float> productMrp;
 
-        @FXML
-        private TableColumn<ProductEntry, Float> productMrp;
+    // For adding
 
+    @FXML
+    private TextField sid, pid, pname, pbatch, pexpdate, pcccharge, pqufor, prate, pquantity, pamount, pmrp, bNo;
 
-        @FXML
-        private Button addButton;
+    @FXML
+    private TextField total;
 
-        @FXML
-        private TextField total;
+    @FXML
+    private TextField discount;
 
-        @FXML
-        private TextField discount;
+    @FXML
+    private TextField netTotal;
 
-        @FXML
-        private TextField netTotal;
-
-        //Default Constructor
-        public PurchaseEntryController(){
-
-        }
-
-        @FXML
-        private void addButton(ActionEvent e){
-
-            ProductEntry p = new ProductEntry();
-            p.setSupplierId(supplierId.getText());
-            p.setProductId(productId.getText());
-            p.setProductName(productName.getText());
-            p.setProductBatch(productBatch.getText());
-            p.setProductExpDate(productExpDate.getText());
-            p.setProductCcCharge(Float.valueOf(productCcharge.getText()));
-            p.setProductQuFoR(Integer.valueOf(productQcfor.getText()));
-            p.setProductRate(Float.valueOf(productRate.getText()));
-            p.setProductQuantity(Integer.valueOf(productQuantity.getText()));
-            p.setProductAmount(Float.valueOf(productAmount.getText()));
-            p.setTodayDate(purchaseDate.getValue().toString());
-            p.setBillNo(Integer.valueOf(billNo.getText()));
-            p.setProductCashCredit(cashCredit.getValue().toString());
-            p.setProductVat(vat.getValue().toString());
-            p.setProductMrp(Float.valueOf(productMrp.getText()));
-
-            productList.add(p);
-
-            CustomAlert alert = new CustomAlert("Info","Add successful");
-            alert.withoutHeader();
-        }
+    //Default Constructor
+    public PurchaseEntryController() throws SQLException, ClassNotFoundException {
 
 
-        @Override
-        public void initialize(URL location, ResourceBundle resources) {
-            new CustomComboBox<>(supplierSearchName);
-            try
-
-            {
-                conn = DatabaseConnection.getConnection();
-                String selectQuery = "SELECT supplier_name FROM supplier";
-                preparedStatement = conn.prepareStatement(selectQuery);
-                resultSet = preparedStatement.executeQuery();
-                while (resultSet.next()) {
-                    supplierList.add(resultSet.getString("supplier_name"));
-                }
-            } catch (ClassNotFoundException |
-                    SQLException e)
-
-            {
-                e.printStackTrace();
-            }
-            supplierSearchName.getItems().addAll(supplierList);
-            supplierSearchName.valueProperty().addListener(new ChangeListener() {
-                @Override
-                public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                    String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + supplierSearchName.getValue() + "'";
-                    System.out.println(idQuery);
-                    try {
-                        preparedStatement = conn.prepareStatement(idQuery);
-                        resultSet = preparedStatement.executeQuery();
-                        while (resultSet.next()) {
-                            supplierId.setText(resultSet.getString("supplier_id"));
-                        }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-            });
-
-            productId.textProperty().
-
-                    addListener(new ChangeListener<String>() {
-                        @Override
-                        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                            if (!newValue.matches("\\d*")) {
-                                productId.setText(newValue.replaceAll("[^\\d]", ""));
-                            }
-                        }
-                    });
-        }
     }
+
+    @FXML
+    private void addButton(ActionEvent e) {
+
+        ProductEntry p = new ProductEntry();
+        p.setSupplierId(sid.getText());
+        p.setProductId(pid.getText());
+        p.setProductName(pname.getText());
+        p.setProductBatch(pbatch.getText());
+        p.setProductExpDate(pexpdate.getText());
+        p.setProductCcCharge(Float.valueOf(pcccharge.getText()));
+        p.setProductQuFoR(Integer.valueOf(pqufor.getText()));
+        p.setProductRate(Float.valueOf(prate.getText()));
+        p.setProductQuantity(Integer.valueOf(pquantity.getText()));
+        p.setProductAmount(Float.valueOf(prate.getText()) * Float.valueOf(pquantity.getText()));
+        p.setTodayDate(purchaseDate.getValue().toString());
+        p.setBillNo(Integer.valueOf(bNo.getText()));
+        p.setProductCashCredit(cashCredit.getValue().toString());
+        p.setProductVat(vat.getValue().toString());
+        p.setProductMrp(Float.valueOf(pmrp.getText()));
+
+        productList.add(p);
+
+        productId.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productId"));
+        supplierId.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("supplierId"));
+        productName.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productName"));
+        productBatch.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productBatch"));
+        productExpDate.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productExpDate"));
+        productCcharge.setCellValueFactory(new PropertyValueFactory<ProductEntry, Float>("productCcCharge"));
+        productQcfor.setCellValueFactory(new PropertyValueFactory<ProductEntry, Integer>("productQuFoR"));
+        productRate.setCellValueFactory(new PropertyValueFactory<ProductEntry, Float>("productRate"));
+        productQuantity.setCellValueFactory(new PropertyValueFactory<ProductEntry, Integer>("productQuantity"));
+        productAmount.setCellValueFactory(new PropertyValueFactory<ProductEntry, Float>("productAmount"));
+        productMrp.setCellValueFactory(new PropertyValueFactory<ProductEntry, Float>("productMrp"));
+
+        purchaseTable.setItems(productList);
+        supplierSearchName.setDisable(true);
+        sid.setDisable(true);
+        bNo.setDisable(true);
+        //for clearing filed
+        for (Node node : anchorPane.getChildren()) {
+            if (node instanceof TextField) {
+                ((TextField) node).clear();
+            }
+        }
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        new CustomComboBox<>(supplierSearchName);
+        try
+        {
+            conn = DatabaseConnection.getConnection();
+            String selectQuery = "SELECT supplier_name FROM supplier";
+            preparedStatement = conn.prepareStatement(selectQuery);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                supplierList.add(resultSet.getString("supplier_name"));
+            }
+        } catch (ClassNotFoundException |
+                SQLException e)
+
+        {
+            e.printStackTrace();
+        }
+        supplierSearchName.getItems().addAll(supplierList);
+        supplierSearchName.valueProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + supplierSearchName.getValue() + "'";
+                System.out.println(idQuery);
+                try {
+                    preparedStatement = conn.prepareStatement(idQuery);
+                    resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        sid.setText(resultSet.getString("supplier_id"));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        pid.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    pid.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
+    }
+
+
+    @FXML
+    void saveToDatabase(ActionEvent event) throws SQLException {
+
+        String insertQuery = "INSERT INTO new_purchase_entry VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        for (ProductEntry p : productList) {
+            PreparedStatement preparedStatement = conn.prepareStatement(insertQuery);
+            preparedStatement.setString(1, p.getProductId());
+            preparedStatement.setString(2, p.getSupplierId());
+            preparedStatement.setString(3, p.getProductName());
+            preparedStatement.setString(4, p.getProductBatch());
+            preparedStatement.setString(5, p.getProductExpDate());
+            preparedStatement.setFloat(6, p.getProductCcCharge());
+            preparedStatement.setInt(7, p.getProductQuFoR());
+            preparedStatement.setFloat(8, p.getProductRate());
+            preparedStatement.setInt(9, p.getProductQuantity());
+            preparedStatement.setFloat(11, p.getProductMrp());
+            preparedStatement.setString(12, p.getTodayDate());
+            preparedStatement.setString(13, p.getProductCashCredit());
+            preparedStatement.setString(14, p.getProductVat());
+            preparedStatement.setInt(15, p.getBillNo());
+            preparedStatement.executeUpdate();
+        }
+        supplierSearchName.setDisable(false);
+        bNo.setDisable(false);
+
+        CustomAlert alert = new CustomAlert("Insert to database Info", "Save successful");
+        alert.withoutHeader();
+    }
+}
