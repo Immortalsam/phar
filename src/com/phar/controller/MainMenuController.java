@@ -18,10 +18,10 @@ import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
 
-    NavigationHandler navigation = new NavigationHandler();
+    private NavigationHandler navigation = new NavigationHandler();
 
     @FXML
-    private Button main_menu_sButton, purchaseEntryBtn, productDetailsBtn;
+    private Button main_menu_sButton, purchaseEntryBtn, productDetailsBtn, productEntryBtn;
 
     @FXML
     private Button oldSupplier;
@@ -34,8 +34,7 @@ public class MainMenuController implements Initializable {
 
         CFunctions.session.put("userName", "");
         CFunctions.session.put("passWord", "");
-
-        navigation.frameNavigation(event, "/com/phar/supplierTable.fxml", "/com/phar/mainMenu.fxml", "Supplier Table", "Main Menu");
+        navigation.frameNavigation(event, "/com/phar/supplierTable.fxml", "/com/phar/mainMenu.fxml", "Supplier Details", "Main Menu");
     }
 
 
@@ -43,6 +42,7 @@ public class MainMenuController implements Initializable {
     void mainPurchaseButton(ActionEvent event) {
         productDetailsBtn.setOpacity(1);
         purchaseEntryBtn.setOpacity(1);
+        productEntryBtn.setOpacity(1);
         oldSupplier.setOpacity(0);
         newSupplier.setOpacity(0);
 
@@ -60,6 +60,7 @@ public class MainMenuController implements Initializable {
         newSupplier.setOpacity(1);
         productDetailsBtn.setOpacity(0);
         purchaseEntryBtn.setOpacity(0);
+        productEntryBtn.setOpacity(0);
     }
 
 
@@ -73,7 +74,10 @@ public class MainMenuController implements Initializable {
 
     public void productDetailsClick(ActionEvent event) {
         navigation.frameNavigation(event, "/com/phar/product_table.fxml", "/com/phar/mainMenu.fxml", "Product Details", "Main Menu");
+    }
 
+    public void productEntryClick(ActionEvent event) {
+        navigation.frameNavigation(event, "/com/phar/productEntry.fxml", "/com/phar/mainMenu.fxml", "Product Entry", "Main Menu");
     }
 }
 

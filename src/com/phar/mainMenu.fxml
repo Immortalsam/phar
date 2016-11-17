@@ -38,5 +38,6 @@
         <Button fx:id="newSupplier" layoutX="454.0" layoutY="102.0" mnemonicParsing="false" onAction="#onActionNewSupplier" opacity="0.0" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: white;" text="New" />
       <Button fx:id="purchaseEntryBtn" layoutX="403.0" layoutY="148.0" mnemonicParsing="false" onAction="#purchaseEntryClick" opacity="0.0" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: white;" text="Purchase Entry" />
       <Button fx:id="productDetailsBtn" layoutX="403.0" layoutY="176.0" mnemonicParsing="false" onAction="#productDetailsClick" opacity="0.0" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: white;" text="Product Details" />
+      <Button fx:id="productEntryBtn" layoutX="403.0" layoutY="204.0" mnemonicParsing="false" onAction="#productEntryClick" opacity="0.0" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: white;" text="Product Entry" />
     </children>
 </AnchorPane>
