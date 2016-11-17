@@ -22,8 +22,8 @@
             <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-              <Button fx:id="main_menu_sButton" mnemonicParsing="false" onMouseClicked="#showOption" prefHeight="27.0" prefWidth="219.0" style="-fx-background-color: white;" text="Supplier " />
-              <Button fx:id="mainMenuPu" mnemonicParsing="false" onAction="#mainPurchaseButton" prefHeight="27.0" prefWidth="219.0" style="-fx-background-color: white;" text="Purchase" GridPane.rowIndex="1" />
+              <Button fx:id="main_menu_sButton" mnemonicParsing="false" onMouseClicked="#showOption" prefHeight="27.0" prefWidth="219.0" style="-fx-background-color: white;" text="Supplier Info" />
+              <Button fx:id="mainMenuPu" mnemonicParsing="false" onAction="#mainPurchaseButton" prefHeight="27.0" prefWidth="219.0" style="-fx-background-color: white;" text="Purchase Department" GridPane.rowIndex="1" />
               <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="217.0" style="-fx-background-color: white;" text="Sales" GridPane.rowIndex="2" />
               <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="217.0" style="-fx-background-color: white;" text="Records" GridPane.rowIndex="3" />
               <Button mnemonicParsing="false" prefHeight="27.0" prefWidth="218.0" style="-fx-background-color: white;" text="Billings" GridPane.rowIndex="4" />
@@ -36,5 +36,7 @@
         </Label>
         <Button fx:id="oldSupplier" layoutX="403.0" layoutY="102.0" mnemonicParsing="false" onAction="#menuSupplierButton" opacity="0.0" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: white;" text="Old" />
         <Button fx:id="newSupplier" layoutX="454.0" layoutY="102.0" mnemonicParsing="false" onAction="#onActionNewSupplier" opacity="0.0" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: white;" text="New" />
+      <Button fx:id="purchaseEntryBtn" layoutX="403.0" layoutY="148.0" mnemonicParsing="false" onAction="#purchaseEntryClick" opacity="0.0" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: white;" text="Purchase Entry" />
+      <Button fx:id="productDetailsBtn" layoutX="403.0" layoutY="176.0" mnemonicParsing="false" onAction="#productDetailsClick" opacity="0.0" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: white;" text="Product Details" />
     </children>
 </AnchorPane>

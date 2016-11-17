@@ -111,7 +111,7 @@ public class ProductTableController implements Initializable {
         pDetailsTable.setItems(productList);
         pDetailsTable.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
             if (newValue != null) {
-                System.out.println("You cliked a row");
+                System.out.println("You Clicked a Row");
             }
         }));
     }
