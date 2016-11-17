@@ -38,11 +38,10 @@ public class DateFormatter {
         });
     }
 
-    public static final LocalDate NOW_LOCAL_DATE() {
+    public static LocalDate NOW_LOCAL_DATE() {
         String date = new SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().getTime());
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate localDate = LocalDate.parse(date, formatter);
-        return localDate;
+        return LocalDate.parse(date, formatter);
     }
 
 }
