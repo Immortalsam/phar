@@ -24,8 +24,13 @@ public class ProductEntry {
     private String productCashCredit;
 
 
+    public float getProductAmount() {
+        return productAmount;
+    }
+
     public String getProductId() {
         return productId;
+
     }
 
     public void setProductId(String productId) {

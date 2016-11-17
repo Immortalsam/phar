@@ -12,6 +12,7 @@ public class ProductDetails {
     private String medicineGroup;
     private String medicineCategory;
     private int noOfPackPerUnit;
+
     private boolean vat;
 
     public String getProductId() {
