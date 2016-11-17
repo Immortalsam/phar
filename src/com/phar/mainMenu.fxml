@@ -40,4 +40,5 @@
       <Button fx:id="productDetailsBtn" layoutX="403.0" layoutY="176.0" mnemonicParsing="false" onAction="#productDetailsClick" opacity="0.0" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: white;" text="Product Details" />
       <Button fx:id="productEntryBtn" layoutX="403.0" layoutY="204.0" mnemonicParsing="false" onAction="#productEntryClick" opacity="0.0" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: white;" text="Product Entry" />
     </children>
+    
 </AnchorPane>
