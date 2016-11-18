@@ -6,9 +6,28 @@ package com.phar.model;
 public class Inventory {
 
     private String productName;
+    private String productID;
     private Double quantity;
     private String batch;
     private Double mRP;
+
+    public String getProductID() {
+        return productID;
+    }
+
+    public void setProductID(String productID) {
+        this.productID = productID;
+    }
+
+    private String expireDate;
+
+    public String getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(String expireDate) {
+        this.expireDate = expireDate;
+    }
 
     public String getProductName() {
         return productName;

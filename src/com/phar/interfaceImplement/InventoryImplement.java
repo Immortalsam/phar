@@ -20,19 +20,23 @@ public class InventoryImplement implements InventoryService {
     public void addtoDb(ProductEntry product) {
         Inventory inventory = new Inventory();
         inventory.setProductName(product.getProductName());
+        inventory.setProductID(product.getProductId());
         inventory.setQuantity((double) product.getProductQuantity());
         inventory.setBatch(String.valueOf(product.getProductBatch()));
         inventory.setmRP(((double) product.getProductMrp()));
-        String insertToInventory = "INSERT INTO inventory VALUES(?,?,?,?,?)";
+        inventory.setExpireDate(product.getProductExpDate());
+        String insertToInventory = "INSERT INTO inventory VALUES(?,?,?,?,?,?,?)";
 
         try {
             connection = DatabaseConnection.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(insertToInventory);
             preparedStatement.setInt(1, 0);
-            preparedStatement.setString(2, inventory.getProductName());
-            preparedStatement.setDouble(3, inventory.getQuantity());
-            preparedStatement.setString(4, inventory.getBatch());
-            preparedStatement.setDouble(5, inventory.getmRP());
+            preparedStatement.setString(2, inventory.getProductID());
+            preparedStatement.setString(3, inventory.getProductName());
+            preparedStatement.setDouble(4, inventory.getQuantity());
+            preparedStatement.setString(5, inventory.getBatch());
+            preparedStatement.setDouble(6, inventory.getmRP());
+            preparedStatement.setString(7, inventory.getExpireDate());
             preparedStatement.executeUpdate();
             connection.close();
 
