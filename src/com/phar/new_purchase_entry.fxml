@@ -17,7 +17,17 @@
 <AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1292.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseEntryController">
    <children>
       <Label fx:id="fiscalYear" layoutX="26.0" layoutY="22.0" prefHeight="23.0" prefWidth="66.0" text="Fiscal Year:" />
-      <TextField fx:id="fisYear" layoutX="117.0" layoutY="21.0" prefHeight="25.0" prefWidth="132.0" text="2073/74" />
+      <GridPane layoutX="117.0" layoutY="21.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <TextField fx:id="fisYear" prefHeight="25.0" prefWidth="132.0" text="2073/74" />
+         </children>
+      </GridPane>
       <Label layoutX="981.0" layoutY="27.0" text="Date: " />
       <DatePicker fx:id="purchaseDate" layoutX="1024.0" layoutY="22.0" />
       <Label layoutX="23.0" layoutY="104.0" text="Bill No:" />
