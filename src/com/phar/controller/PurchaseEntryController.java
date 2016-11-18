@@ -5,6 +5,7 @@ import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DateFormatter;
+import com.phar.model.Inventory;
 import com.phar.model.ProductEntry;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -112,6 +113,8 @@ public class PurchaseEntryController implements Initializable {
 
     @FXML
     private void addButton(ActionEvent e) {
+
+        Inventory inventory = new Inventory();
 
         ProductEntry p = new ProductEntry();
         p.setFisalYear(fisYear.getText());
