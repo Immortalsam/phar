@@ -252,7 +252,7 @@ public class PurchaseEntryController implements Initializable {
             preparedStatement.setInt(1, 0);
             preparedStatement.setString(2, p.getFisalYear());
             preparedStatement.setString(3, p.getProductId());
-            System.out.println(p.getSupplierId());
+//            System.out.println(p.getSupplierId());
             preparedStatement.setString(4, p.getSupplierId());
             preparedStatement.setString(5, p.getProductName());
             preparedStatement.setString(6, p.getProductBatch());
