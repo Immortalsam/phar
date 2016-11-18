@@ -5,7 +5,7 @@ import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DateFormatter;
-import com.phar.model.Inventory;
+import com.phar.interfaceImplement.InventoryImplement;
 import com.phar.model.ProductEntry;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -105,6 +105,7 @@ public class PurchaseEntryController implements Initializable {
     @FXML
     private TextField netTotal;
 
+
     //Default Constructor
     public PurchaseEntryController() throws SQLException, ClassNotFoundException {
 
@@ -113,9 +114,6 @@ public class PurchaseEntryController implements Initializable {
 
     @FXML
     private void addButton(ActionEvent e) {
-
-        Inventory inventory = new Inventory();
-
         ProductEntry p = new ProductEntry();
         p.setFisalYear(fisYear.getText());
         p.setSupplierId(sid.getText());
@@ -133,6 +131,7 @@ public class PurchaseEntryController implements Initializable {
         p.setProductCashCredit(cashCredit.getValue().toString());
         p.setProductVat(vat.getValue().toString());
         p.setProductMrp(Float.valueOf(pmrp.getText()));
+
 
         productList.add(p);
 
@@ -209,7 +208,7 @@ public class PurchaseEntryController implements Initializable {
             System.out.println(idQuery);
             resultSet = CFunctions.executeQuery(preparedStatement, connection, idQuery, resultSet);
             try {
-                while (resultSet.next()){
+                while (resultSet.next()) {
                     sid.setText(resultSet.getString("supplier_id"));
                 }
             } catch (SQLException e) {
@@ -218,24 +217,24 @@ public class PurchaseEntryController implements Initializable {
 
         });
 
-        pid.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (!newValue.matches("\\d*")) {
-                    pid.setText(newValue.replaceAll("[^\\d]", ""));
-                }
-            }
-        });
+//        pid.textProperty().addListener(new ChangeListener<String>() {
+//            @Override
+//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//                if (!newValue.matches("\\d*")) {
+//                    pid.setText(newValue.replaceAll("[^\\d]", ""));
+//                }
+//            }
+//        });
 
-        pname.setOnMouseClicked( event -> {
-            try{
+        pname.setOnMouseClicked(event -> {
+            try {
                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/phar/product_table.fxml"));
                 Parent root1 = (Parent) fxmlLoader.load();
                 Stage stage1 = new Stage();
                 stage1.setTitle("Product Details");
                 stage1.setScene(new Scene(root1));
                 stage1.show();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         });
@@ -244,25 +243,29 @@ public class PurchaseEntryController implements Initializable {
 
     @FXML
     void saveToDatabase(ActionEvent event) throws SQLException {
+        InventoryImplement inventoryImplement = new InventoryImplement();
 
-        String insertQuery = "INSERT INTO new_purchase_entry VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String insertQuery = "INSERT INTO new_purchase_entry VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         for (ProductEntry p : productList) {
+            inventoryImplement.addtoDb(p);
             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
-            preparedStatement.setString(1, p.getFisalYear());
-            preparedStatement.setString(2, p.getProductId());
-            preparedStatement.setString(3, p.getSupplierId());
-            preparedStatement.setString(4, p.getProductName());
-            preparedStatement.setString(5, p.getProductBatch());
-            preparedStatement.setString(6, p.getProductExpDate());
-            preparedStatement.setFloat(7, p.getProductCcCharge());
-            preparedStatement.setInt(8, p.getProductQuFoR());
-            preparedStatement.setFloat(9, p.getProductRate());
-            preparedStatement.setInt(10, p.getProductQuantity());
-            preparedStatement.setFloat(11, p.getProductMrp());
-            preparedStatement.setString(12, p.getTodayDate());
-            preparedStatement.setString(13, p.getProductCashCredit());
-            preparedStatement.setString(14, p.getProductVat());
-            preparedStatement.setString(15, p.getBillNo());
+            preparedStatement.setInt(1, 0);
+            preparedStatement.setString(2, p.getFisalYear());
+            preparedStatement.setString(3, p.getProductId());
+            System.out.println(p.getSupplierId());
+            preparedStatement.setString(4, p.getSupplierId());
+            preparedStatement.setString(5, p.getProductName());
+            preparedStatement.setString(6, p.getProductBatch());
+            preparedStatement.setString(7, p.getProductExpDate());
+            preparedStatement.setFloat(8, p.getProductCcCharge());
+            preparedStatement.setInt(9, p.getProductQuFoR());
+            preparedStatement.setFloat(10, p.getProductRate());
+            preparedStatement.setInt(11, p.getProductQuantity());
+            preparedStatement.setFloat(12, p.getProductMrp());
+            preparedStatement.setString(13, p.getTodayDate());
+            preparedStatement.setString(14, p.getProductCashCredit());
+            preparedStatement.setString(15, p.getProductVat());
+            preparedStatement.setString(16, p.getBillNo());
             preparedStatement.executeUpdate();
 
         }

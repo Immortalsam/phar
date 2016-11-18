@@ -4,6 +4,7 @@ package com.phar.model;
  * Created by somecuitears on 11/18/16.
  */
 public class Inventory {
+
     private String productName;
     private Double quantity;
     private String batch;
