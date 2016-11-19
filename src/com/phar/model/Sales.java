@@ -7,11 +7,31 @@ public class Sales {
     private Integer storeID;
     private String productID;
     private String productName;
-    private Double productQuntity;
+    private Double productQuantity;
     private String productBatch;
     private Double mRP;
     private String expireDate;
     private String rackNumber;
+    private Double discount;
+    private Double amount;
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+
 
     public Integer getStoreID() {
         return storeID;
@@ -37,12 +57,12 @@ public class Sales {
         this.productName = productName;
     }
 
-    public Double getProductQuntity() {
-        return productQuntity;
+    public Double getProductQuantity() {
+        return productQuantity;
     }
 
-    public void setProductQuntity(Double productQuntity) {
-        this.productQuntity = productQuntity;
+    public void setProductQuantity(Double productQuantity) {
+        this.productQuantity = productQuantity;
     }
 
     public String getProductBatch() {
