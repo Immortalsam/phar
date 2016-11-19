@@ -23,6 +23,33 @@ public class ProductEntry {
     private String productVat;
     private String productCashCredit;
 
+    private String expYear;
+    private String expMonth;
+    private String expCombined;
+
+    public String getExpCombined() {
+        return expCombined;
+    }
+
+    public void setExpCombined(String expCombined) {
+        this.expCombined = expCombined;
+    }
+
+    public String getExpYear() {
+        return expYear;
+    }
+
+    public void setExpYear(String expYear) {
+        this.expYear = expYear;
+    }
+
+    public String getExpMonth() {
+        return expMonth;
+    }
+
+    public void setExpMonth(String expMonth) {
+        this.expMonth = expMonth;
+    }
 
     public float getProductAmount() {
         return productAmount;

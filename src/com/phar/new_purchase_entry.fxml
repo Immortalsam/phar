@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1292.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseEntryController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1292.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseEntryController">
    <children>
       <Label fx:id="fiscalYear" layoutX="26.0" layoutY="22.0" prefHeight="23.0" prefWidth="66.0" text="Fiscal Year:" />
       <GridPane layoutX="117.0" layoutY="21.0">
@@ -70,9 +70,9 @@
         <columns>
             <TableColumn fx:id="supplierId" prefWidth="77.89285850524902" text="Supplier Id" />
             <TableColumn fx:id="productId" prefWidth="76.29944610595703" text="Product Id" />
-            <TableColumn fx:id="productName" prefWidth="288.7005920410156" text="Product Name" />
-            <TableColumn fx:id="productBatch" prefWidth="60.97528076171875" text="Batch" />
-            <TableColumn fx:id="productExpDate" prefWidth="132.0" text="Expiring Date" />
+            <TableColumn fx:id="productName" prefWidth="192.0" text="Product Name" />
+            <TableColumn fx:id="productBatch" prefWidth="114.0" text="Batch" />
+            <TableColumn fx:id="productExpDate" prefWidth="176.0" text="Expiring Date" />
             <TableColumn fx:id="productCcharge" minWidth="8.0" prefWidth="81.81317138671875" text="CC Charge" />
             <TableColumn fx:id="productQcfor" prefWidth="89.3818359375" text="QuFoR" />
             <TableColumn fx:id="productRate" prefWidth="127.6181640625" text="Rate" />
@@ -114,14 +114,15 @@
          </children>
       </GridPane>
       <TextField fx:id="pid" layoutX="102.0" layoutY="192.0" prefHeight="27.0" prefWidth="78.0" />
-      <TextField fx:id="pname" layoutX="182.0" layoutY="192.0" prefHeight="27.0" prefWidth="287.0" />
-      <TextField fx:id="pbatch" layoutX="471.0" layoutY="192.0" prefHeight="27.0" prefWidth="56.0" />
-      <TextField fx:id="pexpdate" layoutX="533.0" layoutY="192.0" prefHeight="27.0" prefWidth="120.0" promptText="YYYY/MM" />
-      <TextField fx:id="pcccharge" layoutX="662.0" layoutY="192.0" prefHeight="27.0" prefWidth="84.0" />
+      <TextField fx:id="pname" layoutX="182.0" layoutY="192.0" prefHeight="27.0" prefWidth="190.0" />
+      <TextField fx:id="pbatch" layoutX="376.0" layoutY="192.0" prefHeight="27.0" prefWidth="108.0" />
+      <TextField fx:id="pcccharge" layoutX="664.0" layoutY="192.0" prefHeight="27.0" prefWidth="82.0" />
       <TextField fx:id="pqufor" layoutX="749.0" layoutY="192.0" prefHeight="27.0" prefWidth="84.0" />
       <TextField fx:id="prate" layoutX="836.0" layoutY="192.0" prefHeight="27.0" prefWidth="120.0" />
       <TextField fx:id="pquantity" layoutX="967.0" layoutY="192.0" prefHeight="27.0" prefWidth="95.0" />
       <TextField fx:id="pmrp" layoutX="1069.0" layoutY="192.0" prefHeight="27.0" prefWidth="108.0" />
       <Button fx:id="saveButton" layoutX="1177.0" layoutY="660.0" mnemonicParsing="false" onAction="#saveToDatabase" prefHeight="25.0" prefWidth="82.0" text="Save" />
+      <ComboBox fx:id="monthComboBox" layoutX="488.0" layoutY="193.0" prefHeight="25.0" prefWidth="84.0" />
+      <ComboBox fx:id="yearComboBox" layoutX="576.0" layoutY="193.0" prefHeight="25.0" prefWidth="84.0" />
    </children>
 </AnchorPane>

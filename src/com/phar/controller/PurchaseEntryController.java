@@ -94,7 +94,14 @@ public class PurchaseEntryController implements Initializable {
     // For adding
 
     @FXML
-    private TextField sid, pid, pname, pbatch, pexpdate, pcccharge, pqufor, prate, pquantity, fisYear, pmrp, bNo;
+    private TextField sid, pid, pname, pbatch, pcccharge, pqufor, prate, pquantity, fisYear, pmrp, bNo;
+
+    //ComboBox for Date
+    @FXML
+    private ComboBox<String> monthComboBox;
+
+    @FXML
+    private ComboBox<String> yearComboBox;
 
     @FXML
     private TextField total;
@@ -120,7 +127,7 @@ public class PurchaseEntryController implements Initializable {
         p.setProductId(pid.getText());
         p.setProductName(pname.getText());
         p.setProductBatch(pbatch.getText());
-        p.setProductExpDate(pexpdate.getText());
+      //  p.setProductExpDate(pexpdate.getText());
         p.setProductCcCharge(Float.valueOf(pcccharge.getText()));
         p.setProductQuFoR(Integer.valueOf(pqufor.getText()));
         p.setProductRate(Float.valueOf(prate.getText()));
@@ -131,7 +138,9 @@ public class PurchaseEntryController implements Initializable {
         p.setProductCashCredit(cashCredit.getValue().toString());
         p.setProductVat(vat.getValue().toString());
         p.setProductMrp(Float.valueOf(pmrp.getText()));
-
+        p.setExpYear(yearComboBox.getValue());
+        p.setExpMonth(monthComboBox.getValue());
+        p.setExpCombined(yearComboBox.getValue().concat(" / ").concat(monthComboBox.getValue().toUpperCase()));
 
         productList.add(p);
 
@@ -139,13 +148,14 @@ public class PurchaseEntryController implements Initializable {
         supplierId.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("supplierId"));
         productName.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productName"));
         productBatch.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productBatch"));
-        productExpDate.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productExpDate"));
+    //    productExpDate.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productExpDate"));
         productCcharge.setCellValueFactory(new PropertyValueFactory<ProductEntry, Float>("productCcCharge"));
         productQcfor.setCellValueFactory(new PropertyValueFactory<ProductEntry, Integer>("productQuFoR"));
         productRate.setCellValueFactory(new PropertyValueFactory<ProductEntry, Float>("productRate"));
         productQuantity.setCellValueFactory(new PropertyValueFactory<ProductEntry, Integer>("productQuantity"));
         productAmount.setCellValueFactory(new PropertyValueFactory<ProductEntry, Float>("productAmount"));
         productMrp.setCellValueFactory(new PropertyValueFactory<ProductEntry, Float>("productMrp"));
+        productExpDate.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("expCombined"));
 
         float totalValue = Float.valueOf(prate.getText()) * Float.valueOf(pquantity.getText());
 
@@ -183,6 +193,20 @@ public class PurchaseEntryController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        monthComboBox.getItems().addAll("Jan","Feb","Mar","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+        monthComboBox.setValue("Jan");
+        monthComboBox.valueProperty().addListener(((observable, oldValue, newValue) -> {
+            monthComboBox.setValue(newValue);
+        }));
+
+
+        yearComboBox.getItems().addAll("2017","2018","2019","2020","2021","2022","2023");
+        yearComboBox.setValue("2017");
+        yearComboBox.valueProperty().addListener(((observable, oldValue, newValue) -> {
+            yearComboBox.setValue(newValue);
+        }));
+
+
         DateFormatter.dateFormatterForDatePicker(purchaseDate);
         purchaseDate.setValue(DateFormatter.NOW_LOCAL_DATE());
 
@@ -216,28 +240,6 @@ public class PurchaseEntryController implements Initializable {
             }
 
         });
-
-//        pid.textProperty().addListener(new ChangeListener<String>() {
-//            @Override
-//            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-//                if (!newValue.matches("\\d*")) {
-//                    pid.setText(newValue.replaceAll("[^\\d]", ""));
-//                }
-//            }
-//        });
-
-        pname.setOnMouseClicked(event -> {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/phar/product_table.fxml"));
-                Parent root1 = (Parent) fxmlLoader.load();
-                Stage stage1 = new Stage();
-                stage1.setTitle("Product Details");
-                stage1.setScene(new Scene(root1));
-                stage1.show();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
     }
 
 
@@ -256,7 +258,7 @@ public class PurchaseEntryController implements Initializable {
             preparedStatement.setString(4, p.getSupplierId());
             preparedStatement.setString(5, p.getProductName());
             preparedStatement.setString(6, p.getProductBatch());
-            preparedStatement.setString(7, p.getProductExpDate());
+            preparedStatement.setString(7, p.getExpCombined());
             preparedStatement.setFloat(8, p.getProductCcCharge());
             preparedStatement.setInt(9, p.getProductQuFoR());
             preparedStatement.setFloat(10, p.getProductRate());
