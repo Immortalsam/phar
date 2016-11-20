@@ -5,6 +5,7 @@ package com.phar.controller;
  */
 
 import com.phar.extraFunctionality.CFunctions;
+import com.phar.extraFunctionality.Constants;
 import com.phar.extraFunctionality.NavigationHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +22,7 @@ public class MainMenuController implements Initializable {
     private NavigationHandler navigation = new NavigationHandler();
 
     @FXML
-    private Button main_menu_sButton, purchaseEntryBtn, productDetailsBtn, productEntryBtn;
+    private Button main_menu_sButton, purchaseEntryBtn, productDetailsBtn, productEntryBtn, inventoryBtn, salesBtn;
 
     @FXML
     private Button oldSupplier;
@@ -34,7 +35,7 @@ public class MainMenuController implements Initializable {
 
         CFunctions.session.put("userName", "");
         CFunctions.session.put("passWord", "");
-        navigation.frameNavigation(event, "/com/phar/supplierTable.fxml", "/com/phar/mainMenu.fxml", "Supplier Details", "Main Menu");
+        navigation.frameNavigation(event, Constants.SUPPLIER_FXML, Constants.MAIN_MENU_FXML, "Supplier Details", "Main Menu");
     }
 
 
@@ -65,19 +66,27 @@ public class MainMenuController implements Initializable {
 
 
     public void onActionNewSupplier(ActionEvent event) throws IOException {
-        navigation.frameNavigation(event, "/com/phar/newSupplier.fxml", "/com/phar/mainMenu.fxml", "Add New Suppliers", "Main Menu");
+        navigation.frameNavigation(event, Constants.SUPPLIER_FXML, Constants.MAIN_MENU_FXML, "Add New Suppliers", "Main Menu");
     }
 
     public void purchaseEntryClick(ActionEvent event) {
-        navigation.frameNavigation(event, "/com/phar/new_purchase_entry.fxml", "/com/phar/mainMenu.fxml", "New Purchase Entry", "Main Menu");
+        navigation.frameNavigation(event, Constants.NEW_PURCHASE_ENTRY_FXML, Constants.MAIN_MENU_FXML, "New Purchase Entry", "Main Menu");
     }
 
     public void productDetailsClick(ActionEvent event) {
-        navigation.frameNavigation(event, "/com/phar/product_table.fxml", "/com/phar/mainMenu.fxml", "Product Details", "Main Menu");
+        navigation.frameNavigation(event, Constants.PRODUCT_TABLE_FXML, Constants.MAIN_MENU_FXML, "Product Details", "Main Menu");
     }
 
     public void productEntryClick(ActionEvent event) {
-        navigation.frameNavigation(event, "/com/phar/productEntry.fxml", "/com/phar/mainMenu.fxml", "Product Entry", "Main Menu");
+        navigation.frameNavigation(event, Constants.PRODUCT_ENTRY_FXML, Constants.MAIN_MENU_FXML, "Product Entry", "Main Menu");
+    }
+
+    public void inventoryBtnClick(ActionEvent event) {
+        navigation.frameNavigation(event, Constants.INVENTORY_FXML, Constants.MAIN_MENU_FXML, "Inventory to Store", "Main Menu");
+    }
+
+    public void salesBtnClick(ActionEvent event) {
+        navigation.frameNavigation(event, Constants.SALES_FXML, Constants.MAIN_MENU_FXML, "Sales", "Main Menu");
     }
 }
 
