@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -11,11 +12,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SalesController">
    <children>
-      <Label layoutX="267.0" layoutY="29.0" prefHeight="32.0" prefWidth="67.0" text="Sales ">
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
       <TextField fx:id="p_id1" layoutX="169.0" layoutY="176.0" prefHeight="25.0" prefWidth="96.0" />
       <ComboBox fx:id="pName" layoutX="15.0" layoutY="176.0" prefHeight="25.0" prefWidth="155.0" />
       <TextField fx:id="pBatch" layoutX="264.0" layoutY="176.0" prefHeight="25.0" prefWidth="136.0" />
@@ -56,5 +52,15 @@
             <Font size="18.0" />
          </font>
       </TextField>
+      <DatePicker fx:id="tDate" layoutX="1023.0" layoutY="25.0" />
+      <Label layoutX="970.0" layoutY="29.0" prefHeight="17.0" prefWidth="35.0" text="Date:" />
+      <Label layoutX="286.0" layoutY="123.0" text="Prescribed By:" />
+      <TextField fx:id="pPrescribedBy" layoutX="372.0" layoutY="119.0" />
+      <TextField fx:id="pAddress" layoutX="100.0" layoutY="119.0" />
+      <TextField fx:id="pBillNo" layoutX="100.0" layoutY="25.0" />
+      <Label layoutX="44.0" layoutY="123.0" text="Address:" />
+      <Label layoutX="52.0" layoutY="29.0" text="Bill No:" />
+      <Label layoutX="57.0" layoutY="73.0" text="Party:" />
+      <TextField fx:id="pParty" layoutX="100.0" layoutY="69.0" />
    </children>
 </AnchorPane>

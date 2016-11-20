@@ -1,11 +1,9 @@
 package com.phar.controller;
 
+import com.phar.billing;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CFunctions;
-import com.phar.model.ProductEntry;
 import com.phar.model.Sales;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,8 +17,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * Created by Sam on 11/18/2016.
@@ -84,11 +83,29 @@ public class SalesController implements Initializable{
     @FXML
     private TextField total;
 
+    @FXML
+    private DatePicker tDate;
+
+    @FXML
+    private TextField pPrescribedBy;
+
+    @FXML
+    private TextField pAddress;
+
+    @FXML
+    private TextField pBillNo;
+
+    @FXML
+    private TextField pParty;
+
+    int counter = 0;
+
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
     private List<String> productList = new ArrayList<String>();
     private List<Float> getAmountValue = new ArrayList<>();
+    private List<Sales> productBill = new ArrayList<>();
     private String pIdd;
     private ObservableList<Sales> productTableList = FXCollections.observableArrayList();
     private Double qtyLeft;
@@ -131,23 +148,32 @@ public class SalesController implements Initializable{
 
     @FXML
     void clickToAddToList(ActionEvent event) {
+        counter++;
             Sales s = new Sales();
             s.setProductID(pIdd);
             s.setProductName(pName.getValue());
             s.setProductBatch(pBatch.getText());
-            s.setmRP(Double.valueOf(pmrp.getText()));
+            s.setmRp(Double.valueOf(pmrp.getText()));
             s.setProductQuantity(Double.valueOf(qEntered.getText()));
             s.setExpireDate(pExpire.getText());
             s.setDiscount(Double.valueOf(pDiscount.getText()));
             s.setAmount(Double.valueOf(pAmount.getText()));
 
+            s.setBillNo(pBillNo.getText());
+            s.setParty(pParty.getText());
+            s.setAddress(pAddress.getText());
+            s.setPrescribedBy(pPrescribedBy.getText());
+            s.setProductDate(tDate.getValue().toString());
+
             productTableList.add(s);
 
+            productBill.add(s);
+            billing.bill(productBill,counter);
 
             proId.setCellValueFactory(new PropertyValueFactory<Sales, String>("productID"));
             proName.setCellValueFactory(new PropertyValueFactory<Sales, String>("productName"));
             proBatch.setCellValueFactory(new PropertyValueFactory<Sales, String>("productBatch"));
-            proMrp.setCellValueFactory(new PropertyValueFactory<Sales, Double>("mRP"));
+            proMrp.setCellValueFactory(new PropertyValueFactory<Sales, Double>("mRp"));
             proQuantity.setCellValueFactory(new PropertyValueFactory<Sales, Double>("productQuantity"));
             proExpDate.setCellValueFactory(new PropertyValueFactory<Sales, String>("expireDate"));
             proAmount.setCellValueFactory(new PropertyValueFactory<Sales, Double>("amount"));

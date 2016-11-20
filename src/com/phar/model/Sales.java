@@ -1,5 +1,7 @@
 package com.phar.model;
 
+import java.util.List;
+
 /**
  * Created by somecuitears on 11/18/16.
  */
@@ -9,11 +11,56 @@ public class Sales {
     private String productName;
     private Double productQuantity;
     private String productBatch;
-    private Double mRP;
+    private Double mRp;
     private String expireDate;
     private String rackNumber;
     private Double discount;
     private Double amount;
+    private String productDate;
+    private String prescribedBy;
+    private String billNo;
+    private String address;
+    private String party;
+
+    public String getParty() {
+        return party;
+    }
+
+    public void setParty(String party) {
+        this.party = party;
+    }
+
+    public String getProductDate() {
+        return productDate;
+    }
+
+    public void setProductDate(String productDate) {
+        this.productDate = productDate;
+    }
+
+    public String getPrescribedBy() {
+        return prescribedBy;
+    }
+
+    public void setPrescribedBy(String prescribedBy) {
+        this.prescribedBy = prescribedBy;
+    }
+
+    public String getBillNo() {
+        return billNo;
+    }
+
+    public void setBillNo(String billNo) {
+        this.billNo = billNo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public Double getDiscount() {
         return discount;
@@ -73,12 +120,12 @@ public class Sales {
         this.productBatch = productBatch;
     }
 
-    public Double getmRP() {
-        return mRP;
+    public Double getmRp() {
+        return mRp;
     }
 
-    public void setmRP(Double mRP) {
-        this.mRP = mRP;
+    public void setmRp(Double mRp) {
+        this.mRp = mRp;
     }
 
     public String getExpireDate() {

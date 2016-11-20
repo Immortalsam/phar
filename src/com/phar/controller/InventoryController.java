@@ -101,7 +101,7 @@ public class InventoryController implements Initializable {
         sales.setProductBatch(inventoryBatch.getText());
         sales.setProductQuantity(Double.valueOf(inventoryQty.getText()));
         sales.setExpireDate(inventoryProductExpDate.getText());
-        sales.setmRP(Double.valueOf(inventoryMrp.getText()));
+        sales.setmRp(Double.valueOf(inventoryMrp.getText()));
         sales.setRackNumber(inventoryRackNo.getText());
 
         Double newQuantity = qtyLeft - Double.valueOf(inventoryQty.getText());
@@ -118,7 +118,7 @@ public class InventoryController implements Initializable {
             preparedStatement.setString(3, sales.getProductName());
             preparedStatement.setDouble(4, sales.getProductQuantity());
             preparedStatement.setString(5, sales.getProductBatch());
-            preparedStatement.setDouble(6, sales.getmRP());
+            preparedStatement.setDouble(6, sales.getmRp());
             preparedStatement.setString(7, sales.getExpireDate());
             preparedStatement.setString(8, sales.getRackNumber());
             preparedStatement.executeUpdate();
