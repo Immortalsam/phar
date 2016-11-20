@@ -2,7 +2,6 @@ package com.phar.interfaceImplement;
 
 import com.phar.database.DatabaseConnection;
 import com.phar.interfaces.ProductEntryInterface;
-import com.phar.model.Product;
 import com.phar.model.ProductEntry;
 import javafx.collections.ObservableList;
 
@@ -31,9 +30,9 @@ public class ProductEntryImplement implements ProductEntryInterface {
         this.product = product;
         String addQuery = "INSERT into new_purchase_entry (fiscal_year, product_id , supplier_id, product_name, product_batch, " +
                 "product_expdate, product_cccharge, product_qufor, product_rate, product_quantity, product_mrp, product_todaydate, cash_or_credit, product_vat, product_billno) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        try{
+        try {
             PreparedStatement preparedStatement = conn.prepareStatement(addQuery);
-            preparedStatement.setString(1,product.getFisalYear());
+            preparedStatement.setString(1, product.getFisalYear());
             preparedStatement.setString(2, product.getProductId());
             preparedStatement.setString(3, product.getSupplierId());
             preparedStatement.setString(4, product.getProductName());
@@ -47,10 +46,10 @@ public class ProductEntryImplement implements ProductEntryInterface {
             preparedStatement.setString(12, product.getTodayDate());
             preparedStatement.setString(13, product.getProductCashCredit());
             preparedStatement.setString(14, product.getProductVat());
-            preparedStatement.setString(15,product.getBillNo());
+            preparedStatement.setString(15, product.getBillNo());
             preparedStatement.executeUpdate();
             return true;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;

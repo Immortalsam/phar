@@ -10,6 +10,7 @@ public class Inventory {
     private Double quantity;
     private String batch;
     private Double mRP;
+    private String expireDate;
 
     public String getProductID() {
         return productID;
@@ -18,8 +19,6 @@ public class Inventory {
     public void setProductID(String productID) {
         this.productID = productID;
     }
-
-    private String expireDate;
 
     public String getExpireDate() {
         return expireDate;

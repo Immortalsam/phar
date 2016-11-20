@@ -13,17 +13,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -127,7 +122,7 @@ public class PurchaseEntryController implements Initializable {
         p.setProductId(pid.getText());
         p.setProductName(pname.getText());
         p.setProductBatch(pbatch.getText());
-      //  p.setProductExpDate(pexpdate.getText());
+        //  p.setProductExpDate(pexpdate.getText());
         p.setProductCcCharge(Float.valueOf(pcccharge.getText()));
         p.setProductQuFoR(Integer.valueOf(pqufor.getText()));
         p.setProductRate(Float.valueOf(prate.getText()));
@@ -148,7 +143,7 @@ public class PurchaseEntryController implements Initializable {
         supplierId.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("supplierId"));
         productName.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productName"));
         productBatch.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productBatch"));
-    //    productExpDate.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productExpDate"));
+        //    productExpDate.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productExpDate"));
         productCcharge.setCellValueFactory(new PropertyValueFactory<ProductEntry, Float>("productCcCharge"));
         productQcfor.setCellValueFactory(new PropertyValueFactory<ProductEntry, Integer>("productQuFoR"));
         productRate.setCellValueFactory(new PropertyValueFactory<ProductEntry, Float>("productRate"));
@@ -193,14 +188,14 @@ public class PurchaseEntryController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        monthComboBox.getItems().addAll("Jan","Feb","Mar","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec");
+        monthComboBox.getItems().addAll("Jan", "Feb", "Mar", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         monthComboBox.setValue("Jan");
         monthComboBox.valueProperty().addListener(((observable, oldValue, newValue) -> {
             monthComboBox.setValue(newValue);
         }));
 
 
-        yearComboBox.getItems().addAll("2017","2018","2019","2020","2021","2022","2023");
+        yearComboBox.getItems().addAll("2017", "2018", "2019", "2020", "2021", "2022", "2023");
         yearComboBox.setValue("2017");
         yearComboBox.valueProperty().addListener(((observable, oldValue, newValue) -> {
             yearComboBox.setValue(newValue);

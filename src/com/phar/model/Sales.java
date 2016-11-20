@@ -1,7 +1,5 @@
 package com.phar.model;
 
-import java.util.List;
-
 /**
  * Created by somecuitears on 11/18/16.
  */
@@ -77,8 +75,6 @@ public class Sales {
     public void setAmount(Double amount) {
         this.amount = amount;
     }
-
-
 
     public Integer getStoreID() {
         return storeID;

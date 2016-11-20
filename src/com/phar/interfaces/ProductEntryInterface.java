@@ -1,6 +1,5 @@
 package com.phar.interfaces;
 
-import com.phar.model.Product;
 import com.phar.model.ProductEntry;
 import javafx.collections.ObservableList;
 

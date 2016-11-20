@@ -34,10 +34,10 @@ import java.util.ResourceBundle;
  */
 public class ProductEntryController implements Initializable {
 
+    private final ObservableList<String> compositionDropDownList = FXCollections.observableArrayList();
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    private final ObservableList<String> compositionDropDownList = FXCollections.observableArrayList();
     private String supplierIDValueNow, productIDValueNow;
     private Integer supplierIDIncrement, productIDIncrement;
 

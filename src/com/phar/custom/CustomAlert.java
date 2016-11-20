@@ -18,7 +18,7 @@ public class CustomAlert {
         this.content = content;
     }
 
-    public void withoutHeader(){
+    public void withoutHeader() {
         alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);

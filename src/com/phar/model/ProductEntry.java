@@ -55,6 +55,10 @@ public class ProductEntry {
         return productAmount;
     }
 
+    public void setProductAmount(float productAmount) {
+        this.productAmount = productAmount;
+    }
+
     public String getProductId() {
         return productId;
 
@@ -128,10 +132,6 @@ public class ProductEntry {
         this.productQuantity = productQuantity;
     }
 
-    public void setProductAmount(float productAmount) {
-        this.productAmount = productAmount;
-    }
-
     public float getProductMrp() {
         return productMrp;
     }
@@ -172,7 +172,11 @@ public class ProductEntry {
         this.billNo = billNo;
     }
 
-    public String getFisalYear() { return fisalYear;}
+    public String getFisalYear() {
+        return fisalYear;
+    }
 
-    public void setFisalYear(String fisalYear) { this.fisalYear = fisalYear; }
+    public void setFisalYear(String fisalYear) {
+        this.fisalYear = fisalYear;
+    }
 }

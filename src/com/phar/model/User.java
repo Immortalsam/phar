@@ -1,17 +1,11 @@
 package com.phar.model;
 
-import javafx.beans.property.ReadOnlyStringProperty;
-import javafx.beans.property.ReadOnlyStringWrapper;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
 /**
  * Created by Sam on 11/10/2016.
  */
 public class User {
 
-   private String username;
+    private String username;
     private String password;
 
     public String getUsername() {

@@ -7,7 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.util.List;
 
 /**
  * Created by Sam on 11/6/2016.
@@ -64,13 +63,13 @@ public class SupplierImplement implements SupplierServices {
     public ObservableList<Supplier> listSupplier() {
 
 
-        ObservableList<Supplier> supplierData  = FXCollections.observableArrayList();
+        ObservableList<Supplier> supplierData = FXCollections.observableArrayList();
         String query = "SELECT * from supplier";
 
-        try(Statement stat = conn.createStatement()){
+        try (Statement stat = conn.createStatement()) {
             ResultSet res = stat.executeQuery(query);
 
-            while(res.next()){
+            while (res.next()) {
                 Supplier supplier = new Supplier();
                 supplier.setSupplierId(res.getString("supplier_id"));
                 supplier.setSupplierName(res.getString("supplier_name"));
@@ -81,8 +80,7 @@ public class SupplierImplement implements SupplierServices {
 
                 supplierData.add(supplier);
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return supplierData;

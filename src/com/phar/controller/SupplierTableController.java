@@ -1,6 +1,5 @@
 package com.phar.controller;
 
-import com.phar.Main;
 import com.phar.interfaceImplement.SupplierImplement;
 import com.phar.model.Supplier;
 import javafx.collections.ObservableList;
@@ -12,9 +11,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -49,12 +46,12 @@ public class SupplierTableController {
 
     private ObservableList<Supplier> customerList;
 
-    public SupplierTableController(){
+    public SupplierTableController() {
 
     }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         SupplierImplement supplierImplement = new SupplierImplement();
         customerList = supplierImplement.listSupplier();
         supplierId.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierId"));
@@ -67,25 +64,22 @@ public class SupplierTableController {
     }
 
 
-        public void searchSupplier(KeyEvent keyEvent){
+    public void searchSupplier(KeyEvent keyEvent) {
         FilteredList<Supplier> filteredList = new FilteredList<>(customerList, e -> true);
-        searchField.setOnKeyReleased(e ->{
+        searchField.setOnKeyReleased(e -> {
             searchField.textProperty().addListener((observedValue, oldValue, newValue) -> {
                 filteredList.setPredicate((Predicate<? super Supplier>) supplier -> {
-                    if(newValue == null || newValue.isEmpty()){
+                    if (newValue == null || newValue.isEmpty()) {
                         return true;
                     }
                     String lowerCaseFilter = newValue.toLowerCase();
-                    if(supplier.getSupplierId().contains(newValue)){
+                    if (supplier.getSupplierId().contains(newValue)) {
                         return true;
-                    }
-                    else if(supplier.getSupplierName().toLowerCase().contains(lowerCaseFilter)){
+                    } else if (supplier.getSupplierName().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    }
-                    else if(supplier.getSupplierAddress().toLowerCase().contains(lowerCaseFilter)){
+                    } else if (supplier.getSupplierAddress().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    }
-                    else if(supplier.getSupplierCategory().toLowerCase().contains(lowerCaseFilter)){
+                    } else if (supplier.getSupplierCategory().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     }
                     return false;
@@ -96,7 +90,7 @@ public class SupplierTableController {
             supplierTable.setItems(sortedList);
         });
     }
-    }
+}
 
 
 

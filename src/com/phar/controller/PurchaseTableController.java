@@ -37,78 +37,55 @@ import java.util.ResourceBundle;
 public class PurchaseTableController implements Initializable {
 
 
+    private final Label checkedItemsLabel = new Label();
     private Connection connection;
-
     private List<String> supplierList = new ArrayList<String>();
     private List<String> completeProductList = new ArrayList<String>();
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-
     private ObservableList<Product> ObvProductList = FXCollections.observableArrayList();
-
     @FXML
     private Button saveDb;
-
     @FXML
     private AnchorPane anchorPane;
-
     @FXML
     private ComboBox<String> supplierSearchComboBox;
-
     @FXML
     private TableView<Product> purchaseTable;
-
     @FXML
     private TableColumn<Product, String> sellerId;
-
     @FXML
     private TableColumn<Product, Integer> productId;
-
     @FXML
     private TableColumn<Product, String> productName;
-
     @FXML
     private TableColumn<Product, Integer> productQuantity;
-
     @FXML
     private TableColumn<Product, String> productComposition;
-
     @FXML
     private TableColumn<Product, String> purchaseDate;
-
     @FXML
     private TableColumn<Product, String> expDate;
-
     @FXML
     private TableColumn<Product, String> mfdDate;
-
     @FXML
     private TableColumn<Product, Float> costPrice;
-
     @FXML
     private TableColumn<Product, Float> sellingPrice;
-
     @FXML
     private TableColumn<Product, Integer> billNo;
-
     @FXML
     private TableColumn<Product, Integer> batch;
-
     @FXML
     private TableColumn<Product, Integer> tax;
-
     private ObservableList<Product> productList;
-
     //For Adding Product
     @FXML
     private TextField sId, pId, pName, pQuantity, pComposition, mDate, eDate, cPrice, sPrice, bNo, pBatch, pTax;
-
     @FXML
     private DatePicker pDate;
-
     @FXML
     private GridPane gridd;
-
     @FXML
     private Label compositionLabel;
 
@@ -116,7 +93,6 @@ public class PurchaseTableController implements Initializable {
     public PurchaseTableController() throws SQLException, ClassNotFoundException {
 
     }
-    private final Label checkedItemsLabel = new Label();
 
     @FXML
     private void addProduct(ActionEvent e) {
@@ -303,7 +279,7 @@ public class PurchaseTableController implements Initializable {
         label.setText(str.isEmpty() ? "<empty>" : str);
     }
 
-    private void dateMasking(TextField textField){
+    private void dateMasking(TextField textField) {
         if (!textField.getText().contains("/")) {
             if (textField.getText().length() == 4) {
                 textField.setText(textField.getText().concat("/"));

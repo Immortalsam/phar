@@ -72,10 +72,10 @@ public class ProductImplement implements ProductInterface {
 
         String query = "SELECT * from product_from_supplier";
 
-        try(Statement stat = conn.createStatement()){
+        try (Statement stat = conn.createStatement()) {
             ResultSet res = stat.executeQuery(query);
 
-            while(res.next()){
+            while (res.next()) {
                 Product product = new Product();
                 product.setSellerID(res.getString("supplier_id"));
                 product.setProductId(res.getInt("product_id"));
@@ -93,8 +93,7 @@ public class ProductImplement implements ProductInterface {
 
                 productData.add(product);
             }
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return productData;

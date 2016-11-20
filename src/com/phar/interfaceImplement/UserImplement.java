@@ -12,12 +12,12 @@ import java.sql.Statement;
 /**
  * Created by Sam on 11/10/2016.
  */
-public class UserImplement implements UserInterface{
+public class UserImplement implements UserInterface {
 
     static Connection conn;
     private User user;
 
-    public UserImplement(){
+    public UserImplement() {
         try {
             conn = DatabaseConnection.getConnection();
         } catch (ClassNotFoundException e) {
@@ -31,10 +31,10 @@ public class UserImplement implements UserInterface{
     @Override
     public boolean checkUser(User user) {
         String query = "SELECT * from user ";
-        try(Statement stat = conn.createStatement()){
+        try (Statement stat = conn.createStatement()) {
             ResultSet res = stat.executeQuery(query);
 
-            while (res.next()){
+            while (res.next()) {
                 user.setUsername(res.getString("user_name"));
                 user.setPassword(res.getString("pass_word"));
                 return true;
@@ -42,8 +42,7 @@ public class UserImplement implements UserInterface{
             res.close();
             stat.close();
 
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 

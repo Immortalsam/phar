@@ -1,7 +1,5 @@
 package com.phar.model;
 
-import java.util.Date;
-
 /**
  * Created by Sam on 11/7/2016.
  */

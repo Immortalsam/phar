@@ -1,7 +1,6 @@
 package com.phar.interfaces;
 
 import com.phar.model.ProductDetails;
-import com.phar.model.Supplier;
 import javafx.collections.ObservableList;
 
 import java.sql.Connection;

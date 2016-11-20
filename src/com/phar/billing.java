@@ -2,12 +2,10 @@ package com.phar;
 
 import com.phar.model.Sales;
 
-import javax.swing.table.DefaultTableModel;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.ListIterator;
 
 /**
  * Created by Manish on 11/19/2016.
