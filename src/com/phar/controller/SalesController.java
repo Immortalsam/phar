@@ -17,6 +17,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -89,6 +90,7 @@ public class SalesController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        tDate.setValue(LocalDate.now());
         try {
             connection = DatabaseConnection.getConnection();
             String query = "SELECT product_name from store";
@@ -167,10 +169,12 @@ public class SalesController implements Initializable {
         try {
             preparedStatement = connection.prepareStatement(sql1);
             preparedStatement.executeUpdate();
-            preparedStatement.close();
-            sql1 = "UPDATE store SET quantity='" + s.getProductQuantity() + "'";
+            sql1 = "SELECT quantity FROM store WHERE product_name ='" + pName.getValue() + "'";
             preparedStatement = connection.prepareStatement(sql1);
-            preparedStatement.executeUpdate();
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                qLeftInStore.setText(resultSet.getString("quantity"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
