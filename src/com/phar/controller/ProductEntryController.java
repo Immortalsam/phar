@@ -15,7 +15,6 @@ import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.DragEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import org.controlsfx.control.CheckComboBox;
@@ -101,6 +100,9 @@ public class ProductEntryController implements Initializable {
         selectDatabase();
         productIDIncrement = Integer.valueOf(productIDValueNow.substring(3, productIDValueNow.length()));
         System.out.println(productIDIncrement);
+
+        //    productIDValueNow = AutoGenerator.PIDGenerator(connection, preparedStatement, resultSet, productIDValueNow, productIDIncrement);
+        System.out.println(productIDIncrement);
         newProductId.setText(productIDValueNow);
         try {
             preparedStatement = connection.prepareStatement(Constants.selectCompanyNameFromNewProductEntry);
@@ -140,9 +142,6 @@ public class ProductEntryController implements Initializable {
         }
     }
 
-    public void addComposition(DragEvent dragEvent) {
-    }
-
     public void addProductBtnClick(ActionEvent event) throws SQLException {
         preparedStatement = connection.prepareStatement(Constants.insertToNewProductEntry);
         preparedStatement.setString(1, newProductId.getText());
@@ -178,6 +177,7 @@ public class ProductEntryController implements Initializable {
         System.out.println(productIDIncrement);
         updatePID();
         selectDatabase();
+        //  productIDValueNow = AutoGenerator.PIDGenerator(connection, preparedStatement, resultSet, productIDValueNow, productIDIncrement);
         newProductId.setText(productIDValueNow);
     }
 

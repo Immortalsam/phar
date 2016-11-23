@@ -1,6 +1,5 @@
 package com.phar;
 
-import com.phar.extraFunctionality.CFunctions;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,11 +17,13 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("mainMenu.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("productEntry.fxml"));
         primaryStage.setTitle("Admin Login");
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
+        scene.getStylesheets().add("/com/phar/css/style.css");
+        primaryStage.setResizable(false);
         primaryStage.show();
-        System.out.println("Initial " + CFunctions.session.get("userName", ""));
+        //System.out.println("Initial " + CFunctions.session.get("userName", ""));
     }
 }
