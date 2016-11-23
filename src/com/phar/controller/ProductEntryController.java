@@ -2,9 +2,7 @@ package com.phar.controller;
 
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
-import com.phar.extraFunctionality.CFunctions;
-import com.phar.extraFunctionality.Constants;
-import com.phar.extraFunctionality.CustomComboBox;
+import com.phar.extraFunctionality.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -37,10 +35,10 @@ public class ProductEntryController implements Initializable {
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
-    private String supplierIDValueNow, productIDValueNow;
-    private Integer supplierIDIncrement, productIDIncrement;
 
     private List<String> forNewCompanyNameList = new ArrayList<String>();
+
+    private AutoGenerator generator = new AutoGenerator();
 
     @FXML
     private AnchorPane anchorPane;
@@ -70,8 +68,6 @@ public class ProductEntryController implements Initializable {
         for (int i = 1; i <= 5; i++) {
             compositionDropDownList.add("Composition No " + i);
         }
-
-
         newProductCategory.getItems().addAll(Constants.productCategoryList);
         newProductCategory.setValue(Constants.productCategoryList[0]);
         newProductVat.getItems().addAll(Constants.yesNo);
@@ -96,53 +92,13 @@ public class ProductEntryController implements Initializable {
 
                     }
                 });
-
-        selectDatabase();
-        productIDIncrement = Integer.valueOf(productIDValueNow.substring(3, productIDValueNow.length()));
-        System.out.println(productIDIncrement);
-
-        //    productIDValueNow = AutoGenerator.PIDGenerator(connection, preparedStatement, resultSet, productIDValueNow, productIDIncrement);
-        System.out.println(productIDIncrement);
-        newProductId.setText(productIDValueNow);
-        try {
-            preparedStatement = connection.prepareStatement(Constants.selectCompanyNameFromNewProductEntry);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                forNewCompanyNameList.add(resultSet.getString("company_name"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        newCompanyName.getItems().addAll(forNewCompanyNameList);
-
+        // selectDatabase();
+        newProductId.setText(generator.CurrentID("PID"));
+        listingCompanyName();
     }
 
-    private void selectDatabase() {
-        try {
-            connection = DatabaseConnection.getConnection();
-            preparedStatement = connection.prepareStatement(Constants.productIDGenQuery);
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                productIDValueNow = resultSet.getString(1);
-                System.out.println(productIDValueNow);
-            }
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void updatePID() {
-        String newQuery = Constants.productIDUpdateQuery + "PID" + productIDIncrement + Constants.getProductIDUpdateQueryBack;
-        try {
-            preparedStatement = connection.prepareStatement(newQuery);
-            preparedStatement.executeUpdate();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void addProductBtnClick(ActionEvent event) throws SQLException {
+    public void addProductBtnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
+        connection = DatabaseConnection.getConnection();
         preparedStatement = connection.prepareStatement(Constants.insertToNewProductEntry);
         preparedStatement.setString(1, newProductId.getText());
         preparedStatement.setString(2, newProductName.getText());
@@ -169,20 +125,27 @@ public class ProductEntryController implements Initializable {
             if (node instanceof ComboBox) {
                 ((ComboBox) node).getEditor().clear();
             }
-            if (node instanceof CheckComboBox) {
-                ((CheckComboBox) node).getItems().clear();
-            }
         }
-        productIDIncrement++;
-        System.out.println(productIDIncrement);
-        updatePID();
-        selectDatabase();
-        //  productIDValueNow = AutoGenerator.PIDGenerator(connection, preparedStatement, resultSet, productIDValueNow, productIDIncrement);
-        newProductId.setText(productIDValueNow);
+        listingCompanyName();
+        newProductId.setText(generator.NewID("PID"));
     }
 
     private void updateText(Label label, ObservableList<? extends String> list) {
-        StringBuilder sb = new StringBuilder();
-        sb = CFunctions.updateTextCheckComboBox(sb, label, list);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder = CFunctions.updateTextCheckComboBox(stringBuilder, label, list);
+    }
+
+
+    private void listingCompanyName() {
+        forNewCompanyNameList.clear();
+        try {
+            resultSet = DatabaseOperations.simpleSelect("new_product_entry", "company_name", "null");
+            while (resultSet.next()) {
+                forNewCompanyNameList.add(resultSet.getString("company_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        newCompanyName.getItems().addAll(forNewCompanyNameList);
     }
 }

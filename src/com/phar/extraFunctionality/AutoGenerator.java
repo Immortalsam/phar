@@ -21,15 +21,15 @@ public class AutoGenerator {
 //    private Integer productIDIncrement;
 
 
-    public static void main(String[] args) {
-        AutoGenerator g = new AutoGenerator();
-        System.out.println(g.CurrentID("BID"));
-        System.out.println("========== Value Update ===========");
-        System.out.println(g.NewID("BID"));
+//    public static void main(String[] args) {
+//        AutoGenerator g = new AutoGenerator();
+//        System.out.println(g.CurrentID("BID"));
+//        System.out.println("========== Value Update ===========");
+//        System.out.println(g.NewID("BID"));
+//
+//    }
 
-    }
-
-    private String CurrentID(String ofID) {
+    public String CurrentID(String ofID) {
         //ofID = "CID";
         try {
             connection = DatabaseConnection.getConnection();
@@ -58,7 +58,7 @@ public class AutoGenerator {
         return ID;
     }
 
-    private String NewID(String ofID) {
+    public String NewID(String ofID) {
         ID = CurrentID(ofID);
         newID = Integer.valueOf(ID.substring(3));
         newID++;

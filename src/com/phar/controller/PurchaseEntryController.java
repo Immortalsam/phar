@@ -1,9 +1,8 @@
 package com.phar.controller;
 
 import com.phar.custom.CustomAlert;
-import com.phar.database.DatabaseConnection;
-import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.CustomComboBox;
+import com.phar.extraFunctionality.DatabaseOperations;
 import com.phar.extraFunctionality.DateFormatter;
 import com.phar.interfaceImplement.BillInterfaceImplement;
 import com.phar.interfaceImplement.InventoryImplement;
@@ -60,72 +59,41 @@ public class PurchaseEntryController implements Initializable {
     private DatePicker purchaseDate;
 
     @FXML
-    private ComboBox<String> supplierSearchName;
+    private ComboBox<String> supplierSearchName, monthComboBox, yearComboBox;
 
     @FXML
-    private ComboBox cashCredit;
-
-    @FXML
-    private ComboBox vat;
+    private ComboBox cashCredit, vat, pname;
 
     @FXML
     private TableColumn<ProductEntry, String> supplierId, productId, productName, productBatch, productExpDate;
 
     @FXML
-    private TableColumn<ProductEntry, Float> productCcharge;
+    private TableColumn<ProductEntry, Float> productCcharge, productRate, productAmount, productMrp;
 
     @FXML
-    private TableColumn<ProductEntry, Integer> productQcfor;
+    private TableColumn<ProductEntry, Integer> productQcfor, productQuantity;
 
     @FXML
-    private TableColumn<ProductEntry, Float> productRate;
+    private TextField sid, pid, pbatch, pcccharge, pqufor, prate, pquantity, fisYear, pmrp, bNo;
 
     @FXML
-    private TableColumn<ProductEntry, Integer> productQuantity;
+    private TextField total, discount, netTotal;
 
-    @FXML
-    private TableColumn<ProductEntry, Float> productAmount;
-
-    @FXML
-    private TableColumn<ProductEntry, Float> productMrp;
-
-    // For adding
-
-    @FXML
-    private TextField sid, pid, pname, pbatch, pcccharge, pqufor, prate, pquantity, fisYear, pmrp, bNo;
-
-    //ComboBox for Date
-    @FXML
-    private ComboBox<String> monthComboBox;
-
-    @FXML
-    private ComboBox<String> yearComboBox;
-
-    @FXML
-    private TextField total;
-
-    @FXML
-    private TextField discount;
-
-    @FXML
-    private TextField netTotal;
-
+    private List<String> productNameList = new ArrayList<String>();
 
     //Default Constructor
     public PurchaseEntryController() throws SQLException, ClassNotFoundException {
-
-
     }
 
     @FXML
     private void addButton(ActionEvent e) {
         ProductEntry p = new ProductEntry();
+
         p.setFisalYear(fisYear.getText());
         p.setSupplierId(sid.getText());
         p.setProductId(pid.getText());
-        p.setProductName(pname.getText());
+        p.setProductName(pname.getValue().toString());
         p.setProductBatch(pbatch.getText());
-        //  p.setProductExpDate(pexpdate.getText());
         p.setProductCcCharge(Float.valueOf(pcccharge.getText()));
         p.setProductQuFoR(Integer.valueOf(pqufor.getText()));
         p.setProductRate(Float.valueOf(prate.getText()));
@@ -146,7 +114,6 @@ public class PurchaseEntryController implements Initializable {
         supplierId.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("supplierId"));
         productName.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productName"));
         productBatch.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productBatch"));
-        //    productExpDate.setCellValueFactory(new PropertyValueFactory<ProductEntry, String>("productExpDate"));
         productCcharge.setCellValueFactory(new PropertyValueFactory<ProductEntry, Float>("productCcCharge"));
         productQcfor.setCellValueFactory(new PropertyValueFactory<ProductEntry, Integer>("productQuFoR"));
         productRate.setCellValueFactory(new PropertyValueFactory<ProductEntry, Float>("productRate"));
@@ -192,8 +159,6 @@ public class PurchaseEntryController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         TestCases.TabAndCheck(pquantity);
-       // TestCases.checkEmptinessAndString(pcccharge);
-        //TestCases.checkEmptinessAndString(pmrp);
 
         monthComboBox.getItems().addAll("Jan", "Feb", "Mar", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         monthComboBox.setValue("Jan");
@@ -209,19 +174,18 @@ public class PurchaseEntryController implements Initializable {
         }));
 
 
-
-
         DateFormatter.dateFormatterForDatePicker(purchaseDate);
         purchaseDate.setValue(DateFormatter.NOW_LOCAL_DATE());
 
         new CustomComboBox<>(supplierSearchName);
-        try {
-            connection = DatabaseConnection.getConnection();
-        } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
-        }
-        String selectQuery = "SELECT supplier_name FROM supplier";
-        resultSet = CFunctions.executeQuery(preparedStatement, connection, selectQuery, resultSet);
+//        try {
+//            connection = DatabaseConnection.getConnection();
+//        } catch (ClassNotFoundException | SQLException e) {
+//            e.printStackTrace();
+//        }
+//        String selectQuery = "SELECT supplier_name FROM supplier";
+//        resultSet = CFunctions.executeQuery(preparedStatement, connection, selectQuery, resultSet);
+        resultSet = DatabaseOperations.simpleSelect("supplier", "supplier_name", "null");
         try {
             while (resultSet.next()) {
                 supplierList.add(resultSet.getString("supplier_name"));
@@ -232,9 +196,10 @@ public class PurchaseEntryController implements Initializable {
 
         supplierSearchName.getItems().addAll(supplierList);
         supplierSearchName.valueProperty().addListener((observable, oldValue, newValue) -> {
-            String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + supplierSearchName.getValue() + "'";
-            System.out.println(idQuery);
-            resultSet = CFunctions.executeQuery(preparedStatement, connection, idQuery, resultSet);
+//            String idQuery = "SELECT supplier_id FROM supplier WHERE supplier_name= '" + supplierSearchName.getValue() + "'";
+//            System.out.println(idQuery);
+//            resultSet = CFunctions.executeQuery(preparedStatement, connection, idQuery, resultSet);
+            resultSet = DatabaseOperations.simpleSelect("supplier", "supplier_id", "supplier_name='" + supplierSearchName.getValue() + "'");
             try {
                 while (resultSet.next()) {
                     sid.setText(resultSet.getString("supplier_id"));
@@ -242,7 +207,33 @@ public class PurchaseEntryController implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+        });
 
+        new CustomComboBox<>(pname);
+        listingCompanyName();
+
+    }
+
+    private void listingCompanyName() {
+        productNameList.clear();
+        try {
+            resultSet = DatabaseOperations.simpleSelect("new_product_entry", "product_name", "null");
+            while (resultSet.next()) {
+                productNameList.add(resultSet.getString("product_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        pname.getItems().addAll(productNameList);
+        pname.valueProperty().addListener((observable, oldValue, newValue) -> {
+            resultSet = DatabaseOperations.simpleSelect("new_product_entry", "product_id", "product_name='" + pname.getValue() + "'");
+            try {
+                while (resultSet.next()) {
+                    pid.setText(resultSet.getString("product_id"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         });
     }
 
@@ -266,7 +257,6 @@ public class PurchaseEntryController implements Initializable {
             preparedStatement.setInt(1, 0);
             preparedStatement.setString(2, p.getFisalYear());
             preparedStatement.setString(3, p.getProductId());
-//            System.out.println(p.getSupplierId());
             preparedStatement.setString(4, p.getSupplierId());
             preparedStatement.setString(5, p.getProductName());
             preparedStatement.setString(6, p.getProductBatch());

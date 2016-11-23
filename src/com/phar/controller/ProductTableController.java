@@ -31,22 +31,7 @@ public class ProductTableController implements Initializable {
     private TableView<ProductDetails> pDetailsTable;
 
     @FXML
-    private TableColumn<ProductDetails, String> pid;
-
-    @FXML
-    private TableColumn<ProductDetails, String> companyname;
-
-    @FXML
-    private TableColumn<ProductDetails, String> pname;
-
-    @FXML
-    private TableColumn<ProductDetails, String> compositionname;
-
-    @FXML
-    private TableColumn<ProductDetails, String> mgroup;
-
-    @FXML
-    private TableColumn<ProductDetails, String> mcategory;
+    private TableColumn<ProductDetails, String> pid, companyname, pname, compositionname, mgroup, mcategory;
 
     @FXML
     private TableColumn<ProductDetails, Integer> noup;

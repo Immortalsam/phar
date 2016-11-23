@@ -1,7 +1,7 @@
 package com.phar.controller;
 
 import com.phar.database.DatabaseConnection;
-import com.phar.extraFunctionality.CFunctions;
+import com.phar.extraFunctionality.DatabaseOperations;
 import com.phar.model.Sales;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,53 +26,37 @@ import java.util.ResourceBundle;
  */
 public class InventoryController implements Initializable {
 
-    private ResultSet resultSet;
-    private PreparedStatement preparedStatement;
-
     @FXML
     private ComboBox<String> inventoryProductList;
 
     @FXML
-    private TextField inventoryQty;
-
-    @FXML
-    private TextField inventoryBatch;
-
-    @FXML
-    private TextField inventoryMrp;
-
-    @FXML
-    private TextField inventoryRackNo;
+    private TextField inventoryQty, inventoryBatch, inventoryMrp, inventoryRackNo, inventoryProductExpDate;
 
     @FXML
     private Button addToInventory;
 
     @FXML
-    private TextField inventoryProductExpDate;
-
-    @FXML
     private Label qtyLbl;
 
     private Connection connection;
+    private ResultSet resultSet;
     private List<String> productList = new ArrayList<String>();
     private Double qtyLeft;
     private String productIDD;
 
+    //    private PreparedStatement preparedStatement;
+    private String query;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            connection = DatabaseConnection.getConnection();
-            String query = "SELECT product_name FROM inventory";
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
+            resultSet = DatabaseOperations.simpleSelect("inventory", "product_name", "null");
             while (resultSet.next()) {
                 productList.add(resultSet.getString("product_name"));
             }
             inventoryProductList.getItems().addAll(productList);
             inventoryProductList.valueProperty().addListener((observable, oldValue, newValue) -> {
-                String otherDetailsQuery = "SELECT product_id,expire_date,quantity,batch,mRP FROM inventory WHERE product_name='" + inventoryProductList.getValue() + "'";
-                System.out.println(otherDetailsQuery);
-                resultSet = CFunctions.executeQuery(preparedStatement, connection, otherDetailsQuery, resultSet);
+                resultSet = DatabaseOperations.simpleSelect("inventory", "product_id,expire_date,quantity,batch,mRP", "product_name='" + inventoryProductList.getValue() + "'");
                 try {
                     while (resultSet.next()) {
                         productIDD = resultSet.getString("product_id");
@@ -86,7 +70,7 @@ public class InventoryController implements Initializable {
                     e.printStackTrace();
                 }
             });
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -104,13 +88,14 @@ public class InventoryController implements Initializable {
         sales.setRackNumber(inventoryRackNo.getText());
 
         Double newQuantity = qtyLeft - Double.valueOf(inventoryQty.getText());
-        String sql1 = "UPDATE inventory SET quantity='" + newQuantity + "' WHERE product_name = '" + inventoryProductList.getValue() + "'";
+        query = "UPDATE inventory SET quantity='" + newQuantity + "' WHERE product_name = '" + inventoryProductList.getValue() + "'";
+        System.out.println(query);
         try {
-            preparedStatement = connection.prepareStatement(sql1);
+            connection = DatabaseConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.executeUpdate();
-            preparedStatement.close();
-            sql1 = "INSERT INTO store VALUES (?,?,?,?,?,?,?,?)";
-            preparedStatement = connection.prepareStatement(sql1);
+            query = "INSERT INTO store VALUES (?,?,?,?,?,?,?,?)";
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setInt(1, 0);
             preparedStatement.setString(2, sales.getProductID());
             preparedStatement.setString(3, sales.getProductName());
@@ -120,7 +105,8 @@ public class InventoryController implements Initializable {
             preparedStatement.setString(7, sales.getExpireDate());
             preparedStatement.setString(8, sales.getRackNumber());
             preparedStatement.executeUpdate();
-        } catch (SQLException e) {
+            preparedStatement.close();
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 

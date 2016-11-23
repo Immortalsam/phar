@@ -22,16 +22,13 @@ public class MainMenuController implements Initializable {
     private NavigationHandler navigation = new NavigationHandler();
 
     @FXML
-    private Button main_menu_sButton, purchaseEntryBtn, productDetailsBtn, productEntryBtn, inventoryBtn, salesBtn;
+    private Button purchaseEntryBtn, productDetailsBtn, productEntryBtn, inventoryBtn, salesBtn;
 
     @FXML
     private Button oldSupplier;
 
     @FXML
     private Button newSupplier;
-
-    @FXML
-    private Button salesMenu;
 
     @FXML
     void menuSupplierButton(ActionEvent event) {
@@ -88,15 +85,10 @@ public class MainMenuController implements Initializable {
         navigation.frameNavigation(event, Constants.INVENTORY_FXML, Constants.MAIN_MENU_FXML, "Inventory to Store", "Main Menu");
     }
 
+    @FXML
     public void salesBtnClick(ActionEvent event) {
         navigation.frameNavigation(event, Constants.SALES_FXML, Constants.MAIN_MENU_FXML, "Sales", "Main Menu");
     }
 
-    @FXML
-    void onClickSales(ActionEvent event) {
-        navigation.frameNavigation(event, "/com/phar/sales.fxml", "/com/phar/mainMenu.fxml", "Sales", "Main Menu");
-
-
-    }
 }
 
