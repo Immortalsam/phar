@@ -5,8 +5,11 @@ import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DateFormatter;
+import com.phar.interfaceImplement.BillInterfaceImplement;
 import com.phar.interfaceImplement.InventoryImplement;
+import com.phar.model.Bill;
 import com.phar.model.ProductEntry;
+import com.phar.testCases.TestCases;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -188,6 +191,10 @@ public class PurchaseEntryController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
+        TestCases.TabAndCheck(pquantity);
+       // TestCases.checkEmptinessAndString(pcccharge);
+        //TestCases.checkEmptinessAndString(pmrp);
+
         monthComboBox.getItems().addAll("Jan", "Feb", "Mar", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         monthComboBox.setValue("Jan");
         monthComboBox.valueProperty().addListener(((observable, oldValue, newValue) -> {
@@ -200,6 +207,8 @@ public class PurchaseEntryController implements Initializable {
         yearComboBox.valueProperty().addListener(((observable, oldValue, newValue) -> {
             yearComboBox.setValue(newValue);
         }));
+
+
 
 
         DateFormatter.dateFormatterForDatePicker(purchaseDate);
@@ -240,8 +249,16 @@ public class PurchaseEntryController implements Initializable {
 
     @FXML
     void saveToDatabase(ActionEvent event) throws SQLException {
-        InventoryImplement inventoryImplement = new InventoryImplement();
+        Bill bill = new Bill();
+        bill.setPurchaseDate(purchaseDate.getValue().toString());
+        bill.setBillNo(bNo.getText());
+        bill.setSupplierId(sid.getText());
+        bill.setTotalAmount(Float.valueOf(netTotal.getText()));
 
+        BillInterfaceImplement billInterfaceImplement = new BillInterfaceImplement();
+        billInterfaceImplement.addBill(bill);
+
+        InventoryImplement inventoryImplement = new InventoryImplement();
         String insertQuery = "INSERT INTO new_purchase_entry VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         for (ProductEntry p : productList) {
             inventoryImplement.addtoDb(p);
@@ -264,7 +281,6 @@ public class PurchaseEntryController implements Initializable {
             preparedStatement.setString(15, p.getProductVat());
             preparedStatement.setString(16, p.getBillNo());
             preparedStatement.executeUpdate();
-
         }
         supplierSearchName.setDisable(false);
         bNo.setDisable(false);

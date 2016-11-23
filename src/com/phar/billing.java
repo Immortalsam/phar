@@ -34,21 +34,20 @@ public abstract class billing {
             Date time = new Date();
             String Date = dateFormat.format(date);
             String Time = timeFormat.format(time);
-            for (int i = 0; i < counter; i++) {
                 String Header =
                         "              *****TECHNORIO PHARMACY*****       \n"
                                 + "                     PAN : 123456789  \n"
                                 + "                  Sankhamul, Kathmandu  \n"
                                 + "                   Phone: 01-4231560  \n"
-                                + "Bill No : " + s.get(i).getBillNo() + "    \t\t\t\t\t\t\t"
+                                + "Bill No : " + s.get(0).getBillNo() + "    \t\t\t\t\t\t\t"
                                 + "Date: " + Date + "\n"
                                 + "  \t\t\t\t\t\t\t\t\t\t\t  Time: " + Time + "\n"
                                 + "----------------------------------------------------------------\n"
                                 + "                          INVOICE  \n"
                                 + "----------------------------------------------------------------\n"
                                 + "Name    : " + type + "\n"
-                                + "Address : " + s.get(i).getAddress() + "\n"
-                                + "Prescribed by: " + s.get(i).getPrescribedBy() + "\n"
+                                + "Address : " + s.get(0).getAddress() + "\n"
+                                + "Prescribed by: " + s.get(0).getPrescribedBy() + "\n"
                                 + "Payment mode: " + paymode + "\n"
                                 + "================================================================\n"
                                 + "SN. Particular          Batch     Expiry   Qty  Rate     Amount\n"
@@ -64,12 +63,14 @@ public abstract class billing {
                                 + "User: " + user + "\n";
 
                 String bill = Header;
-                {
-                    String pName = s.get(i).getProductName();
+            for (int i = 0; i < counter; i++) {
+
+
+                String pName = s.get(i).getProductName();
                     int sn = i + 1;
                     String batch = s.get(i).getProductBatch();
                     String expiry = s.get(i).getExpireDate();
-                    Double qty = s.get(i).getProductQuantity();
+                    Integer qty = s.get(i).getProductQuantity();
                     double rate = s.get(i).getmRp();
                     double amtt = qty * rate;
 
@@ -108,4 +109,3 @@ public abstract class billing {
         }
 
     }
-}

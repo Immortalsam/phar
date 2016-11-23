@@ -7,7 +7,7 @@ public class Sales {
     private Integer storeID;
     private String productID;
     private String productName;
-    private Double productQuantity;
+    private int productQuantity;
     private String productBatch;
     private Double mRp;
     private String expireDate;
@@ -100,11 +100,11 @@ public class Sales {
         this.productName = productName;
     }
 
-    public Double getProductQuantity() {
+    public int getProductQuantity() {
         return productQuantity;
     }
 
-    public void setProductQuantity(Double productQuantity) {
+    public void setProductQuantity(int productQuantity) {
         this.productQuantity = productQuantity;
     }
 
