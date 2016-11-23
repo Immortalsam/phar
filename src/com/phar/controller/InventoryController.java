@@ -80,7 +80,6 @@ public class InventoryController implements Initializable {
                         inventoryBatch.setText(resultSet.getString("batch"));
                         qtyLbl.setText("Quantity Left : " + resultSet.getString("quantity"));
                         qtyLeft = Double.valueOf(resultSet.getString("quantity"));
-                        //inventoryQty.setText(resultSet.getString("quantity"));
                         inventoryMrp.setText(resultSet.getString("mRP"));
                     }
                 } catch (SQLException e) {
@@ -99,14 +98,13 @@ public class InventoryController implements Initializable {
         sales.setProductID(productIDD);
         sales.setProductName(inventoryProductList.getValue());
         sales.setProductBatch(inventoryBatch.getText());
-        sales.setProductQuantity(Double.valueOf(inventoryQty.getText()));
+        sales.setProductQuantity(Integer.valueOf(inventoryQty.getText()));
         sales.setExpireDate(inventoryProductExpDate.getText());
         sales.setmRp(Double.valueOf(inventoryMrp.getText()));
         sales.setRackNumber(inventoryRackNo.getText());
 
         Double newQuantity = qtyLeft - Double.valueOf(inventoryQty.getText());
         String sql1 = "UPDATE inventory SET quantity='" + newQuantity + "' WHERE product_name = '" + inventoryProductList.getValue() + "'";
-        System.out.println(sql1);
         try {
             preparedStatement = connection.prepareStatement(sql1);
             preparedStatement.executeUpdate();

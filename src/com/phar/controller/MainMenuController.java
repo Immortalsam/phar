@@ -31,6 +31,9 @@ public class MainMenuController implements Initializable {
     private Button newSupplier;
 
     @FXML
+    private Button salesMenu;
+
+    @FXML
     void menuSupplierButton(ActionEvent event) {
 
         CFunctions.session.put("userName", "");
@@ -87,6 +90,13 @@ public class MainMenuController implements Initializable {
 
     public void salesBtnClick(ActionEvent event) {
         navigation.frameNavigation(event, Constants.SALES_FXML, Constants.MAIN_MENU_FXML, "Sales", "Main Menu");
+    }
+
+    @FXML
+    void onClickSales(ActionEvent event) {
+        navigation.frameNavigation(event, "/com/phar/sales.fxml", "/com/phar/mainMenu.fxml", "Sales", "Main Menu");
+
+
     }
 }
 

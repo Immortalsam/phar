@@ -55,7 +55,7 @@ public class SalesController implements Initializable {
     @FXML
     private TableView<Sales> pTableStore;
     @FXML
-    private TableColumn<Sales, Double> proQuantity;
+    private TableColumn<Sales, Integer> proQuantity;
     @FXML
     private TableColumn<Sales, Double> proMrp;
     @FXML
@@ -131,7 +131,7 @@ public class SalesController implements Initializable {
         s.setProductName(pName.getValue());
         s.setProductBatch(pBatch.getText());
         s.setmRp(Double.valueOf(pmrp.getText()));
-        s.setProductQuantity(Double.valueOf(qEntered.getText()));
+        s.setProductQuantity(Integer.valueOf(qEntered.getText()));
         s.setExpireDate(pExpire.getText());
         s.setDiscount(Double.valueOf(pDiscount.getText()));
         s.setAmount(Double.valueOf(pAmount.getText()));
@@ -145,13 +145,12 @@ public class SalesController implements Initializable {
         productTableList.add(s);
 
         productBill.add(s);
-        billing.bill(productBill, counter);
 
         proId.setCellValueFactory(new PropertyValueFactory<Sales, String>("productID"));
         proName.setCellValueFactory(new PropertyValueFactory<Sales, String>("productName"));
         proBatch.setCellValueFactory(new PropertyValueFactory<Sales, String>("productBatch"));
         proMrp.setCellValueFactory(new PropertyValueFactory<Sales, Double>("mRp"));
-        proQuantity.setCellValueFactory(new PropertyValueFactory<Sales, Double>("productQuantity"));
+        proQuantity.setCellValueFactory(new PropertyValueFactory<Sales, Integer>("productQuantity"));
         proExpDate.setCellValueFactory(new PropertyValueFactory<Sales, String>("expireDate"));
         proAmount.setCellValueFactory(new PropertyValueFactory<Sales, Double>("amount"));
         proDiscount.setCellValueFactory(new PropertyValueFactory<Sales, Double>("discount"));
@@ -178,5 +177,10 @@ public class SalesController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    void onClickPrintBill(ActionEvent event) {
+        billing.bill(productBill, counter);
     }
 }
