@@ -2,10 +2,7 @@ package com.phar.controller;
 
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
-import com.phar.extraFunctionality.CFunctions;
-import com.phar.extraFunctionality.Constants;
-import com.phar.extraFunctionality.CustomComboBox;
-import com.phar.extraFunctionality.DateFormatter;
+import com.phar.extraFunctionality.*;
 import com.phar.model.Product;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -224,7 +221,9 @@ public class PurchaseTableController implements Initializable {
         supplierSearchComboBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             System.out.println(Constants.selectSupplierIDFromSupplierWhereSupplierName + supplierSearchComboBox.getValue() + "'");
             try {
-                resultSet = CFunctions.executeQuery(preparedStatement, connection, Constants.selectSupplierIDFromSupplierWhereSupplierName + supplierSearchComboBox.getValue() + "'", resultSet);
+//                resultSet = CFunctions.executeQuery(preparedStatement, connection, Constants.selectSupplierIDFromSupplierWhereSupplierName + supplierSearchComboBox.getValue() + "'", resultSet);
+//                "SELECT supplier_id FROM supplier WHERE supplier_name= '"
+                resultSet = DatabaseOperations.simpleSelect("supplier", "supplier_id", "supplier_name='" + supplierSearchComboBox.getValue() + "'");
                 while (resultSet.next()) {
                     sId.setText(resultSet.getString("supplier_id"));
                 }
@@ -233,15 +232,15 @@ public class PurchaseTableController implements Initializable {
             }
         });
 
-        pId.textProperty().
-                addListener(new ChangeListener<String>() {
-                    @Override
-                    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                        if (!newValue.matches("\\d*")) {
-                            pId.setText(newValue.replaceAll("[^\\d]", ""));
-                        }
-                    }
-                });
+//        pId.textProperty().
+//                addListener(new ChangeListener<String>() {
+//                    @Override
+//                    public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+//                        if (!newValue.matches("\\d*")) {
+//                            pId.setText(newValue.replaceAll("[^\\d]", ""));
+//                        }
+//                    }
+//                });
 
     }
 
