@@ -4,10 +4,12 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SupplierPaymentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SupplierPaymentController">
    <children>
       <DatePicker fx:id="tDate" layoutX="76.0" layoutY="52.0" prefHeight="26.0" prefWidth="180.0" />
       <Label layoutX="37.0" layoutY="57.0" text="Date:" />
@@ -22,5 +24,14 @@
       <TextField fx:id="sId" layoutX="42.0" layoutY="130.0" prefHeight="25.0" prefWidth="72.0" />
       <Label layoutX="140.0" layoutY="106.0" text="Suppiler Name:" />
       <Button layoutX="802.0" layoutY="130.0" mnemonicParsing="false" onAction="#onSaveClicked" text="Save" />
+      <TableView fx:id="tableTrans" layoutX="45.0" layoutY="214.0" prefHeight="364.0" prefWidth="729.0">
+        <columns>
+          <TableColumn fx:id="tableDate" prefWidth="136.99998474121094" text="Date" />
+            <TableColumn fx:id="tDescription" prefWidth="207.99996948242188" text="Description" />
+            <TableColumn fx:id="tdrAmt" minWidth="0.0" prefWidth="219.0" text="Payment" />
+            <TableColumn fx:id="tCrAmt" prefWidth="164.0" text="Purchase" />
+        </columns>
+      </TableView>
+      <Label layoutX="43.0" layoutY="189.0" text="Transaction History:" />
    </children>
 </AnchorPane>

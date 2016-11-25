@@ -6,14 +6,17 @@ import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.interfaceImplement.SupplierPaymentIntImplement;
 import com.phar.model.SupplierPayment;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import com.phar.model.Transactions;
+import javafx.beans.property.ListProperty;
+import javafx.beans.property.SimpleListProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -23,8 +26,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.ResourceBundle;
-import java.util.StringJoiner;
 
 /**
  * Created by Sam on 11/22/2016.
@@ -38,21 +41,37 @@ public class SupplierPaymentController implements Initializable {
     private ComboBox<String> sNameCBox;
 
     @FXML
-    private TextField amtToBePaid;
+    private TextField amtToBePaid, amtPaid, amtRemaining, sId;
+
+    //For table data
+
 
     @FXML
-    private TextField amtPaid;
+    private TableView<Transactions> tableTrans;
 
     @FXML
-    private TextField amtRemaining;
+    private TableColumn<Transactions, String> tableDate;
 
     @FXML
-    private TextField sId;
+    private TableColumn<Transactions, String> tBillno;
+
+    @FXML
+    private TableColumn<Transactions, String> tDescription;
+
+    @FXML
+    private TableColumn<Transactions, String> tdrAmt;
+
+    @FXML
+    private TableColumn<Transactions, String> tCrAmt;
+
 
     private Connection connection;
-    private ResultSet resultSet;
+    private ResultSet resultSet, rs, rs1;
     private PreparedStatement preparedStatement;
     private List<String> supplierList = new ArrayList<String>();
+    private ObservableList<Transactions> supplierPurchaseList = FXCollections.observableArrayList();
+    private ObservableList<Transactions> supplierPaidList = FXCollections.observableArrayList();
+    private ObservableList<Transactions> newList = FXCollections.observableArrayList();
     private float billTotal = 0;
     private float paidTotal = 0;
 
@@ -82,13 +101,60 @@ public class SupplierPaymentController implements Initializable {
 
         //For supplier's Id
         sNameCBox.getItems().addAll(supplierList);
-        sNameCBox.valueProperty().addListener(((observable, oldValue, newValue) -> {
+        sNameCBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             String idQuery = "SELECT supplier_id from supplier WHERE supplier_name= '" + sNameCBox.getValue() + "'";
             resultSet = CFunctions.executeQuery(preparedStatement, connection, idQuery, resultSet);
             try{
                 while (resultSet.next()){
                     sId.setText(resultSet.getString("supplier_id"));
+
+                    String someQuery = "SELECT supplier_id, purchase_date, bill_no, total_amount, NULL AS payment_date, NULL AS amt_paid FROM bill UNION SELECT supplier_id, NULL, NULL, NULL, payment_date, amt_paid FROM supplier_payment ORDER By supplier_id";
+                    rs = CFunctions.executeQuery(preparedStatement, connection, someQuery, rs);
+
+//                    String someQuery = "SELECT purchase_date,bill_no, total_amount from bill WHERE supplier_id='" + sId.getText() + "'";
+//                    rs = CFunctions.executeQuery(preparedStatement, connection, someQuery, rs);
+//
+//                    String anotherQuery = "SELECT payment_date, amt_paid from supplier_payment WHERE supplier_id='" + sId.getText() + "'";
+//                    rs1 = CFunctions.executeQuery(preparedStatement, connection, anotherQuery, rs1);
+
+
+                    while(rs.next()){
+                        Transactions t = new Transactions();
+                        if(rs.getString("purchase_date") == null){
+                            t.setDate(rs.getString("payment_date"));
+                        }
+                        else {
+                            t.setDate(rs.getString("purchase_date"));
+                        }
+                        if(rs.getFloat("total_amount") == 0){
+                            t.setCr("-");
+                        }
+                        else {
+                            t.setCr(String.valueOf(rs.getFloat("total_amount")));
+                        }
+                        if(rs.getString("bill_no") == null){
+                            t.setDescription("Payment");
+                        }
+                       else {
+                            t.setDescription(rs.getString("bill_no"));
+                        }
+                        if(rs.getFloat("amt_paid") == 0){
+                            t.setDr("-");
+                        }
+                        else {
+                            t.setDr(String.valueOf(rs.getFloat("amt_paid")));
+                        }
+
+                        supplierPurchaseList.add(t);
+                    }
+
+                    tDescription.setCellValueFactory(new PropertyValueFactory<Transactions, String>("description"));
+                    tCrAmt.setCellValueFactory(new PropertyValueFactory<Transactions, String>("cr"));
+                    tdrAmt.setCellValueFactory(new PropertyValueFactory<Transactions, String>("dr"));
+                    tableDate.setCellValueFactory(new PropertyValueFactory<Transactions, String>("date"));
                 }
+                    tableTrans.setItems(supplierPurchaseList);
+
             }catch (SQLException e){
                 e.printStackTrace();
             }
@@ -121,7 +187,7 @@ public class SupplierPaymentController implements Initializable {
             catch (SQLException e){
                 e.printStackTrace();
             }
-        }));
+        });
     }
 
     @FXML
@@ -141,6 +207,5 @@ public class SupplierPaymentController implements Initializable {
             CustomAlert alert = new CustomAlert("Info", "Save Successful");
             alert.withoutHeader();
         }
-
     }
 }
