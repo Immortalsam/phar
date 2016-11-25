@@ -90,6 +90,7 @@
          </children>
       </GridPane>
       <Label layoutX="403.0" layoutY="157.0" text="Quantity " />
-      <Button fx:id="printBill" layoutX="1049.0" layoutY="623.0" mnemonicParsing="false" onAction="#onClickPrintBill" text="Print Bill" />
+      <Button fx:id="printBill" layoutX="683.0" layoutY="616.0" mnemonicParsing="false" onAction="#onClickPrintBill" prefHeight="30.0" prefWidth="96.0" text="Print Bill" />
+      <Button layoutX="683.0" layoutY="653.0" mnemonicParsing="false" onAction="#onClickSaveButton" prefHeight="30.0" prefWidth="96.0" text="Save " />
     </children>
 </AnchorPane>
