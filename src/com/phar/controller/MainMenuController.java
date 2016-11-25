@@ -90,5 +90,8 @@ public class MainMenuController implements Initializable {
         navigation.frameNavigation(event, Constants.SALES_FXML, Constants.MAIN_MENU_FXML, "Sales", "Main Menu");
     }
 
+    public void oldSupplierBtnClick(ActionEvent actionEvent) {
+        navigation.frameNavigation(actionEvent, Constants.OLD_SUPPLIER_FXML, Constants.MAIN_MENU_FXML, "Old Suppliers", "Main Menu");
+    }
 }
 

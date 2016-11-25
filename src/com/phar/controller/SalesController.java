@@ -2,7 +2,9 @@ package com.phar.controller;
 
 import com.phar.billing;
 import com.phar.database.DatabaseConnection;
+import com.phar.extraFunctionality.AutoGenerator;
 import com.phar.extraFunctionality.CFunctions;
+import com.phar.extraFunctionality.DatabaseOperations;
 import com.phar.model.Sales;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,23 +31,9 @@ public class SalesController implements Initializable {
 
     int counter = 0;
     @FXML
-    private TextField p_id1;
+    private TextField pExpire, pAmount, pDiscount, pmrp, qEntered, qLeftInStore, pBatch, p_id1, total, pPrescribedBy, pAddress, pBillNo, pParty;
     @FXML
     private ComboBox<String> pName;
-    @FXML
-    private TextField pBatch;
-    @FXML
-    private TextField qLeftInStore;
-    @FXML
-    private TextField qEntered;
-    @FXML
-    private TextField pmrp;
-    @FXML
-    private TextField pDiscount;
-    @FXML
-    private TextField pAmount;
-    @FXML
-    private TextField pExpire;
     @FXML
     private TableColumn<Sales, String> proName;
     @FXML
@@ -65,17 +53,8 @@ public class SalesController implements Initializable {
     @FXML
     private TableColumn<Sales, Double> proAmount;
     @FXML
-    private TextField total;
-    @FXML
     private DatePicker tDate;
-    @FXML
-    private TextField pPrescribedBy;
-    @FXML
-    private TextField pAddress;
-    @FXML
-    private TextField pBillNo;
-    @FXML
-    private TextField pParty;
+
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
@@ -86,10 +65,14 @@ public class SalesController implements Initializable {
     private ObservableList<Sales> productTableList = FXCollections.observableArrayList();
     private Double qtyLeft;
     private float newTotal = 0;
+    private String query;
+    private AutoGenerator generator = new AutoGenerator();
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        pBillNo.setText(generator.CurrentID("BID"));
         tDate.setValue(LocalDate.now());
         try {
             connection = DatabaseConnection.getConnection();
@@ -135,7 +118,6 @@ public class SalesController implements Initializable {
         s.setExpireDate(pExpire.getText());
         s.setDiscount(Double.valueOf(pDiscount.getText()));
         s.setAmount(Double.valueOf(pAmount.getText()));
-
         s.setBillNo(pBillNo.getText());
         s.setParty(pParty.getText());
         s.setAddress(pAddress.getText());
@@ -143,7 +125,6 @@ public class SalesController implements Initializable {
         s.setProductDate(tDate.getValue().toString());
 
         productTableList.add(s);
-
         productBill.add(s);
 
         proId.setCellValueFactory(new PropertyValueFactory<Sales, String>("productID"));
@@ -163,18 +144,20 @@ public class SalesController implements Initializable {
         total.setText(String.valueOf(newTotal));
 
         Double newQty = qtyLeft - Double.valueOf(qEntered.getText());
-        String sql1 = "UPDATE store SET quantity='" + newQty + "' WHERE product_name = '" + pName.getValue() + "'";
-        System.out.println(sql1);
+        query = "UPDATE store SET quantity='" + newQty + "' WHERE product_name = '" + pName.getValue() + "'";
+        System.out.println(query);
         try {
-            preparedStatement = connection.prepareStatement(sql1);
-            preparedStatement.executeUpdate();
-            sql1 = "SELECT quantity FROM store WHERE product_name ='" + pName.getValue() + "'";
-            preparedStatement = connection.prepareStatement(sql1);
-            resultSet = preparedStatement.executeQuery();
+//            preparedStatement = connection.prepareStatement(query);
+//            preparedStatement.executeUpdate();
+            DatabaseOperations.simpleUpdate(query);
+//            query = "SELECT quantity FROM store WHERE product_name ='" + pName.getValue() + "'";
+//            preparedStatement = connection.prepareStatement(query);
+//            resultSet = preparedStatement.executeQuery();
+            resultSet = DatabaseOperations.simpleSelect("store", "quantity", "product_name='" + pName.getValue() + "'");
             while (resultSet.next()) {
                 qLeftInStore.setText(resultSet.getString("quantity"));
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

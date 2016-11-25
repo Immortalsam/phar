@@ -36,7 +36,7 @@
                 <Font size="28.0" />
             </font>
         </Label>
-        <Button fx:id="oldSupplier" layoutX="403.0" layoutY="98.0" mnemonicParsing="false" onAction="#menuSupplierButton" opacity="0.0" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: white;" text="Old" />
+        <Button fx:id="oldSupplier" layoutX="403.0" layoutY="98.0" mnemonicParsing="false" onAction="#oldSupplierBtnClick" opacity="0.0" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: white;" text="Old" />
         <Button fx:id="newSupplier" layoutX="454.0" layoutY="98.0" mnemonicParsing="false" onAction="#onActionNewSupplier" opacity="0.0" prefHeight="25.0" prefWidth="50.0" style="-fx-background-color: white;" text="New" />
         <Button fx:id="purchaseEntryBtn" layoutX="403.0" layoutY="137.0" mnemonicParsing="false" onAction="#purchaseEntryClick" opacity="0.0" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: white;" text="Purchase Entry" />
         <Button fx:id="productDetailsBtn" layoutX="403.0" layoutY="165.0" mnemonicParsing="false" onAction="#productDetailsClick" opacity="0.0" prefHeight="27.0" prefWidth="139.0" style="-fx-background-color: white;" text="Product Details" />

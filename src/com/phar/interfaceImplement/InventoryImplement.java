@@ -24,7 +24,7 @@ public class InventoryImplement implements InventoryService {
         inventory.setQuantity((double) product.getProductQuantity());
         inventory.setBatch(String.valueOf(product.getProductBatch()));
         inventory.setmRP(((double) product.getProductMrp()));
-        inventory.setExpireDate(product.getProductExpDate());
+        inventory.setExpireDate(product.getExpCombined());
         String insertToInventory = "INSERT INTO inventory VALUES(?,?,?,?,?,?,?)";
 
         try {

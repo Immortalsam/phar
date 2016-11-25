@@ -42,7 +42,12 @@ public class DatabaseOperations {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-
         return resultSet;
+    }
+
+    public static void simpleUpdate(String query) throws SQLException, ClassNotFoundException {
+        Connection connection = DatabaseConnection.getConnection();
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.executeUpdate();
     }
 }

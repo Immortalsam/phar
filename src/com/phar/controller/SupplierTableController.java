@@ -36,7 +36,7 @@ public class SupplierTableController {
     private TableColumn<Supplier, String> supplierContact;
 
     @FXML
-    private TableColumn<Supplier, String> supplierCategory;
+    private TableColumn<Supplier, String> supplierEmail;
 
     @FXML
     private TableColumn<Supplier, Double> supplierPanNo;
@@ -58,7 +58,7 @@ public class SupplierTableController {
         supplierName.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierName"));
         supplierAddress.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierAddress"));
         supplierContact.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierContact"));
-        supplierCategory.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierCategory"));
+        supplierEmail.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierEmail"));
         supplierPanNo.setCellValueFactory(new PropertyValueFactory<Supplier, Double>("panNo"));
         supplierTable.setItems(customerList);
     }
@@ -79,7 +79,7 @@ public class SupplierTableController {
                         return true;
                     } else if (supplier.getSupplierAddress().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
-                    } else if (supplier.getSupplierCategory().toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (supplier.getSupplierEmail().toLowerCase().contains(lowerCaseFilter)) {
                         return true;
                     }
                     return false;

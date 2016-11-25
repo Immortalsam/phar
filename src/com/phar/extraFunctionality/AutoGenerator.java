@@ -17,17 +17,6 @@ public class AutoGenerator {
     private ResultSet resultSet;
     private String query, ID;
     private Integer newID;
-//    private String productIDValueNow;
-//    private Integer productIDIncrement;
-
-
-//    public static void main(String[] args) {
-//        AutoGenerator g = new AutoGenerator();
-//        System.out.println(g.CurrentID("BID"));
-//        System.out.println("========== Value Update ===========");
-//        System.out.println(g.NewID("BID"));
-//
-//    }
 
     public String CurrentID(String ofID) {
         //ofID = "CID";

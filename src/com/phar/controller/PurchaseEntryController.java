@@ -1,6 +1,7 @@
 package com.phar.controller;
 
 import com.phar.custom.CustomAlert;
+import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DatabaseOperations;
 import com.phar.extraFunctionality.DateFormatter;
@@ -252,7 +253,11 @@ public class PurchaseEntryController implements Initializable {
         InventoryImplement inventoryImplement = new InventoryImplement();
         String insertQuery = "INSERT INTO new_purchase_entry VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         for (ProductEntry p : productList) {
-            inventoryImplement.addtoDb(p);
+            try {
+                connection = DatabaseConnection.getConnection();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
             preparedStatement.setInt(1, 0);
             preparedStatement.setString(2, p.getFisalYear());
@@ -271,6 +276,7 @@ public class PurchaseEntryController implements Initializable {
             preparedStatement.setString(15, p.getProductVat());
             preparedStatement.setString(16, p.getBillNo());
             preparedStatement.executeUpdate();
+            inventoryImplement.addtoDb(p);
         }
         supplierSearchName.setDisable(false);
         bNo.setDisable(false);

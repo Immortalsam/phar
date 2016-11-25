@@ -37,7 +37,7 @@ public class ProductEntryController implements Initializable {
     private ResultSet resultSet;
 
     private List<String> forNewCompanyNameList = new ArrayList<String>();
-
+    private List<String> forNewGroupList = new ArrayList<>();
     private AutoGenerator generator = new AutoGenerator();
 
     @FXML
@@ -61,6 +61,8 @@ public class ProductEntryController implements Initializable {
         //to generate company name list
         new CustomComboBox<>(newCompanyName);
 
+        listingGroupName();
+        listingCompanyName();
         //make product id uneditable
         newProductId.setEditable(false);
 
@@ -94,7 +96,6 @@ public class ProductEntryController implements Initializable {
                 });
         // selectDatabase();
         newProductId.setText(generator.CurrentID("PID"));
-        listingCompanyName();
     }
 
     public void addProductBtnClick(ActionEvent event) throws SQLException, ClassNotFoundException {
@@ -127,6 +128,7 @@ public class ProductEntryController implements Initializable {
             }
         }
         listingCompanyName();
+        listingGroupName();
         newProductId.setText(generator.NewID("PID"));
     }
 
@@ -147,5 +149,18 @@ public class ProductEntryController implements Initializable {
             e.printStackTrace();
         }
         newCompanyName.getItems().addAll(forNewCompanyNameList);
+    }
+
+    private void listingGroupName() {
+        forNewGroupList.clear();
+        try {
+            resultSet = DatabaseOperations.simpleSelect("new_product_entry", "medicine_group", "null");
+            while (resultSet.next()) {
+                forNewGroupList.add(resultSet.getString("medicine_group"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        newProductGroup.getItems().addAll(forNewGroupList);
     }
 }

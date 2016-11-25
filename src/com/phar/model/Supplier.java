@@ -10,7 +10,7 @@ public class Supplier {
     private String supplierName;
     private String supplierAddress;
     private String supplierContact;
-    private String supplierCategory;
+    private String supplierEmail;
     private double panNo;
 
 
@@ -46,12 +46,12 @@ public class Supplier {
         this.supplierContact = supplierContact;
     }
 
-    public String getSupplierCategory() {
-        return supplierCategory;
+    public String getSupplierEmail() {
+        return supplierEmail;
     }
 
-    public void setSupplierCategory(String supplierCategory) {
-        this.supplierCategory = supplierCategory;
+    public void setSupplierEmail(String supplierEmail) {
+        this.supplierEmail = supplierEmail;
     }
 
     public double getPanNo() {

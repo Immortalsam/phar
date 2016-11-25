@@ -1,32 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
-            xmlns="http://javafx.com/javafx/8.0.65" fx:controller="com.phar.controller.SupplierController">
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SupplierController">
     <children>
-        <TextField fx:id="supplierId" layoutX="203.0" layoutY="85.0" prefHeight="25.0" prefWidth="234.0"
-                   promptText="Supplier Id" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0"/>
-        <TextField fx:id="supplierName" layoutX="203.0" layoutY="128.0" prefHeight="25.0" prefWidth="234.0"
-                   promptText="Supplier Name" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0"/>
-        <TextField fx:id="supplierAddress" layoutX="203.0" layoutY="169.0" prefHeight="25.0" prefWidth="234.0"
-                   promptText="Supplier Address" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0"/>
-        <TextField fx:id="supplierEmail" layoutX="203.0" layoutY="253.0" prefHeight="25.0" prefWidth="234.0"
-                   promptText="Supplier Email" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0"/>
-        <TextField fx:id="supplierContact" layoutX="203.0" layoutY="210.0" prefHeight="25.0" prefWidth="234.0"
-                   promptText="Supplier Contact" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0"/>
-        <TextField fx:id="supplierPanNo" layoutX="203.0" layoutY="289.0" prefHeight="25.0" prefWidth="234.0"
-                   promptText="Pan no" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0"/>
-        <Label layoutX="249.0" layoutY="37.0" prefHeight="28.0" prefWidth="142.0" text="New Supplier"
-               AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="209.0" AnchorPane.topAnchor="37.0">
+        <TextField fx:id="supplierName" layoutX="203.0" layoutY="128.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Name" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
+        <TextField fx:id="supplierAddress" layoutX="203.0" layoutY="169.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Address" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
+        <TextField fx:id="supplierEmail" layoutX="203.0" layoutY="253.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Email" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
+        <TextField fx:id="supplierContact" layoutX="203.0" layoutY="210.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Contact" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
+        <TextField fx:id="supplierPanNo" layoutX="203.0" layoutY="289.0" prefHeight="25.0" prefWidth="234.0" promptText="Pan no" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
+        <Label layoutX="249.0" layoutY="37.0" prefHeight="28.0" prefWidth="142.0" text="New Supplier" AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="209.0" AnchorPane.topAnchor="37.0">
             <font>
-                <Font size="22.0"/>
+                <Font size="22.0" />
             </font>
         </Label>
-        <Button fx:id="suppSaveButtomn" layoutX="203.0" layoutY="332.0" mnemonicParsing="false" onAction="#onClickSave"
-                prefHeight="34.0" prefWidth="234.0" text="Save Supplier" AnchorPane.leftAnchor="203.0"
-                AnchorPane.rightAnchor="163.0"/>
+        <Button fx:id="suppSaveButtomn" layoutX="203.0" layoutY="332.0" mnemonicParsing="false" onAction="#onClickSave" prefHeight="34.0" prefWidth="234.0" text="Save Supplier" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
+        <TextField fx:id="supplierId" editable="false" layoutX="203.0" layoutY="85.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Id" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
     </children>
 </AnchorPane>

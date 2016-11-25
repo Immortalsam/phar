@@ -30,7 +30,7 @@ public class SupplierImplement implements SupplierServices {
     public boolean addSupplier(Supplier supplier) {
 
         String addquery = "INSERT into supplier (supplier_id, supplier_name, supplier_address, supplier_contact, " +
-                "supplier_category, pan_no) VALUES (?,?,?,?,?,?)";
+                "supplier_email, pan_no) VALUES (?,?,?,?,?,?)";
 
         try {
             PreparedStatement stat = conn.prepareStatement(addquery);
@@ -38,7 +38,7 @@ public class SupplierImplement implements SupplierServices {
             stat.setString(2, supplier.getSupplierName());
             stat.setString(3, supplier.getSupplierAddress());
             stat.setString(4, supplier.getSupplierContact());
-            stat.setString(5, supplier.getSupplierCategory());
+            stat.setString(5, supplier.getSupplierEmail());
             stat.setDouble(6, supplier.getPanNo());
             stat.executeUpdate();
             return true;
@@ -75,7 +75,7 @@ public class SupplierImplement implements SupplierServices {
                 supplier.setSupplierName(res.getString("supplier_name"));
                 supplier.setSupplierAddress(res.getString("supplier_address"));
                 supplier.setSupplierContact(res.getString("supplier_contact"));
-                supplier.setSupplierCategory(res.getString("supplier_category"));
+                supplier.setSupplierEmail(res.getString("supplier_email"));
                 supplier.setPanNo(res.getDouble("pan_no"));
 
                 supplierData.add(supplier);
