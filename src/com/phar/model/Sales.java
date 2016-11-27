@@ -19,6 +19,15 @@ public class Sales {
     private String billNo;
     private String address;
     private String party;
+    private float total;
+
+    public float getTotal() {
+        return total;
+    }
+
+    public void setTotal(float total) {
+        this.total = total;
+    }
 
     public String getParty() {
         return party;

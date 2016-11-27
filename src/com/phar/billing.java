@@ -19,7 +19,7 @@ public abstract class billing {
             String add = "";
             String paymode = "Cash";
             String user = "User1";
-            double amt = 984.63;
+//            double amt = 984.63;
             double rounding = 0.37;
             double netAmt = 985.00;
             int k = 0;
@@ -49,14 +49,6 @@ public abstract class billing {
                             + "================================================================\n"
                             + "SN. Particular          Batch     Expiry   Qty  Rate     Amount\n"
                             + "----------------------------------------------------------------\n";
-            String amount =
-                    "\n \n \n\t\t\t\t\t\t\t\t\t\t   Total Amount: " + amt + "\n"
-                            + "\t\t\t\t\t\t\t\t\t\t       Rounding: " + rounding + "\n"
-                            + "\t\t\t\t\t\t\t\t\t\t     Net Amount: " + netAmt + "\n"
-                            + "In Words: \n"
-                            + "-----------------------------------------------------------------\n"
-                            + "Thank you. \n"
-                            + "User: " + user + "\n";
             String bill = Header;
             for (int i = 0; i < counter; i++) {
                 String pName = s.get(i).getProductName();
@@ -84,6 +76,14 @@ public abstract class billing {
                         sn + "\t" + pName + "\t" + batch + expiry + "  " + qty + "\t" + rate + " \t " + amtt + "\n";
                 bill = bill + items;
             }
+            String amount =
+                    "\n \n \n\t\t\t\t\t\t\t\t\t\t   Total Amount: " +  s.get(0).getTotal() + "\n"
+                            + "\t\t\t\t\t\t\t\t\t\t       Rounding: " + rounding + "\n"
+                            + "\t\t\t\t\t\t\t\t\t\t     Net Amount: " + netAmt + "\n"
+                            + "In Words: \n"
+                            + "-----------------------------------------------------------------\n"
+                            + "Thank you. \n"
+                            + "User: " + user + "\n";
             bill = bill + amount;
             System.out.println(bill);
             // printCard(bill);

@@ -141,16 +141,11 @@ public class SalesController implements Initializable {
         s.setExpireDate(pExpire.getText());
         s.setDiscount(Double.valueOf(pDiscount.getText()));
         s.setAmount(Double.valueOf(pAmount.getText()));
-
         s.setBillNo(pBillNo.getText());
         s.setParty(pParty.getText());
         s.setAddress(pAddress.getText());
         s.setPrescribedBy(pPrescribedBy.getText());
         s.setProductDate(tDate.getValue().toString());
-
-        productTableList.add(s);
-
-        productBill.add(s);
 
         proId.setCellValueFactory(new PropertyValueFactory<Sales, String>("productID"));
         proName.setCellValueFactory(new PropertyValueFactory<Sales, String>("productName"));
@@ -167,6 +162,9 @@ public class SalesController implements Initializable {
         getAmountValue.add(total1);
         newTotal += total1;
         total.setText(String.valueOf(newTotal));
+        s.setTotal(newTotal);
+        productTableList.add(s);
+        productBill.add(s);
 
         Double newQty = qtyLeft - Double.valueOf(qEntered.getText());
         String sql1 = "UPDATE store SET quantity='" + newQty + "' WHERE product_name = '" + pName.getValue() + "'";
