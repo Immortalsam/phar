@@ -3,8 +3,8 @@ package com.phar.controller;
 import com.phar.billing;
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
+import com.phar.extraFunctionality.AutoGenerator;
 import com.phar.extraFunctionality.CFunctions;
-import com.phar.model.ProductEntry;
 import com.phar.model.Sales;
 import com.phar.model.SalesInfo;
 import javafx.collections.FXCollections;
@@ -91,10 +91,11 @@ public class SalesController implements Initializable {
     private ObservableList<SalesInfo> salesInfoList = FXCollections.observableArrayList();
     private Double qtyLeft;
     private float newTotal = 0;
-
+    private AutoGenerator generator = new AutoGenerator();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        pBillNo.setText(generator.CurrentID("BID"));
         tDate.setValue(LocalDate.now());
         try {
             connection = DatabaseConnection.getConnection();
@@ -204,7 +205,7 @@ public class SalesController implements Initializable {
 
         String query = "INSERT into sales_info(sales_bill, sales_party, customer_address, prescribed_by, product_name, sales_date, sales_amount, product_quantity) VALUES (?,?,?,?,?,?,?,?) ";
         for (SalesInfo salesInfo : salesInfoList) {
-            try{
+            try {
                 preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, salesInfo.getSalesBill());
                 preparedStatement.setString(2, salesInfo.getSalesParty());
@@ -215,8 +216,7 @@ public class SalesController implements Initializable {
                 preparedStatement.setFloat(7, salesInfo.getSalesAmount());
                 preparedStatement.setInt(8, salesInfo.getProductQuantity());
                 preparedStatement.executeUpdate();
-                }
-            catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
