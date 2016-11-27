@@ -57,6 +57,6 @@ public class SupplierController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         AutoGenerator generator = new AutoGenerator();
-        supplierId.setText(generator.NewID("SID"));
+        supplierId.setText(generator.CurrentID("SID"));
     }
 }

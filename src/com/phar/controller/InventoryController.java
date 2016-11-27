@@ -27,10 +27,10 @@ import java.util.ResourceBundle;
 public class InventoryController implements Initializable {
 
     @FXML
-    private ComboBox<String> inventoryProductList;
+    private ComboBox<String> inventoryProductList, inventoryBatch;
 
     @FXML
-    private TextField inventoryQty, inventoryBatch, inventoryMrp, inventoryRackNo, inventoryProductExpDate;
+    private TextField inventoryQty, inventoryMrp, inventoryRackNo, inventoryProductExpDate;
 
     @FXML
     private Button addToInventory;
@@ -41,6 +41,7 @@ public class InventoryController implements Initializable {
     private Connection connection;
     private ResultSet resultSet;
     private List<String> productList = new ArrayList<String>();
+    private List<String> batchList = new ArrayList<>();
     private Double qtyLeft;
     private String productIDD;
 
@@ -50,25 +51,38 @@ public class InventoryController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            resultSet = DatabaseOperations.simpleSelect("inventory", "product_name", "null");
+            resultSet = DatabaseOperations.simpleSelect("inventory", "DISTINCT product_name", "quantity >= 1");
             while (resultSet.next()) {
                 productList.add(resultSet.getString("product_name"));
             }
             inventoryProductList.getItems().addAll(productList);
             inventoryProductList.valueProperty().addListener((observable, oldValue, newValue) -> {
-                resultSet = DatabaseOperations.simpleSelect("inventory", "product_id,expire_date,quantity,batch,mRP", "product_name='" + inventoryProductList.getValue() + "'");
+                inventoryBatch.getItems().clear();
+                batchList.clear();
+                resultSet = DatabaseOperations.simpleSelect("inventory", "batch", "product_name='" + inventoryProductList.getValue() + "'");
                 try {
                     while (resultSet.next()) {
-                        productIDD = resultSet.getString("product_id");
-                        inventoryProductExpDate.setText(resultSet.getString("expire_date"));
-                        inventoryBatch.setText(resultSet.getString("batch"));
-                        qtyLbl.setText("Quantity Left : " + resultSet.getString("quantity"));
-                        qtyLeft = Double.valueOf(resultSet.getString("quantity"));
-                        inventoryMrp.setText(resultSet.getString("mRP"));
+                        batchList.add(resultSet.getString("batch"));
                     }
+
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                inventoryBatch.getItems().addAll(batchList);
+                inventoryBatch.valueProperty().addListener((observable1, oldValue1, newValue1) -> {
+                    resultSet = DatabaseOperations.simpleSelect("inventory", "product_id,expire_date,quantity,mRP", "batch=" + inventoryBatch.getValue());
+                    try {
+                        while (resultSet.next()) {
+                            productIDD = resultSet.getString("product_id");
+                            inventoryProductExpDate.setText(resultSet.getString("expire_date"));
+                            qtyLbl.setText("Quantity Left : " + resultSet.getString("quantity"));
+                            qtyLeft = Double.valueOf(resultSet.getString("quantity"));
+                            inventoryMrp.setText(resultSet.getString("mRP"));
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                });
             });
         } catch (SQLException e) {
             e.printStackTrace();
@@ -81,14 +95,14 @@ public class InventoryController implements Initializable {
 
         sales.setProductID(productIDD);
         sales.setProductName(inventoryProductList.getValue());
-        sales.setProductBatch(inventoryBatch.getText());
+        sales.setProductBatch(inventoryBatch.getValue());
         sales.setProductQuantity(Integer.valueOf(inventoryQty.getText()));
         sales.setExpireDate(inventoryProductExpDate.getText());
         sales.setmRp(Double.valueOf(inventoryMrp.getText()));
         sales.setRackNumber(inventoryRackNo.getText());
 
         Double newQuantity = qtyLeft - Double.valueOf(inventoryQty.getText());
-        query = "UPDATE inventory SET quantity='" + newQuantity + "' WHERE product_name = '" + inventoryProductList.getValue() + "'";
+        query = "UPDATE inventory SET quantity='" + newQuantity + "' WHERE product_name = '" + inventoryProductList.getValue() + "' AND batch=" + inventoryBatch.getValue();
         System.out.println(query);
         try {
             connection = DatabaseConnection.getConnection();

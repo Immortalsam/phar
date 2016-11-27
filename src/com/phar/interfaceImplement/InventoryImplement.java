@@ -21,7 +21,7 @@ public class InventoryImplement implements InventoryService {
         Inventory inventory = new Inventory();
         inventory.setProductName(product.getProductName());
         inventory.setProductID(product.getProductId());
-        inventory.setQuantity((double) product.getProductQuantity());
+        inventory.setQuantity((double) product.getProductQuantity() * product.getProductQuFoR());
         inventory.setBatch(String.valueOf(product.getProductBatch()));
         inventory.setmRP(((double) product.getProductMrp()));
         inventory.setExpireDate(product.getExpCombined());

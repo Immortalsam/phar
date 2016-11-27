@@ -22,39 +22,25 @@ public class MainMenuController implements Initializable {
     private NavigationHandler navigation = new NavigationHandler();
 
     @FXML
-    private Button purchaseEntryBtn, productDetailsBtn, productEntryBtn, inventoryBtn, salesBtn;
-
-    @FXML
-    private Button oldSupplier;
-
-    @FXML
-    private Button newSupplier;
-
-    @FXML
-    void menuSupplierButton(ActionEvent event) {
-
-        CFunctions.session.put("userName", "");
-        CFunctions.session.put("passWord", "");
-        navigation.frameNavigation(event, Constants.SUPPLIER_FXML, Constants.MAIN_MENU_FXML, "Supplier Details", "Main Menu");
-    }
-
-
-    @FXML
-    void mainPurchaseButton(ActionEvent event) {
-        productDetailsBtn.setOpacity(1);
-        purchaseEntryBtn.setOpacity(1);
-        productEntryBtn.setOpacity(1);
-        oldSupplier.setOpacity(0);
-        newSupplier.setOpacity(0);
-
-    }
+    private Button purchaseEntryBtn, productDetailsBtn, productEntryBtn, inventoryBtn, salesBtn, oldSupplier, paymentReceiveBtn, paymentPayBtn, paymentBtn, newSupplier;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        System.out.println("Username : " + CFunctions.session.get("userName", ""));
-        System.out.println("Password : " + CFunctions.session.get("passWord", ""));
+//        System.out.println("Username : " + CFunctions.session.get("userName", ""));
+//        System.out.println("Password : " + CFunctions.session.get("passWord", ""));
 
     }
+
+
+//    void mainPurchaseButton(ActionEvent event) {
+//        productDetailsBtn.setOpacity(1);
+//        purchaseEntryBtn.setOpacity(1);
+//        productEntryBtn.setOpacity(1);
+//        oldSupplier.setOpacity(0);
+//        newSupplier.setOpacity(0);
+//        paymentPayBtn.setOpacity(0);
+//        paymentReceiveBtn.setOpacity(0);
+//    }
 
     public void showOption(MouseEvent mouseEvent) {
         oldSupplier.setOpacity(1);
@@ -62,6 +48,8 @@ public class MainMenuController implements Initializable {
         productDetailsBtn.setOpacity(0);
         purchaseEntryBtn.setOpacity(0);
         productEntryBtn.setOpacity(0);
+        paymentPayBtn.setOpacity(0);
+        paymentReceiveBtn.setOpacity(0);
     }
 
 
@@ -85,13 +73,28 @@ public class MainMenuController implements Initializable {
         navigation.frameNavigation(event, Constants.INVENTORY_FXML, Constants.MAIN_MENU_FXML, "Inventory to Store", "Main Menu");
     }
 
-    @FXML
     public void salesBtnClick(ActionEvent event) {
         navigation.frameNavigation(event, Constants.SALES_FXML, Constants.MAIN_MENU_FXML, "Sales", "Main Menu");
     }
 
     public void oldSupplierBtnClick(ActionEvent actionEvent) {
         navigation.frameNavigation(actionEvent, Constants.OLD_SUPPLIER_FXML, Constants.MAIN_MENU_FXML, "Old Suppliers", "Main Menu");
+    }
+
+    public void paymentBtnClick(ActionEvent actionEvent) {
+        oldSupplier.setOpacity(0);
+        newSupplier.setOpacity(0);
+        productDetailsBtn.setOpacity(0);
+        purchaseEntryBtn.setOpacity(0);
+        productEntryBtn.setOpacity(0);
+        paymentPayBtn.setOpacity(1);
+        paymentReceiveBtn.setOpacity(1);
+    }
+
+    public void paymentReceiveBtnClick(ActionEvent actionEvent) {
+    }
+
+    public void paymentPayBtnClick(ActionEvent actionEvent) {
     }
 }
 

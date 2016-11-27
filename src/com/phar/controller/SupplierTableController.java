@@ -6,19 +6,22 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.function.Predicate;
 
 /**
  * Created by Sam on 11/9/2016.
  */
 
-public class SupplierTableController {
+public class SupplierTableController implements Initializable {
 
     @FXML
     private TableView<Supplier> supplierTable;
@@ -50,19 +53,6 @@ public class SupplierTableController {
 
     }
 
-    @FXML
-    private void initialize() {
-        SupplierImplement supplierImplement = new SupplierImplement();
-        customerList = supplierImplement.listSupplier();
-        supplierId.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierId"));
-        supplierName.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierName"));
-        supplierAddress.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierAddress"));
-        supplierContact.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierContact"));
-        supplierEmail.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierEmail"));
-        supplierPanNo.setCellValueFactory(new PropertyValueFactory<Supplier, Double>("panNo"));
-        supplierTable.setItems(customerList);
-    }
-
 
     public void searchSupplier(KeyEvent keyEvent) {
         FilteredList<Supplier> filteredList = new FilteredList<>(customerList, e -> true);
@@ -89,6 +79,19 @@ public class SupplierTableController {
             sortedList.comparatorProperty().bind(supplierTable.comparatorProperty());
             supplierTable.setItems(sortedList);
         });
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        SupplierImplement supplierImplement = new SupplierImplement();
+        customerList = supplierImplement.listSupplier();
+        supplierId.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierId"));
+        supplierName.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierName"));
+        supplierAddress.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierAddress"));
+        supplierContact.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierContact"));
+        supplierEmail.setCellValueFactory(new PropertyValueFactory<Supplier, String>("supplierEmail"));
+        supplierPanNo.setCellValueFactory(new PropertyValueFactory<Supplier, Double>("panNo"));
+        supplierTable.setItems(customerList);
     }
 }
 

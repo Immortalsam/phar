@@ -99,7 +99,7 @@ public class SalesController implements Initializable {
         tDate.setValue(LocalDate.now());
         try {
             connection = DatabaseConnection.getConnection();
-            String query = "SELECT product_name from store";
+            String query = "SELECT product_name,rack_number from store WHERE quantity >= 1";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
