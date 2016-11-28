@@ -171,7 +171,7 @@ public class SalesController implements Initializable {
         s.setProductQuantity(Integer.valueOf(qEntered.getText()));
         s.setExpireDate(pExpire.getText());
         s.setDiscount(Double.valueOf(pDiscount.getText()));
-        s.setAmount(Double.valueOf(pAmount.getText()));
+        s.setAmount(Double.valueOf(pAmount.getText()) * Integer.valueOf(qEntered.getText()));
         s.setBillNo(pBillNo.getText());
         s.setParty(searchCustomer.getValue());
         s.setPayment(paymentmode.getValue());
@@ -189,9 +189,10 @@ public class SalesController implements Initializable {
         proDiscount.setCellValueFactory(new PropertyValueFactory<Sales, Double>("discount"));
 
         pTableStore.setItems(productTableList);
-        float total1 = Float.valueOf(pAmount.getText());
 
-        getAmountValue.add(total1);
+        float total1 = Float.valueOf(String.valueOf(s.getAmount()));
+
+        //getAmountValue.add(total1);
         newTotal += total1;
         total.setText(String.valueOf(newTotal));
         s.setTotal(newTotal);

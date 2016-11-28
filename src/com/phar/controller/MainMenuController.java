@@ -4,7 +4,6 @@ package com.phar.controller;
  * Created by Sam on 11/10/2016.
  */
 
-import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.Constants;
 import com.phar.extraFunctionality.NavigationHandler;
 import javafx.event.ActionEvent;
@@ -22,7 +21,7 @@ public class MainMenuController implements Initializable {
     private NavigationHandler navigation = new NavigationHandler();
 
     @FXML
-    private Button purchaseEntryBtn, productDetailsBtn, productEntryBtn, inventoryBtn, salesBtn, oldSupplier, paymentReceiveBtn, paymentPayBtn, paymentBtn, newSupplier;
+    private Button billingBtn, purchaseEntryBtn, productDetailsBtn, productEntryBtn, inventoryBtn, salesBtn, oldSupplier, paymentReceiveBtn, paymentPayBtn, paymentBtn, newSupplier;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -95,6 +94,9 @@ public class MainMenuController implements Initializable {
     }
 
     public void paymentPayBtnClick(ActionEvent actionEvent) {
+    }
+
+    public void billingBtnClick(ActionEvent actionEvent) {
     }
 }
 

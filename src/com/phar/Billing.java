@@ -20,8 +20,8 @@ public class Billing {
             String paymode = "Cash";
             String user = "User1";
 //            double amt = 984.63;
-            double rounding = 0.37;
-            double netAmt = 985.00;
+            double gTotal = 0;
+            double rounding = 0.0;
             int k = 0;
             //  DefaultTableModel mod = (DefaultTableModel) jTable1.getModel();
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -57,7 +57,8 @@ public class Billing {
                 String expiry = s.get(i).getExpireDate();
                 Integer qty = s.get(i).getProductQuantity();
                 double rate = s.get(i).getmRp();
-                double amtt = qty * rate;
+//                double amtt = qty * rate;
+                double amtt = s.get(i).getTotal();
                 if (pName.length() > 16) {
                     pName = pName.substring(0, 16) + "  ";
                 } else {
@@ -75,11 +76,13 @@ public class Billing {
                 String items =
                         sn + "\t" + pName + "\t" + batch + expiry + "  " + qty + "\t" + rate + " \t " + amtt + "\n";
                 bill = bill + items;
+                gTotal += amtt;
             }
             String amount =
-                    "\n \n \n\t\t\t\t\t\t\t\t\t\t   Total Amount: " + s.get(0).getTotal() + "\n"
+//                    "\n \n \n\t\t\t\t\t\t\t\t\t\t   Total Amount: " + s.get(0).getTotal() + "\n"
+                    "\n \n \n\t\t\t\t\t\t\t\t\t\t   Total Amount: " + gTotal + "\n"
                             + "\t\t\t\t\t\t\t\t\t\t       Rounding: " + rounding + "\n"
-                            + "\t\t\t\t\t\t\t\t\t\t     Net Amount: " + netAmt + "\n"
+                            + "\t\t\t\t\t\t\t\t\t\t     Net Amount: " + gTotal + "\n"
                             + "In Words: \n"
                             + "-----------------------------------------------------------------\n"
                             + "Thank you. \n"
