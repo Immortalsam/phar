@@ -6,6 +6,8 @@ package com.phar.model;
 
 public class SalesInfo {
 
+
+    private String customerId;
     private String salesBill;
     private String salesParty;
     private String customerAddress;
@@ -14,6 +16,14 @@ public class SalesInfo {
     private int productQuantity;
     private String salesDate;
     private float salesAmount;
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
 
     public int getProductQuantity() {
         return productQuantity;

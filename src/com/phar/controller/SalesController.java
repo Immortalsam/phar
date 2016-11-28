@@ -5,6 +5,8 @@ import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.AutoGenerator;
 import com.phar.extraFunctionality.CFunctions;
+import com.phar.extraFunctionality.CustomComboBox;
+import com.phar.extraFunctionality.DatabaseOperations;
 import com.phar.model.Sales;
 import com.phar.model.SalesInfo;
 import javafx.collections.FXCollections;
@@ -36,6 +38,10 @@ public class SalesController implements Initializable {
     private TextField p_id1;
     @FXML
     private ComboBox<String> pName;
+    @FXML
+    private ComboBox<String> searchCustomer;
+    @FXML
+    private ComboBox<String> paymentmode;
     @FXML
     private TextField pBatch;
     @FXML
@@ -78,20 +84,21 @@ public class SalesController implements Initializable {
     private TextField pAddress;
     @FXML
     private TextField pBillNo;
-    @FXML
-    private TextField pParty;
+
     private Connection connection;
     private PreparedStatement preparedStatement;
     private ResultSet resultSet;
     private List<String> productList = new ArrayList<String>();
     private List<Float> getAmountValue = new ArrayList<>();
     private List<Sales> productBill = new ArrayList<>();
+    private List<String> customerList = new ArrayList<String>();
     private String pIdd;
     private ObservableList<Sales> productTableList = FXCollections.observableArrayList();
     private ObservableList<SalesInfo> salesInfoList = FXCollections.observableArrayList();
     private Double qtyLeft;
     private float newTotal = 0;
     private AutoGenerator generator = new AutoGenerator();
+    private String customer_id;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -117,7 +124,6 @@ public class SalesController implements Initializable {
                         qLeftInStore.setText(resultSet.getString("quantity"));
                         qtyLeft = Double.valueOf(resultSet.getString("quantity"));
                         pmrp.setText(resultSet.getString("mRP"));
-                        System.out.println(resultSet.getString("mRP"));
                         pExpire.setText(resultSet.getString("expire"));
                     }
                 } catch (SQLException e) {
@@ -127,6 +133,18 @@ public class SalesController implements Initializable {
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+        //search customer
+        new CustomComboBox<>(searchCustomer);
+        resultSet = DatabaseOperations.simpleSelect("customer_info", "customer_name", "null");
+        try {
+            while (resultSet.next()) {
+                customerList.add(resultSet.getString("customer_name"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        searchCustomer.getItems().addAll(customerList);
     }
 
     @FXML
@@ -142,7 +160,8 @@ public class SalesController implements Initializable {
         s.setDiscount(Double.valueOf(pDiscount.getText()));
         s.setAmount(Double.valueOf(pAmount.getText()));
         s.setBillNo(pBillNo.getText());
-        s.setParty(pParty.getText());
+        s.setParty(searchCustomer.getValue());
+        s.setPayment(paymentmode.getValue());
         s.setAddress(pAddress.getText());
         s.setPrescribedBy(pPrescribedBy.getText());
         s.setProductDate(tDate.getValue().toString());
@@ -190,8 +209,19 @@ public class SalesController implements Initializable {
 
     public void onClickSaveButton(ActionEvent actionEvent) {
         SalesInfo si = new SalesInfo();
+
+            resultSet = DatabaseOperations.simpleSelect("customer_info", "customer_id", "customer_name='" + searchCustomer.getValue() + "'");
+            try {
+                while (resultSet.next()) {
+                    System.out.println((resultSet.getString("customer_id")));
+                    si.setCustomerId(resultSet.getString("customer_id"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
         si.setSalesBill(pBillNo.getText());
-        si.setSalesParty(pParty.getText());
+        si.setSalesParty(searchCustomer.getValue());
         si.setCustomerAddress(pAddress.getText());
         si.setPrescribedBy(pPrescribedBy.getText());
         si.setProductName(pName.getValue());
@@ -201,18 +231,20 @@ public class SalesController implements Initializable {
 
         salesInfoList.add(si);
 
-        String query = "INSERT into sales_info(sales_bill, sales_party, customer_address, prescribed_by, product_name, sales_date, sales_amount, product_quantity) VALUES (?,?,?,?,?,?,?,?) ";
+        String query = "INSERT into sales_info(customer_id, sales_bill, sales_party, customer_address, prescribed_by, product_name, sales_date, sales_amount, product_quantity) VALUES (?,?,?,?,?,?,?,?,?) ";
         for (SalesInfo salesInfo : salesInfoList) {
             try {
                 preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, salesInfo.getSalesBill());
-                preparedStatement.setString(2, salesInfo.getSalesParty());
-                preparedStatement.setString(3, salesInfo.getCustomerAddress());
-                preparedStatement.setString(4, salesInfo.getPrescribedBy());
-                preparedStatement.setString(5, salesInfo.getProductName());
-                preparedStatement.setString(6, salesInfo.getSalesDate());
-                preparedStatement.setFloat(7, salesInfo.getSalesAmount());
-                preparedStatement.setInt(8, salesInfo.getProductQuantity());
+                System.out.println("THIS:" + salesInfo.getCustomerId());
+                preparedStatement.setString(1, salesInfo.getCustomerId());
+                preparedStatement.setString(2, salesInfo.getSalesBill());
+                preparedStatement.setString(3, salesInfo.getSalesParty());
+                preparedStatement.setString(4, salesInfo.getCustomerAddress());
+                preparedStatement.setString(5, salesInfo.getPrescribedBy());
+                preparedStatement.setString(6, salesInfo.getProductName());
+                preparedStatement.setString(7, salesInfo.getSalesDate());
+                preparedStatement.setFloat(8, salesInfo.getSalesAmount());
+                preparedStatement.setInt(9, salesInfo.getProductQuantity());
                 preparedStatement.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();

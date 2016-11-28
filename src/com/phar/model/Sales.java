@@ -12,6 +12,7 @@ public class Sales {
     private Double mRp;
     private String expireDate;
     private String rackNumber;
+    private String payment;
     private Double discount;
     private Double amount;
     private String productDate;
@@ -20,6 +21,14 @@ public class Sales {
     private String address;
     private String party;
     private float total;
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
+    }
 
     public float getTotal() {
         return total;
