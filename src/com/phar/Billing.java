@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by Manish on 11/19/2016.
  */
-public abstract class billing {
+public class Billing {
     public static void bill(List<Sales> s, int counter) {
         {
             //Sales s = new Sales();
@@ -77,7 +77,7 @@ public abstract class billing {
                 bill = bill + items;
             }
             String amount =
-                    "\n \n \n\t\t\t\t\t\t\t\t\t\t   Total Amount: " +  s.get(0).getTotal() + "\n"
+                    "\n \n \n\t\t\t\t\t\t\t\t\t\t   Total Amount: " + s.get(0).getTotal() + "\n"
                             + "\t\t\t\t\t\t\t\t\t\t       Rounding: " + rounding + "\n"
                             + "\t\t\t\t\t\t\t\t\t\t     Net Amount: " + netAmt + "\n"
                             + "In Words: \n"

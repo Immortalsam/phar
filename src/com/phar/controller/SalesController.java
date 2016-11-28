@@ -1,10 +1,9 @@
 package com.phar.controller;
 
-import com.phar.billing;
+import com.phar.Billing;
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.AutoGenerator;
-import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DatabaseOperations;
 import com.phar.model.Sales;
@@ -38,14 +37,14 @@ public class SalesController implements Initializable {
     private TextField p_id1;
     @FXML
     private ComboBox<String> pName;
+
     @FXML
-    private ComboBox<String> searchCustomer;
+    private ComboBox pBatch;
     @FXML
-    private ComboBox<String> paymentmode;
+    private ComboBox<String> searchCustomer, paymentmode;
+
     @FXML
-    private TextField pBatch;
-    @FXML
-    private TextField qLeftInStore;
+    private Label qLeftInStore;
     @FXML
     private TextField qEntered;
     @FXML
@@ -92,6 +91,7 @@ public class SalesController implements Initializable {
     private List<Float> getAmountValue = new ArrayList<>();
     private List<Sales> productBill = new ArrayList<>();
     private List<String> customerList = new ArrayList<String>();
+    private List<String> batchList = new ArrayList<>();
     private String pIdd;
     private ObservableList<Sales> productTableList = FXCollections.observableArrayList();
     private ObservableList<SalesInfo> salesInfoList = FXCollections.observableArrayList();
@@ -105,33 +105,13 @@ public class SalesController implements Initializable {
         pBillNo.setText(generator.CurrentID("BID"));
         tDate.setValue(LocalDate.now());
         try {
-            connection = DatabaseConnection.getConnection();
-            String query = "SELECT product_name,rack_number from store WHERE quantity >= 1";
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
+            resultSet = DatabaseOperations.simpleSelect("store", "DISTINCT product_name", "null");
             while (resultSet.next()) {
                 productList.add(resultSet.getString("product_name"));
             }
             pName.getItems().addAll(productList);
-            pName.valueProperty().addListener((observable, oldValue, newValue) -> {
-                String otherInfo = "SELECT product_id,batch,quantity,mRP, expire FROM store WHERE product_name='" + pName.getValue() + "'";
-                resultSet = CFunctions.executeQuery(preparedStatement, connection, otherInfo, resultSet);
-                try {
-                    while (resultSet.next()) {
-                        pIdd = resultSet.getString("product_id");
-                        p_id1.setText(pIdd);
-                        pBatch.setText(resultSet.getString("batch"));
-                        qLeftInStore.setText(resultSet.getString("quantity"));
-                        qtyLeft = Double.valueOf(resultSet.getString("quantity"));
-                        pmrp.setText(resultSet.getString("mRP"));
-                        pExpire.setText(resultSet.getString("expire"));
-                        //something
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            });
-        } catch (SQLException | ClassNotFoundException e) {
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -145,6 +125,38 @@ public class SalesController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        pName.valueProperty().addListener((observable, oldValue, newValue) -> {
+            pBatch.getItems().clear();
+            batchList.clear();
+            qLeftInStore.setText("0");
+            resultSet = DatabaseOperations.simpleSelect("store", "product_id,batch", "product_name='" + pName.getValue() + "'");
+            try {
+                while (resultSet.next()) {
+                    pIdd = resultSet.getString("product_id");
+                    p_id1.setText(pIdd);
+                    batchList.add(resultSet.getString("batch"));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            pBatch.getItems().addAll(batchList);
+        });
+
+        pBatch.valueProperty().addListener((observable1, oldValue1, newValue1) -> {
+            if (pBatch.getValue() != null) {
+                resultSet = DatabaseOperations.simpleSelect("store", "quantity,mRP,expire", "product_name='" + pName.getValue() + "' AND batch=" + pBatch.getValue());
+                try {
+                    while (resultSet.next()) {
+                        qLeftInStore.setText(resultSet.getString("quantity"));
+                        qtyLeft = Double.valueOf(resultSet.getString("quantity"));
+                        pmrp.setText(resultSet.getString("mRP"));
+                        pExpire.setText(resultSet.getString("expire"));
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         searchCustomer.getItems().addAll(customerList);
     }
 
@@ -154,7 +166,7 @@ public class SalesController implements Initializable {
         Sales s = new Sales();
         s.setProductID(pIdd);
         s.setProductName(pName.getValue());
-        s.setProductBatch(pBatch.getText());
+        s.setProductBatch((String) pBatch.getValue());
         s.setmRp(Double.valueOf(pmrp.getText()));
         s.setProductQuantity(Integer.valueOf(qEntered.getText()));
         s.setExpireDate(pExpire.getText());
@@ -190,36 +202,37 @@ public class SalesController implements Initializable {
         String sql1 = "UPDATE store SET quantity='" + newQty + "' WHERE product_name = '" + pName.getValue() + "'";
         System.out.println(sql1);
         try {
-            preparedStatement = connection.prepareStatement(sql1);
-            preparedStatement.executeUpdate();
+//            preparedStatement = connection.prepareStatement(sql1);
+//            preparedStatement.executeUpdate();
+            DatabaseOperations.simpleUpdate(sql1);
             sql1 = "SELECT quantity FROM store WHERE product_name ='" + pName.getValue() + "'";
-            preparedStatement = connection.prepareStatement(sql1);
-            resultSet = preparedStatement.executeQuery();
+
+            resultSet = DatabaseOperations.simpleSelect("store", "quantity", "product_name ='" + pName.getValue() + "'");
             while (resultSet.next()) {
                 qLeftInStore.setText(resultSet.getString("quantity"));
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     @FXML
     void onClickPrintBill(ActionEvent event) {
-        billing.bill(productBill, counter);
+        Billing.bill(productBill, counter);
     }
 
     public void onClickSaveButton(ActionEvent actionEvent) {
         SalesInfo si = new SalesInfo();
 
-            resultSet = DatabaseOperations.simpleSelect("customer_info", "customer_id", "customer_name='" + searchCustomer.getValue() + "'");
-            try {
-                while (resultSet.next()) {
-                    System.out.println((resultSet.getString("customer_id")));
-                    si.setCustomerId(resultSet.getString("customer_id"));
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
+        resultSet = DatabaseOperations.simpleSelect("customer_info", "customer_id", "customer_name='" + searchCustomer.getValue() + "'");
+        try {
+            while (resultSet.next()) {
+                System.out.println((resultSet.getString("customer_id")));
+                si.setCustomerId(resultSet.getString("customer_id"));
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         si.setSalesBill(pBillNo.getText());
         si.setSalesParty(searchCustomer.getValue());
@@ -235,6 +248,7 @@ public class SalesController implements Initializable {
         String query = "INSERT into sales_info(customer_id, sales_bill, sales_party, customer_address, prescribed_by, product_name, sales_date, sales_amount, product_quantity) VALUES (?,?,?,?,?,?,?,?,?) ";
         for (SalesInfo salesInfo : salesInfoList) {
             try {
+                connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement(query);
                 System.out.println("THIS:" + salesInfo.getCustomerId());
                 preparedStatement.setString(1, salesInfo.getCustomerId());
@@ -247,7 +261,7 @@ public class SalesController implements Initializable {
                 preparedStatement.setFloat(8, salesInfo.getSalesAmount());
                 preparedStatement.setInt(9, salesInfo.getProductQuantity());
                 preparedStatement.executeUpdate();
-            } catch (SQLException e) {
+            } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
         }
