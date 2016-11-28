@@ -6,6 +6,14 @@ package com.phar.extraFunctionality;
 public class Constants {
     static final public String[] productCategoryList = {"General", "Essential", "Narcotic", "Cosmetic"};
     static final public String[] yesNo = {"Yes", "No"};
+
+    static final public String AtoZ = "[A-Z]*";
+    static final public String atoz = "[a-z]*";
+    static final public String ZerotoNine = "[0-9]*";
+    static final public String Atoz = "[a-zA-Z]*";
+    static final public String forEmail = "/@/";
+
+
 //
 //    static final public String supplierIDGenQuery = "SELECT value FROM idGen WHERE ofID = 'supplierIdGen'";
 //    static final public String supplierIDUpdateQuery = "UPDATE idGen SET value ='";

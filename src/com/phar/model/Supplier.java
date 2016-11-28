@@ -11,7 +11,7 @@ public class Supplier {
     private String supplierAddress;
     private String supplierContact;
     private String supplierEmail;
-    private double panNo;
+    private String panNo;
 
 
     public String getSupplierId() {
@@ -54,11 +54,11 @@ public class Supplier {
         this.supplierEmail = supplierEmail;
     }
 
-    public double getPanNo() {
+    public String getPanNo() {
         return panNo;
     }
 
-    public void setPanNo(double panNo) {
+    public void setPanNo(String panNo) {
         this.panNo = panNo;
     }
 }

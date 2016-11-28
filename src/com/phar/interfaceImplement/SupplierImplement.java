@@ -1,5 +1,6 @@
 package com.phar.interfaceImplement;
 
+import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.interfaces.SupplierServices;
 import com.phar.model.Supplier;
@@ -29,22 +30,28 @@ public class SupplierImplement implements SupplierServices {
     @Override
     public boolean addSupplier(Supplier supplier) {
 
-        String addquery = "INSERT into supplier (supplier_id, supplier_name, supplier_address, supplier_contact, " +
-                "supplier_email, pan_no) VALUES (?,?,?,?,?,?)";
+        if (supplier.getPanNo().length() != 10) {
+            CustomAlert alert = new CustomAlert("PAN Length Invalid", "PAN no should be minimum of 10 length");
+            alert.withoutHeader();
+        } else {
 
-        try {
-            PreparedStatement stat = conn.prepareStatement(addquery);
-            stat.setString(1, supplier.getSupplierId());
-            stat.setString(2, supplier.getSupplierName());
-            stat.setString(3, supplier.getSupplierAddress());
-            stat.setString(4, supplier.getSupplierContact());
-            stat.setString(5, supplier.getSupplierEmail());
-            stat.setDouble(6, supplier.getPanNo());
-            stat.executeUpdate();
-            return true;
+            String addquery = "INSERT into supplier (supplier_id, supplier_name, supplier_address, supplier_contact, " +
+                    "supplier_email, pan_no) VALUES (?,?,?,?,?,?)";
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+            try {
+                PreparedStatement stat = conn.prepareStatement(addquery);
+                stat.setString(1, supplier.getSupplierId());
+                stat.setString(2, supplier.getSupplierName());
+                stat.setString(3, supplier.getSupplierAddress());
+                stat.setString(4, supplier.getSupplierContact());
+                stat.setString(5, supplier.getSupplierEmail());
+                stat.setString(6, supplier.getPanNo());
+                stat.executeUpdate();
+                return true;
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
         return false;
     }
@@ -76,7 +83,7 @@ public class SupplierImplement implements SupplierServices {
                 supplier.setSupplierAddress(res.getString("supplier_address"));
                 supplier.setSupplierContact(res.getString("supplier_contact"));
                 supplier.setSupplierEmail(res.getString("supplier_email"));
-                supplier.setPanNo(res.getDouble("pan_no"));
+                supplier.setPanNo(res.getString("pan_no"));
 
                 supplierData.add(supplier);
             }

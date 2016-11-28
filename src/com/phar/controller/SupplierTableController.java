@@ -94,6 +94,3 @@ public class SupplierTableController implements Initializable {
         supplierTable.setItems(customerList);
     }
 }
-
-
-
