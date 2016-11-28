@@ -125,6 +125,7 @@ public class SalesController implements Initializable {
                         qtyLeft = Double.valueOf(resultSet.getString("quantity"));
                         pmrp.setText(resultSet.getString("mRP"));
                         pExpire.setText(resultSet.getString("expire"));
+                        //something
                     }
                 } catch (SQLException e) {
                     e.printStackTrace();
