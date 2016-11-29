@@ -36,53 +36,25 @@ public class SalesController implements Initializable {
     @FXML
     private TextField p_id1;
     @FXML
-    private ComboBox<String> pName;
-
-    @FXML
-    private ComboBox pBatch;
-    @FXML
-    private ComboBox<String> searchCustomer, paymentmode;
-
+    private ComboBox<String> pName, pBatch, searchCustomer, paymentMode;
     @FXML
     private Label qLeftInStore;
     @FXML
-    private TextField qEntered;
+    private TextField qEntered, pmrp, pDiscount, pAmount, pExpire;
     @FXML
-    private TextField pmrp;
-    @FXML
-    private TextField pDiscount;
-    @FXML
-    private TextField pAmount;
-    @FXML
-    private TextField pExpire;
-    @FXML
-    private TableColumn<Sales, String> proName;
-    @FXML
-    private TableColumn<Sales, String> proId;
-    @FXML
-    private TableColumn<Sales, String> proBatch;
+    private TableColumn<Sales, String> proName, proId, proBatch, proExpDate;
     @FXML
     private TableView<Sales> pTableStore;
     @FXML
     private TableColumn<Sales, Integer> proQuantity;
     @FXML
-    private TableColumn<Sales, Double> proMrp;
+    private TableColumn<Sales, Double> proDiscount, proMrp, proAmount;
     @FXML
-    private TableColumn<Sales, String> proExpDate;
-    @FXML
-    private TableColumn<Sales, Double> proDiscount;
-    @FXML
-    private TableColumn<Sales, Double> proAmount;
-    @FXML
-    private TextField total;
+    private Label total;
     @FXML
     private DatePicker tDate;
     @FXML
-    private TextField pPrescribedBy;
-    @FXML
-    private TextField pAddress;
-    @FXML
-    private TextField pBillNo;
+    private TextField pPrescribedBy, pAddress, pBillNo;
 
     private Connection connection;
     private PreparedStatement preparedStatement;
@@ -117,6 +89,19 @@ public class SalesController implements Initializable {
 
         //search customer
         new CustomComboBox<>(searchCustomer);
+
+        searchCustomer.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (searchCustomer.getValue().equals("CASH_SALES")) {
+                pAddress.setDisable(true);
+                pPrescribedBy.setDisable(true);
+                paymentMode.setDisable(true);
+            } else {
+                pAddress.setDisable(false);
+                pPrescribedBy.setDisable(false);
+                paymentMode.setDisable(false);
+            }
+        });
+
         resultSet = DatabaseOperations.simpleSelect("customer_info", "customer_name", "null");
         try {
             while (resultSet.next()) {
@@ -174,7 +159,7 @@ public class SalesController implements Initializable {
         s.setAmount(Double.valueOf(pAmount.getText()) * Integer.valueOf(qEntered.getText()));
         s.setBillNo(pBillNo.getText());
         s.setParty(searchCustomer.getValue());
-        s.setPayment(paymentmode.getValue());
+        s.setPayment(paymentMode.getValue());
         s.setAddress(pAddress.getText());
         s.setPrescribedBy(pPrescribedBy.getText());
         s.setProductDate(tDate.getValue().toString());
@@ -223,6 +208,7 @@ public class SalesController implements Initializable {
     }
 
     public void onClickSaveButton(ActionEvent actionEvent) {
+
         SalesInfo si = new SalesInfo();
 
         resultSet = DatabaseOperations.simpleSelect("customer_info", "customer_id", "customer_name='" + searchCustomer.getValue() + "'");
