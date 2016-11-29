@@ -21,7 +21,7 @@ public class MainMenuController implements Initializable {
     private NavigationHandler navigation = new NavigationHandler();
 
     @FXML
-    private Button billingBtn, purchaseEntryBtn, productDetailsBtn, productEntryBtn, inventoryBtn, salesBtn, oldSupplier, paymentReceiveBtn, paymentPayBtn, paymentBtn, newSupplier;
+    private Button purchaseDepartmentBtn, billingBtn, purchaseEntryBtn, productDetailsBtn, productEntryBtn, inventoryBtn, salesBtn, oldSupplier, paymentReceiveBtn, paymentPayBtn, paymentBtn, newSupplier;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -29,17 +29,6 @@ public class MainMenuController implements Initializable {
 //        System.out.println("Password : " + CFunctions.session.get("passWord", ""));
 
     }
-
-
-//    void mainPurchaseButton(ActionEvent event) {
-//        productDetailsBtn.setOpacity(1);
-//        purchaseEntryBtn.setOpacity(1);
-//        productEntryBtn.setOpacity(1);
-//        oldSupplier.setOpacity(0);
-//        newSupplier.setOpacity(0);
-//        paymentPayBtn.setOpacity(0);
-//        paymentReceiveBtn.setOpacity(0);
-//    }
 
     public void showOption(MouseEvent mouseEvent) {
         oldSupplier.setOpacity(1);
@@ -97,6 +86,16 @@ public class MainMenuController implements Initializable {
     }
 
     public void billingBtnClick(ActionEvent actionEvent) {
+    }
+
+    public void purchaseDepartmentBtnClick(ActionEvent actionEvent) {
+        productDetailsBtn.setOpacity(1);
+        purchaseEntryBtn.setOpacity(1);
+        productEntryBtn.setOpacity(1);
+        oldSupplier.setOpacity(0);
+        newSupplier.setOpacity(0);
+        paymentPayBtn.setOpacity(0);
+        paymentReceiveBtn.setOpacity(0);
     }
 }
 
