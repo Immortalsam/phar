@@ -7,6 +7,8 @@ import com.phar.extraFunctionality.AutoGenerator;
 import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DatabaseOperations;
+import com.phar.interfaceImplement.CustomerBillImplement;
+import com.phar.model.CustomerBill;
 import com.phar.model.Sales;
 import com.phar.model.SalesInfo;
 import javafx.collections.FXCollections;
@@ -221,12 +223,13 @@ public class SalesController implements Initializable {
     public void onClickSaveButton(ActionEvent actionEvent) {
 
         SalesInfo si = new SalesInfo();
+        CustomerBill cb = new CustomerBill();
 
         resultSet = DatabaseOperations.simpleSelect("customer_info", "customer_id", "customer_name='" + searchCustomer.getValue() + "'");
         try {
             while (resultSet.next()) {
-                System.out.println((resultSet.getString("customer_id")));
                 si.setCustomerId(resultSet.getString("customer_id"));
+                cb.setCustomerId(resultSet.getString("customer_id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -240,8 +243,19 @@ public class SalesController implements Initializable {
         si.setSalesDate(tDate.getValue().toString());
         si.setProductQuantity(Integer.valueOf(qEntered.getText()));
         si.setSalesAmount(Float.valueOf(pAmount.getText()));
-
         salesInfoList.add(si);
+
+
+        //For customer bill
+        cb.setCustomerBillNo(pBillNo.getText());
+        cb.setSalesDate(tDate.getValue().toString());
+        cb.setTotalAmount(newTotal);
+
+        CustomerBillImplement cbi = new CustomerBillImplement();
+        cbi.addCustomerBill(cb);
+
+        generator.NewID("BID");
+
 
         String query = "INSERT into sales_info(customer_id, sales_bill, sales_party, customer_address, prescribed_by, product_name, sales_date, sales_amount, product_quantity) VALUES (?,?,?,?,?,?,?,?,?) ";
         for (SalesInfo salesInfo : salesInfoList) {

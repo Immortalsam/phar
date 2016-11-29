@@ -53,9 +53,6 @@ public class SupplierPaymentController implements Initializable {
     private TableColumn<Transactions, String> tableDate;
 
     @FXML
-    private TableColumn<Transactions, String> tBillno;
-
-    @FXML
     private TableColumn<Transactions, String> tDescription;
 
     @FXML
@@ -63,7 +60,6 @@ public class SupplierPaymentController implements Initializable {
 
     @FXML
     private TableColumn<Transactions, String> tCrAmt;
-
 
     private Connection connection;
     private ResultSet resultSet, rs, rs1;
@@ -110,13 +106,6 @@ public class SupplierPaymentController implements Initializable {
 
                     String someQuery = "SELECT supplier_id, purchase_date, bill_no, total_amount, NULL AS payment_date, NULL AS amt_paid FROM bill UNION SELECT supplier_id, NULL, NULL, NULL, payment_date, amt_paid FROM supplier_payment ORDER By supplier_id";
                     rs = CFunctions.executeQuery(preparedStatement, connection, someQuery, rs);
-
-//                    String someQuery = "SELECT purchase_date,bill_no, total_amount from bill WHERE supplier_id='" + sId.getText() + "'";
-//                    rs = CFunctions.executeQuery(preparedStatement, connection, someQuery, rs);
-//
-//                    String anotherQuery = "SELECT payment_date, amt_paid from supplier_payment WHERE supplier_id='" + sId.getText() + "'";
-//                    rs1 = CFunctions.executeQuery(preparedStatement, connection, anotherQuery, rs1);
-
 
                     while(rs.next()){
                         Transactions t = new Transactions();
