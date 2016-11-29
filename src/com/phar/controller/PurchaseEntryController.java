@@ -130,17 +130,14 @@ public class PurchaseEntryController implements Initializable {
         newTotalValue += totalValue;
         total.setText(String.valueOf(newTotalValue));
         netTotal.setText(String.valueOf(newTotalValue));
-        discount.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                if (discount.getText() == null || discount.getText().trim().isEmpty()) {
-                    netTotal.setText(String.valueOf(newTotalValue));
-                }
-                float dis = Float.valueOf(discount.getText());
-                newDiscountAmount = newTotalValue - dis;
-                //discount
-                netTotal.setText(String.valueOf(newDiscountAmount));
+        discount.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (discount.getText() == null || discount.getText().trim().isEmpty()) {
+                netTotal.setText(String.valueOf(newTotalValue));
             }
+            float dis = Float.valueOf(discount.getText());
+            newDiscountAmount = newTotalValue - dis;
+            //discount
+            netTotal.setText(String.valueOf(newDiscountAmount));
         });
 
         purchaseTable.setItems(productList);

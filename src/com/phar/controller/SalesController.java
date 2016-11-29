@@ -4,6 +4,7 @@ import com.phar.Billing;
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.AutoGenerator;
+import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DatabaseOperations;
 import com.phar.model.Sales;
@@ -143,6 +144,16 @@ public class SalesController implements Initializable {
             }
         });
         searchCustomer.getItems().addAll(customerList);
+
+        CFunctions.restrictTxtField(pDiscount, "[0-9]*");
+        pDiscount.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (pDiscount.getText() == null || pDiscount.getText().trim().isEmpty()) {
+                pDiscount.setText("");
+            } else {
+                double tempAmt = (Double.valueOf(pmrp.getText()) * Double.valueOf(qEntered.getText())) - Double.valueOf(pDiscount.getText());
+                pAmount.setText(String.valueOf(tempAmt));
+            }
+        });
     }
 
     @FXML
@@ -156,7 +167,7 @@ public class SalesController implements Initializable {
         s.setProductQuantity(Integer.valueOf(qEntered.getText()));
         s.setExpireDate(pExpire.getText());
         s.setDiscount(Double.valueOf(pDiscount.getText()));
-        s.setAmount(Double.valueOf(pAmount.getText()) * Integer.valueOf(qEntered.getText()));
+        s.setAmount(Double.valueOf(pAmount.getText()));
         s.setBillNo(pBillNo.getText());
         s.setParty(searchCustomer.getValue());
         s.setPayment(paymentMode.getValue());
