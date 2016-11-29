@@ -114,7 +114,7 @@ public class SalesController implements Initializable {
             pBatch.getItems().clear();
             batchList.clear();
             qLeftInStore.setText("0");
-            resultSet = DatabaseOperations.simpleSelect("store", "product_id,batch", "product_name='" + pName.getValue() + "'");
+            resultSet = DatabaseOperations.simpleSelect("store", "product_id,batch", "product_name='" + pName.getValue() + "' AND quantity>=1");
             try {
                 while (resultSet.next()) {
                     pIdd = resultSet.getString("product_id");
