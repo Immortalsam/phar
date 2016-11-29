@@ -7,10 +7,7 @@ import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.interfaceImplement.SupplierPaymentIntImplement;
 import com.phar.model.SupplierPayment;
 import com.phar.model.Transactions;
-import javafx.beans.property.ListProperty;
-import javafx.beans.property.SimpleListProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -26,7 +23,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 import java.util.ResourceBundle;
 
 /**
@@ -44,8 +40,6 @@ public class SupplierPaymentController implements Initializable {
     private TextField amtToBePaid, amtPaid, amtRemaining, sId;
 
     //For table data
-
-
     @FXML
     private TableView<Transactions> tableTrans;
 
@@ -78,20 +72,19 @@ public class SupplierPaymentController implements Initializable {
 
         //For Supplier's Name
         new CustomComboBox<String>(sNameCBox);
-        try{
+        try {
             connection = DatabaseConnection.getConnection();
-        }
-        catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 
         String sQuery = "SELECT supplier_name from supplier";
         resultSet = CFunctions.executeQuery(preparedStatement, connection, sQuery, resultSet);
-        try{
-            while (resultSet.next()){
+        try {
+            while (resultSet.next()) {
                 supplierList.add(resultSet.getString("supplier_name"));
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -100,37 +93,33 @@ public class SupplierPaymentController implements Initializable {
         sNameCBox.valueProperty().addListener((observable, oldValue, newValue) -> {
             String idQuery = "SELECT supplier_id from supplier WHERE supplier_name= '" + sNameCBox.getValue() + "'";
             resultSet = CFunctions.executeQuery(preparedStatement, connection, idQuery, resultSet);
-            try{
-                while (resultSet.next()){
+            try {
+                while (resultSet.next()) {
                     sId.setText(resultSet.getString("supplier_id"));
 
                     String someQuery = "SELECT supplier_id, purchase_date, bill_no, total_amount, NULL AS payment_date, NULL AS amt_paid FROM bill UNION SELECT supplier_id, NULL, NULL, NULL, payment_date, amt_paid FROM supplier_payment ORDER By supplier_id";
                     rs = CFunctions.executeQuery(preparedStatement, connection, someQuery, rs);
 
-                    while(rs.next()){
+                    while (rs.next()) {
                         Transactions t = new Transactions();
-                        if(rs.getString("purchase_date") == null){
+                        if (rs.getString("purchase_date") == null) {
                             t.setDate(rs.getString("payment_date"));
-                        }
-                        else {
+                        } else {
                             t.setDate(rs.getString("purchase_date"));
                         }
-                        if(rs.getFloat("total_amount") == 0){
+                        if (rs.getFloat("total_amount") == 0) {
                             t.setCr("-");
-                        }
-                        else {
+                        } else {
                             t.setCr(String.valueOf(rs.getFloat("total_amount")));
                         }
-                        if(rs.getString("bill_no") == null){
+                        if (rs.getString("bill_no") == null) {
                             t.setDescription("Payment");
-                        }
-                       else {
+                        } else {
                             t.setDescription(rs.getString("bill_no"));
                         }
-                        if(rs.getFloat("amt_paid") == 0){
+                        if (rs.getFloat("amt_paid") == 0) {
                             t.setDr("-");
-                        }
-                        else {
+                        } else {
                             t.setDr(String.valueOf(rs.getFloat("amt_paid")));
                         }
 
@@ -142,38 +131,37 @@ public class SupplierPaymentController implements Initializable {
                     tdrAmt.setCellValueFactory(new PropertyValueFactory<Transactions, String>("dr"));
                     tableDate.setCellValueFactory(new PropertyValueFactory<Transactions, String>("date"));
                 }
-                    tableTrans.setItems(supplierPurchaseList);
+                tableTrans.setItems(supplierPurchaseList);
 
-            }catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
 
-           //Billed amount
+            //Billed amount
             String querybill = "SELECT supplier_id, sum(total_amount) from bill group by supplier_id";
             resultSet = CFunctions.executeQuery(preparedStatement, connection, querybill, resultSet);
-            try{
-                while(resultSet.next()){
+            try {
+                while (resultSet.next()) {
                     billTotal = resultSet.getFloat("sum(total_amount)");
                     System.out.println(billTotal);
                 }
-            }catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
             //Paid Amount
             String queryPaid = "SELECT supplier_id, sum(amt_paid) from supplier_payment group by supplier_id";
             resultSet = CFunctions.executeQuery(preparedStatement, connection, queryPaid, resultSet);
-            try{
-                if(!resultSet.isBeforeFirst()){
+            try {
+                if (!resultSet.isBeforeFirst()) {
                     paidTotal = 0;
                     System.out.println(paidTotal);
                     amtToBePaid.setText(String.valueOf(billTotal - paidTotal));
                 }
-                while (resultSet.next()){
+                while (resultSet.next()) {
                     paidTotal = resultSet.getFloat("sum(amt_paid)");
                     amtToBePaid.setText(String.valueOf(billTotal - paidTotal));
                 }
-            }
-            catch (SQLException e){
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         });
@@ -192,7 +180,7 @@ public class SupplierPaymentController implements Initializable {
 
         SupplierPaymentIntImplement suppIntImp = new SupplierPaymentIntImplement();
 
-        if(suppIntImp.addSupplierPayment(supplierPayment)){
+        if (suppIntImp.addSupplierPayment(supplierPayment)) {
             CustomAlert alert = new CustomAlert("Info", "Save Successful");
             alert.withoutHeader();
         }
