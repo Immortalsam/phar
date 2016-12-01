@@ -3,6 +3,7 @@ package com.phar.interfaceImplement;
 import com.phar.database.DatabaseConnection;
 import com.phar.interfaces.CustomerInterface;
 import com.phar.model.CustomerInfo;
+import com.phar.model.CustomerPayment;
 
 import javax.xml.crypto.Data;
 import java.sql.Connection;
@@ -39,6 +40,23 @@ public class CustomerInterfaceImplement implements CustomerInterface {
             ps.executeUpdate();
             return true;
         }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addCustomerPayment(CustomerPayment customerPayment) {
+        String query = "INSERT into customer_payment(payment_date,customer_id,amount_paid) VALUES (?,?,?)";
+        try{
+            PreparedStatement ps1 = connection.prepareStatement(query);
+            ps1.setString(1, customerPayment.getPaymentDate());
+            ps1.setString(2, customerPayment.getCustomerId());
+            ps1.setFloat(3, customerPayment.getAmtPaid());
+            ps1.executeUpdate();
+            return true;
+        }
+        catch (SQLException e){
             e.printStackTrace();
         }
         return false;

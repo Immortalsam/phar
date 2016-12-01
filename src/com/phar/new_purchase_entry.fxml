@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1292.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseEntryController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1292.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseEntryController">
     <children>
         <Label fx:id="fiscalYear" layoutX="26.0" layoutY="22.0" prefHeight="23.0" prefWidth="66.0" text="Fiscal Year:" />
         <GridPane layoutX="117.0" layoutY="21.0">
@@ -73,15 +73,15 @@
                 <TableColumn fx:id="productName" prefWidth="192.0" text="Product Name" />
                 <TableColumn fx:id="productBatch" prefWidth="114.0" text="Batch" />
                 <TableColumn fx:id="productExpDate" prefWidth="176.0" text="Expiring Date" />
-                <TableColumn fx:id="productCcharge" minWidth="8.0" prefWidth="81.81317138671875" text="CC Charge" />
-                <TableColumn fx:id="productQcfor" prefWidth="89.3818359375" text="QuFoR" />
+                <TableColumn fx:id="productCcharge" minWidth="8.0" prefWidth="92.0" text="CC Charge (%)" />
+                <TableColumn fx:id="productQcfor" text="QuFoR" />
                 <TableColumn fx:id="productRate" prefWidth="127.6181640625" text="Rate" />
                 <TableColumn fx:id="productQuantity" prefWidth="104.0" text="Quantity" />
                 <TableColumn fx:id="productMrp" prefWidth="109.703369140625" text="MRP" />
                 <TableColumn fx:id="productAmount" prefWidth="97.296630859375" text="Amount" />
             </columns>
         </TableView>
-        <Button fx:id="addButton" layoutX="1180.0" layoutY="192.0" mnemonicParsing="false" onAction="#addButton" prefHeight="27.0" prefWidth="76.0" text="Add " />
+        <Button fx:id="addButton" layoutX="1183.0" layoutY="192.0" mnemonicParsing="false" onAction="#addButton" prefHeight="27.0" prefWidth="84.0" text="Add " />
         <Label layoutX="20.0" layoutY="68.0" text="Supplier Name:" />
         <ComboBox fx:id="supplierSearchName" layoutX="117.0" layoutY="64.0" prefHeight="25.0" prefWidth="282.0" />
         <Label layoutX="1060.0" layoutY="562.0" text="Total: " />
@@ -115,14 +115,14 @@
         </GridPane>
         <TextField fx:id="pid" editable="false" layoutX="102.0" layoutY="192.0" prefHeight="27.0" prefWidth="78.0" />
         <TextField fx:id="pbatch" layoutX="376.0" layoutY="192.0" prefHeight="27.0" prefWidth="108.0" />
-        <TextField fx:id="pcccharge" layoutX="664.0" layoutY="192.0" prefHeight="27.0" prefWidth="82.0" />
-        <TextField fx:id="pqufor" layoutX="749.0" layoutY="192.0" prefHeight="27.0" prefWidth="84.0" />
-        <TextField fx:id="prate" layoutX="836.0" layoutY="192.0" prefHeight="27.0" prefWidth="120.0" />
-        <TextField fx:id="pquantity" layoutX="967.0" layoutY="192.0" prefHeight="27.0" prefWidth="95.0" />
+        <TextField fx:id="pcccharge" layoutX="661.0" layoutY="192.0" prefHeight="27.0" prefWidth="95.0" />
+        <TextField fx:id="pqufor" layoutX="757.0" layoutY="192.0" prefHeight="27.0" prefWidth="76.0" />
+        <TextField fx:id="prate" layoutX="836.0" layoutY="192.0" prefHeight="27.0" prefWidth="123.0" />
+        <TextField fx:id="pquantity" layoutX="960.0" layoutY="192.0" prefHeight="27.0" prefWidth="108.0" />
         <TextField fx:id="pmrp" layoutX="1069.0" layoutY="192.0" prefHeight="27.0" prefWidth="108.0" />
         <Button fx:id="saveButton" layoutX="1177.0" layoutY="660.0" mnemonicParsing="false" onAction="#saveToDatabase" prefHeight="25.0" prefWidth="82.0" text="Save" />
         <ComboBox fx:id="monthComboBox" layoutX="488.0" layoutY="193.0" prefHeight="25.0" prefWidth="84.0" />
-        <ComboBox fx:id="yearComboBox" layoutX="576.0" layoutY="193.0" prefHeight="25.0" prefWidth="84.0" />
+        <ComboBox fx:id="yearComboBox" layoutX="575.0" layoutY="193.0" prefHeight="25.0" prefWidth="84.0" />
       <ComboBox fx:id="pname" editable="true" layoutX="181.0" layoutY="192.0" prefHeight="27.0" prefWidth="194.0" />
     </children>
 </AnchorPane>

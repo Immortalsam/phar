@@ -198,7 +198,7 @@ public class SalesController implements Initializable {
         productBill.add(s);
 
         Double newQty = qtyLeft - Double.valueOf(qEntered.getText());
-        String sql1 = "UPDATE store SET quantity='" + newQty + "' WHERE product_name = '" + pName.getValue() + "'";
+        String sql1 = "UPDATE store SET quantity='" + newQty + "' WHERE product_name = '" + pName.getValue()  + "'";
         System.out.println(sql1);
         try {
 //            preparedStatement = connection.prepareStatement(sql1);

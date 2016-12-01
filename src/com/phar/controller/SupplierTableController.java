@@ -27,19 +27,7 @@ public class SupplierTableController implements Initializable {
     private TableView<Supplier> supplierTable;
 
     @FXML
-    private TableColumn<Supplier, String> supplierId;
-
-    @FXML
-    private TableColumn<Supplier, String> supplierName;
-
-    @FXML
-    private TableColumn<Supplier, String> supplierAddress;
-
-    @FXML
-    private TableColumn<Supplier, String> supplierContact;
-
-    @FXML
-    private TableColumn<Supplier, String> supplierEmail;
+    private TableColumn<Supplier, String> supplierId, supplierName, supplierAddress, supplierContact, supplierEmail;
 
     @FXML
     private TableColumn<Supplier, Double> supplierPanNo;
