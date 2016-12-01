@@ -43,7 +43,7 @@ public class SalesController implements Initializable {
     @FXML
     private Label qLeftInStore;
     @FXML
-    private TextField qEntered, pmrp, pDiscount, pAmount, pExpire;
+    private TextField qEntered, pmrp, pDiscount, pAmount, pExpire, cashReceived;
     @FXML
     private TableColumn<Sales, String> proName, proId, proBatch, proExpDate;
     @FXML
@@ -53,7 +53,7 @@ public class SalesController implements Initializable {
     @FXML
     private TableColumn<Sales, Double> proDiscount, proMrp, proAmount;
     @FXML
-    private Label total;
+    private Label total, toBeReturned;
     @FXML
     private DatePicker tDate;
     @FXML
@@ -156,6 +156,17 @@ public class SalesController implements Initializable {
                 pAmount.setText(String.valueOf(tempAmt));
             }
         });
+
+        cashReceived.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (cashReceived.getText().trim().isEmpty() || cashReceived.getText() == null) {
+                cashReceived.setText("");
+                toBeReturned.setText("0.00");
+            } else {
+                Double d = Math.abs(Double.valueOf(total.getText()) - Double.valueOf(cashReceived.getText()));
+                toBeReturned.setText(d.toString());
+            }
+        });
+
     }
 
     @FXML
@@ -198,7 +209,7 @@ public class SalesController implements Initializable {
         productBill.add(s);
 
         Double newQty = qtyLeft - Double.valueOf(qEntered.getText());
-        String sql1 = "UPDATE store SET quantity='" + newQty + "' WHERE product_name = '" + pName.getValue()  + "'";
+        String sql1 = "UPDATE store SET quantity='" + newQty + "' WHERE product_name = '" + pName.getValue() + "'";
         System.out.println(sql1);
         try {
 //            preparedStatement = connection.prepareStatement(sql1);
