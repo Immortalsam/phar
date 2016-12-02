@@ -1,5 +1,13 @@
-.custom-button{
+.custom-button {
     -fx-font: 16px "Serif";
     -fx-padding: 10;
     -fx-background-color: #CCFF99;
+}
+
+.redd {
+    -fx-background-color: #ffd9cc;
+}
+
+.clear {
+    -fx-background-color: white;
 }

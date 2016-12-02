@@ -10,7 +10,6 @@ import com.phar.extraFunctionality.DatabaseOperations;
 import com.phar.interfaceImplement.CustomerBillImplement;
 import com.phar.model.CustomerBill;
 import com.phar.model.Sales;
-import com.phar.model.SalesInfo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -55,7 +54,7 @@ public class SalesController implements Initializable {
     @FXML
     private DatePicker tDate;
     @FXML
-    private TextField pPrescribedBy, pAddress, pBillNo,p_id1;
+    private TextField pPrescribedBy, pAddress, pBillNo, p_id1;
 
     private Connection connection;
     private PreparedStatement preparedStatement;
@@ -67,11 +66,12 @@ public class SalesController implements Initializable {
     private List<String> batchList = new ArrayList<>();
     private String pIdd;
     private ObservableList<Sales> productTableList = FXCollections.observableArrayList();
-    private ObservableList<SalesInfo> salesInfoList = FXCollections.observableArrayList();
+    private ObservableList<Sales> salesInfoList = FXCollections.observableArrayList();
     private Double qtyLeft;
     private float newTotal = 0;
     private AutoGenerator generator = new AutoGenerator();
     private String customer_id;
+    private CustomerBill cb;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -146,6 +146,7 @@ public class SalesController implements Initializable {
         searchCustomer.getItems().addAll(customerList);
 
         CFunctions.restrictTxtField(pDiscount, "[0-9]*");
+
         pDiscount.textProperty().addListener((observable, oldValue, newValue) -> {
             if (pDiscount.getText() == null || pDiscount.getText().trim().isEmpty()) {
                 pDiscount.setText("");
@@ -165,12 +166,37 @@ public class SalesController implements Initializable {
             }
         });
 
+        qEntered.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (qEntered.getText() == null || qEntered.getText().trim().isEmpty()) {
+                qEntered.setText("0");
+            } else {
+                double tempAmt = (Double.valueOf(pmrp.getText()) * Double.valueOf(qEntered.getText()));
+                pAmount.setText(String.valueOf(tempAmt));
+            }
+            if (Integer.valueOf(qEntered.getText()) > Integer.valueOf(qLeftInStore.getText())) {
+                qEntered.setText(qLeftInStore.getText());
+                qEntered.getStyleClass().add("redd");
+            }
+        });
+
     }
 
     @FXML
     void clickToAddToList(ActionEvent event) {
         counter++;
         Sales s = new Sales();
+        cb = new CustomerBill();
+
+        resultSet = DatabaseOperations.simpleSelect("customer_info", "customer_id", "customer_name='" + searchCustomer.getValue() + "'");
+        try {
+            while (resultSet.next()) {
+                s.setCustomerId(resultSet.getString("customer_id"));
+                cb.setCustomerId(resultSet.getString("customer_id"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         s.setProductID(pIdd);
         s.setProductName(pName.getValue());
         s.setProductBatch(pBatch.getValue());
@@ -185,6 +211,9 @@ public class SalesController implements Initializable {
         s.setAddress(pAddress.getText());
         s.setPrescribedBy(pPrescribedBy.getText());
         s.setProductDate(tDate.getValue().toString());
+        s.setSalesAmount(Float.valueOf(pAmount.getText()));
+        salesInfoList.add(s);
+
 
         proId.setCellValueFactory(new PropertyValueFactory<Sales, String>("productID"));
         proName.setCellValueFactory(new PropertyValueFactory<Sales, String>("productName"));
@@ -207,7 +236,7 @@ public class SalesController implements Initializable {
         productBill.add(s);
 
         Double newQty = qtyLeft - Double.valueOf(qEntered.getText());
-        String sql1 = "UPDATE store SET quantity='" + newQty + "' WHERE product_name = '" + pName.getValue() + "'";
+        String sql1 = "UPDATE store SET quantity='" + newQty + "' WHERE product_name = '" + pName.getValue() + "' AND batch='" + pBatch.getValue() + "'";
         System.out.println(sql1);
         try {
 //            preparedStatement = connection.prepareStatement(sql1);
@@ -215,13 +244,19 @@ public class SalesController implements Initializable {
             DatabaseOperations.simpleUpdate(sql1);
             sql1 = "SELECT quantity FROM store WHERE product_name ='" + pName.getValue() + "'";
 
-            resultSet = DatabaseOperations.simpleSelect("store", "quantity", "product_name ='" + pName.getValue() + "'");
+            resultSet = DatabaseOperations.simpleSelect("store", "quantity", "product_name ='" + pName.getValue() + "' AND batch='" + pBatch.getValue() + "'");
             while (resultSet.next()) {
                 qLeftInStore.setText(resultSet.getString("quantity"));
             }
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+
+        proQuantity.setText("");
+        pAmount.setText("");
+        pDiscount.setText("");
+
     }
 
     @FXML
@@ -230,31 +265,6 @@ public class SalesController implements Initializable {
     }
 
     public void onClickSaveButton(ActionEvent actionEvent) {
-
-        SalesInfo si = new SalesInfo();
-        CustomerBill cb = new CustomerBill();
-
-        resultSet = DatabaseOperations.simpleSelect("customer_info", "customer_id", "customer_name='" + searchCustomer.getValue() + "'");
-        try {
-            while (resultSet.next()) {
-                si.setCustomerId(resultSet.getString("customer_id"));
-                cb.setCustomerId(resultSet.getString("customer_id"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        si.setSalesBill(pBillNo.getText());
-        si.setSalesParty(searchCustomer.getValue());
-        si.setBatch(pBatch.getValue());
-        si.setCustomerAddress(pAddress.getText());
-        si.setPrescribedBy(pPrescribedBy.getText());
-        si.setProductName(pName.getValue());
-        si.setSalesDate(tDate.getValue().toString());
-        si.setProductQuantity(Integer.valueOf(qEntered.getText()));
-        si.setSalesAmount(Float.valueOf(pAmount.getText()));
-        salesInfoList.add(si);
-
 
         //For customer bill
         cb.setCustomerBillNo(pBillNo.getText());
@@ -268,21 +278,21 @@ public class SalesController implements Initializable {
 
 
         String query = "INSERT into sales_info(customer_id, sales_bill, sales_party, customer_address, prescribed_by, product_name, sales_date, sales_amount, product_quantity,product_batch) VALUES (?,?,?,?,?,?,?,?,?,?) ";
-        for (SalesInfo salesInfo : salesInfoList) {
+        for (Sales salesInfo : salesInfoList) {
             try {
                 connection = DatabaseConnection.getConnection();
                 preparedStatement = connection.prepareStatement(query);
                 System.out.println("THIS:" + salesInfo.getCustomerId());
                 preparedStatement.setString(1, salesInfo.getCustomerId());
-                preparedStatement.setString(2, salesInfo.getSalesBill());
-                preparedStatement.setString(3, salesInfo.getSalesParty());
-                preparedStatement.setString(4, salesInfo.getCustomerAddress());
+                preparedStatement.setString(2, salesInfo.getBillNo());
+                preparedStatement.setString(3, salesInfo.getParty());
+                preparedStatement.setString(4, salesInfo.getAddress());
                 preparedStatement.setString(5, salesInfo.getPrescribedBy());
                 preparedStatement.setString(6, salesInfo.getProductName());
-                preparedStatement.setString(7, salesInfo.getSalesDate());
+                preparedStatement.setString(7, salesInfo.getProductDate());
                 preparedStatement.setFloat(8, salesInfo.getSalesAmount());
                 preparedStatement.setInt(9, salesInfo.getProductQuantity());
-                preparedStatement.setString(10, salesInfo.getBatch());
+                preparedStatement.setString(10, salesInfo.getProductBatch());
                 preparedStatement.executeUpdate();
             } catch (SQLException | ClassNotFoundException e) {
                 e.printStackTrace();
@@ -290,5 +300,7 @@ public class SalesController implements Initializable {
         }
         CustomAlert alert = new CustomAlert("Info.", "Save Successful");
         alert.withoutHeader();
+
+
     }
 }

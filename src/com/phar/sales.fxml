@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1147.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SalesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1147.0" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SalesController">
     <children>
         <GridPane layoutX="100.0" layoutY="25.0" prefHeight="114.0" prefWidth="167.0">
             <columnConstraints>
@@ -50,8 +50,8 @@
         <TextField fx:id="pExpire" layoutX="402.0" layoutY="177.0" prefHeight="25.0" prefWidth="136.0" />
         <TextField fx:id="pmrp" layoutX="541.0" layoutY="177.0" prefHeight="25.0" prefWidth="87.0" />
         <TextField fx:id="qEntered" layoutX="631.0" layoutY="177.0" prefHeight="25.0" prefWidth="124.0" />
-        <TextField fx:id="pDiscount" layoutX="757.0" layoutY="177.0" prefHeight="25.0" prefWidth="136.0" />
-        <TextField fx:id="pAmount" layoutX="894.0" layoutY="177.0" prefHeight="25.0" prefWidth="131.0" />
+        <TextField fx:id="pDiscount" layoutX="757.0" layoutY="177.0" prefHeight="25.0" prefWidth="136.0" text="0" />
+        <TextField fx:id="pAmount" layoutX="894.0" layoutY="177.0" prefHeight="25.0" prefWidth="131.0" text="0" />
         <Button fx:id="addButton" layoutX="1039.0" layoutY="176.0" mnemonicParsing="false" onAction="#clickToAddToList" prefHeight="27.0" prefWidth="88.0" text="Add" />
         <Label layoutX="21.0" layoutY="159.0" text="Product Name:" />
         <Label layoutX="169.0" layoutY="159.0" text="Product Id:" />

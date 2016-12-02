@@ -22,6 +22,25 @@ public class Sales {
     private String party;
     private float total;
 
+    private String customerId;
+    private float salesAmount;
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public float getSalesAmount() {
+        return salesAmount;
+    }
+
+    public void setSalesAmount(float salesAmount) {
+        this.salesAmount = salesAmount;
+    }
+
     public String getPayment() {
         return payment;
     }
