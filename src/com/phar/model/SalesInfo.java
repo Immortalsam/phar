@@ -15,7 +15,16 @@ public class SalesInfo {
     private String productName;
     private int productQuantity;
     private String salesDate;
+    private String batch;
     private float salesAmount;
+
+    public String getBatch() {
+        return batch;
+    }
+
+    public void setBatch(String batch) {
+        this.batch = batch;
+    }
 
     public String getCustomerId() {
         return customerId;
