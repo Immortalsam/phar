@@ -15,14 +15,44 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1147.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SalesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1147.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SalesController">
     <children>
+        <GridPane layoutX="100.0" layoutY="25.0" prefHeight="114.0" prefWidth="167.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <TextField fx:id="pBillNo" editable="false" />
+                <TextField fx:id="pAddress" GridPane.rowIndex="2" />
+                <ComboBox fx:id="searchCustomer" prefHeight="25.0" prefWidth="208.0" GridPane.rowIndex="1" />
+            </children>
+        </GridPane>
+        <TextField fx:id="pPrescribedBy" layoutX="396.0" layoutY="31.0" />
+        <ComboBox fx:id="paymentMode" layoutX="397.0" layoutY="70.0" prefHeight="27.0" prefWidth="87.0">
+            <items>
+                <FXCollections fx:factory="observableArrayList">
+                    <String fx:value="Cash" />
+                    <String fx:value="Credit" />
+                </FXCollections>
+            </items>
+            <value>
+                <String fx:value="Cash" />
+            </value>
+        </ComboBox>
         <ComboBox fx:id="pName" layoutX="15.0" layoutY="176.0" prefHeight="27.0" prefWidth="155.0" />
         <TextField fx:id="p_id1" layoutX="171.0" layoutY="177.0" prefHeight="25.0" prefWidth="96.0" />
-        <TextField fx:id="pmrp" layoutX="541.0" layoutY="177.0" prefHeight="25.0" prefWidth="87.0" />
+        <ComboBox fx:id="pBatch" layoutX="269.0" layoutY="177.0" prefHeight="25.0" prefWidth="131.0" />
         <TextField fx:id="pExpire" layoutX="402.0" layoutY="177.0" prefHeight="25.0" prefWidth="136.0" />
+        <TextField fx:id="pmrp" layoutX="541.0" layoutY="177.0" prefHeight="25.0" prefWidth="87.0" />
+        <TextField fx:id="qEntered" layoutX="631.0" layoutY="177.0" prefHeight="25.0" prefWidth="124.0" />
         <TextField fx:id="pDiscount" layoutX="757.0" layoutY="177.0" prefHeight="25.0" prefWidth="136.0" />
         <TextField fx:id="pAmount" layoutX="894.0" layoutY="177.0" prefHeight="25.0" prefWidth="131.0" />
+        <Button fx:id="addButton" layoutX="1039.0" layoutY="176.0" mnemonicParsing="false" onAction="#clickToAddToList" prefHeight="27.0" prefWidth="88.0" text="Add" />
         <Label layoutX="21.0" layoutY="159.0" text="Product Name:" />
         <Label layoutX="169.0" layoutY="159.0" text="Product Id:" />
         <Label layoutX="625.0" layoutY="126.0" text="Qty Left:" />
@@ -41,7 +71,6 @@
                 <TableColumn fx:id="proAmount" prefWidth="134.0" text="Amount" />
             </columns>
         </TableView>
-        <Button fx:id="addButton" layoutX="1039.0" layoutY="176.0" mnemonicParsing="false" onAction="#clickToAddToList" prefHeight="27.0" prefWidth="88.0" text="Add" />
         <Label layoutX="402.0" layoutY="158.0" text="Expire:" />
         <Label layoutX="653.0" layoutY="560.0" text="Net Total:">
             <font>
@@ -51,22 +80,6 @@
         <DatePicker fx:id="tDate" layoutX="923.0" layoutY="25.0" />
         <Label layoutX="877.0" layoutY="30.0" prefHeight="17.0" prefWidth="35.0" text="Date:" />
         <Label layoutX="294.0" layoutY="37.0" text="Prescribed By:" />
-        <TextField fx:id="pPrescribedBy" layoutX="396.0" layoutY="31.0" />
-        <GridPane layoutX="100.0" layoutY="25.0" prefHeight="114.0" prefWidth="167.0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <children>
-                <TextField fx:id="pBillNo" editable="false" />
-                <TextField fx:id="pAddress" GridPane.rowIndex="2" />
-                <ComboBox fx:id="searchCustomer" prefHeight="25.0" prefWidth="208.0" GridPane.rowIndex="1" />
-            </children>
-        </GridPane>
         <GridPane layoutX="19.0" layoutY="29.0" prefHeight="107.0" prefWidth="80.0">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -82,46 +95,33 @@
                 <Label text="Address:" GridPane.rowIndex="2" />
             </children>
         </GridPane>
-        <Button fx:id="printBill" layoutX="1033.0" layoutY="606.0" mnemonicParsing="false" onAction="#onClickPrintBill" prefHeight="30.0" prefWidth="96.0" text="Print Bill" />
-        <Button layoutX="1033.0" layoutY="643.0" mnemonicParsing="false" onAction="#onClickSaveButton" prefHeight="30.0" prefWidth="96.0" text="Save " />
-        <Label layoutX="294.0" layoutY="74.0" text="Payment Mode:" />
-        <ComboBox fx:id="paymentMode" layoutX="397.0" layoutY="70.0" prefHeight="27.0" prefWidth="87.0">
-            <items>
-                <FXCollections fx:factory="observableArrayList">
-                    <String fx:value="Cash" />
-                    <String fx:value="Credit" />
-                </FXCollections>
-            </items>
-            <value>
-                <String fx:value="Cash" />
-            </value>
-        </ComboBox>
-        <Label layoutX="279.0" layoutY="158.0" text="Batch:" />
-        <TextField fx:id="qEntered" layoutX="631.0" layoutY="177.0" prefHeight="25.0" prefWidth="124.0" />
-        <Label layoutX="627.0" layoutY="157.0" text="Quantity " />
-        <ComboBox fx:id="pBatch" layoutX="269.0" layoutY="177.0" prefHeight="25.0" prefWidth="131.0" />
-        <Label fx:id="qLeftInStore" layoutX="686.0" layoutY="119.0" prefHeight="31.0" prefWidth="62.0" text="0">
-            <font>
-                <Font size="26.0" />
-            </font>
-        </Label>
       <Label fx:id="total" layoutX="782.0" layoutY="560.0" prefHeight="17.0" prefWidth="136.0" text="0.00">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label layoutX="653.0" layoutY="601.0" text="Recieved:">
+      <Label fx:id="toBeReturned" layoutX="783.0" layoutY="641.0" text="0.00">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
       <TextField fx:id="cashReceived" layoutX="777.0" layoutY="601.0" text="0.00" />
-      <Label layoutX="653.0" layoutY="641.0" text="Return:">
+        <Button fx:id="printBill" layoutX="1033.0" layoutY="606.0" mnemonicParsing="false" onAction="#onClickPrintBill" prefHeight="30.0" prefWidth="96.0" text="Print Bill" />
+        <Button layoutX="1033.0" layoutY="643.0" mnemonicParsing="false" onAction="#onClickSaveButton" prefHeight="30.0" prefWidth="96.0" text="Save " />
+        <Label layoutX="294.0" layoutY="74.0" text="Payment Mode:" />
+        <Label layoutX="279.0" layoutY="158.0" text="Batch:" />
+        <Label layoutX="627.0" layoutY="157.0" text="Quantity " />
+        <Label fx:id="qLeftInStore" layoutX="686.0" layoutY="119.0" prefHeight="31.0" prefWidth="62.0" text="0">
+            <font>
+                <Font size="26.0" />
+            </font>
+        </Label>
+      <Label layoutX="653.0" layoutY="601.0" text="Recieved:">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="toBeReturned" layoutX="783.0" layoutY="641.0" text="0.00">
+      <Label layoutX="653.0" layoutY="641.0" text="Return:">
          <font>
             <Font size="20.0" />
          </font>

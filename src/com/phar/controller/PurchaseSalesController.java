@@ -26,28 +26,16 @@ import java.util.ResourceBundle;
 public class PurchaseSalesController implements Initializable {
 
     @FXML
-    private DatePicker fromDatePicker;
-
-    @FXML
-    private DatePicker toDatePicker;
+    private DatePicker fromDatePicker, toDatePicker;
 
     @FXML
     private TableView tableView;
 
     @FXML
-    private TableColumn<PurchaseSales, String> tableDate;
+    private TableColumn<PurchaseSales, String> tableDate,tableBill,tablePurchase,tableSales;
 
-    @FXML
-    private TableColumn<PurchaseSales, String> tableBill;
-
-    @FXML
-    private TableColumn<PurchaseSales, String> tablePurchase;
-
-    @FXML
-    private TableColumn<PurchaseSales, String> tableSales;
 
     private ObservableList<PurchaseSales> forTableList = FXCollections.observableArrayList();
-
     private Connection connection;
 
     @Override

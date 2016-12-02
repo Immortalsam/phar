@@ -69,6 +69,12 @@ public class MainMenuController implements Initializable {
         navigation.frameNavigation(actionEvent, Constants.OLD_SUPPLIER_FXML, Constants.MAIN_MENU_FXML, "Old Suppliers", "Main Menu");
     }
 
+    @FXML
+    void onProductsClick(ActionEvent actionEvent) {
+        navigation.frameNavigation(actionEvent,"/com/phar/product_table.fxml", Constants.MAIN_MENU_FXML, "Product Table", "Main Menu");
+
+    }
+
     public void paymentBtnClick(ActionEvent actionEvent) {
         oldSupplier.setOpacity(0);
         newSupplier.setOpacity(0);
@@ -80,6 +86,8 @@ public class MainMenuController implements Initializable {
     }
 
     public void paymentReceiveBtnClick(ActionEvent actionEvent) {
+        navigation.frameNavigation(actionEvent,"/com/phar/supplierPayment.fxml", Constants.MAIN_MENU_FXML, "Product Table", "Main Menu");
+
     }
 
     public void paymentPayBtnClick(ActionEvent actionEvent) {

@@ -91,15 +91,16 @@ public class SupplierPaymentController implements Initializable {
         //For supplier's Id
         sNameCBox.getItems().addAll(supplierList);
         sNameCBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+
+            supplierPurchaseList.clear();
             String idQuery = "SELECT supplier_id from supplier WHERE supplier_name= '" + sNameCBox.getValue() + "'";
             resultSet = CFunctions.executeQuery(preparedStatement, connection, idQuery, resultSet);
             try {
                 while (resultSet.next()) {
                     sId.setText(resultSet.getString("supplier_id"));
 
-                    String someQuery = "SELECT supplier_id, purchase_date, bill_no, total_amount, NULL AS payment_date, NULL AS amt_paid FROM bill UNION SELECT supplier_id, NULL, NULL, NULL, payment_date, amt_paid FROM supplier_payment ORDER By supplier_id";
+                    String someQuery = "SELECT supplier_id, purchase_date, bill_no, total_amount, NULL AS payment_date, NULL AS amt_paid FROM bill WHERE supplier_id = '" +  sId.getText() + "'UNION SELECT supplier_id, NULL, NULL, NULL, payment_date, amt_paid FROM supplier_payment WHERE supplier_id = '" + sId.getText() + "'";
                     rs = CFunctions.executeQuery(preparedStatement, connection, someQuery, rs);
-
                     while (rs.next()) {
                         Transactions t = new Transactions();
                         if (rs.getString("purchase_date") == null) {
@@ -138,7 +139,7 @@ public class SupplierPaymentController implements Initializable {
             }
 
             //Billed amount
-            String querybill = "SELECT supplier_id, sum(total_amount) from bill group by supplier_id";
+            String querybill = "SELECT supplier_id, sum(total_amount) from bill WHERE supplier_id = '" +sId.getText() + "'";
             resultSet = CFunctions.executeQuery(preparedStatement, connection, querybill, resultSet);
             try {
                 while (resultSet.next()) {
@@ -149,7 +150,7 @@ public class SupplierPaymentController implements Initializable {
                 e.printStackTrace();
             }
             //Paid Amount
-            String queryPaid = "SELECT supplier_id, sum(amt_paid) from supplier_payment group by supplier_id";
+            String queryPaid = "SELECT supplier_id, sum(amt_paid) from supplier_payment WHERE supplier_id = '" + sId.getText() + "'";
             resultSet = CFunctions.executeQuery(preparedStatement, connection, queryPaid, resultSet);
             try {
                 if (!resultSet.isBeforeFirst()) {

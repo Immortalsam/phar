@@ -7,9 +7,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -19,17 +19,12 @@ import java.util.ResourceBundle;
  */
 public class PurchaseReturnController implements Initializable {
 
-    @FXML
-    private ComboBox<String> searchSupplierName;
 
     @FXML
-    private ComboBox<String> pName;
+    private ComboBox<String> pName ,pBatch , searchSupplierName;
 
     @FXML
     private TextField pId;
-
-    @FXML
-    private TextField pBatch;
 
     @FXML
     private TextField pExpiry;
@@ -45,6 +40,9 @@ public class PurchaseReturnController implements Initializable {
 
     @FXML
     private TextField pTotal;
+
+    @FXML
+    private DatePicker returnDate;
 
     @FXML
     private TableView<?> ptTabelView;
@@ -79,15 +77,15 @@ public class PurchaseReturnController implements Initializable {
     private ResultSet resultSet, rs1;
     private List<String> supplierList = new ArrayList<String>();
     private List<String> productList = new ArrayList<String>();
+    private List<String> batchList = new ArrayList<>();
 
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        returnDate.setValue(LocalDate.now());
 
         //For supplier Search
-
-
         new CustomComboBox<>(searchSupplierName);
         new CustomComboBox<>(pName);
         resultSet = DatabaseOperations.simpleSelect("supplier", "supplier_name", "null");
@@ -120,22 +118,30 @@ public class PurchaseReturnController implements Initializable {
             }
             pName.getItems().addAll(productList);
             pName.valueProperty().addListener((((observable1, oldValue1, newValue1) -> {
-                rs1 = DatabaseOperations.simpleSelect("new_purchase_entry", "product_id,product_batch,product_expdate,product_rate,product_quantity,product_cccharge","product_name='" + pName.getValue() + "'");
+                rs1 = DatabaseOperations.simpleSelect("new_purchase_entry", "product_id, product_batch", "product_name='" + pName.getValue() + "'AND product_quantity>=1");
                 try{
                     while (rs1.next()){
+                        batchList.add(rs1.getString("product_batch"));
                         pId.setText(rs1.getString("product_id"));
-                        pBatch.setText(rs1.getString("product_batch"));
-                        pExpiry.setText(rs1.getString("product_expdate"));
-                        pRate.setText(String.valueOf(rs1.getFloat("product_rate")));
-                        pQuantity.setText(String.valueOf(rs1.getInt("product_rate")));
-                        pCCCharge.setText(String.valueOf(rs1.getFloat("product_cccharge")));
                     }
+                }catch (SQLException e){
+                    e.printStackTrace();
                 }
-                catch (SQLException e){
+                pBatch.getItems().addAll(batchList);
+            })));
+            pBatch.valueProperty().addListener((((observable1, oldValue1, newValue1) -> {
+                rs1 = DatabaseOperations.simpleSelect("new_purchase_entry","product_rate, product_quantity,product_expdate,product_cccharge", "product_batch='" + pBatch.getValue()+ "'");
+                try{
+                    while (rs1.next()){
+                        pRate.setText(rs1.getString("product_rate"));
+                        pQuantity.setText(rs1.getString("product_quantity"));
+                        pExpiry.setText(rs1.getString("product_expdate"));
+                        pCCCharge.setText(rs1.getString("product_cccharge"));
+                    }
+                }catch (SQLException e){
                     e.printStackTrace();
                 }
             })));
         }));
-
     }
 }

@@ -37,8 +37,6 @@ public class SalesController implements Initializable {
 
     int counter = 0;
     @FXML
-    private TextField p_id1;
-    @FXML
     private ComboBox<String> pName, pBatch, searchCustomer, paymentMode;
     @FXML
     private Label qLeftInStore;
@@ -57,7 +55,7 @@ public class SalesController implements Initializable {
     @FXML
     private DatePicker tDate;
     @FXML
-    private TextField pPrescribedBy, pAddress, pBillNo;
+    private TextField pPrescribedBy, pAddress, pBillNo,p_id1;
 
     private Connection connection;
     private PreparedStatement preparedStatement;
