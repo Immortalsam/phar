@@ -55,7 +55,7 @@ public class SalesController implements Initializable {
     @FXML
     private DatePicker tDate;
     @FXML
-    private TextField pPrescribedBy, pAddress, pBillNo,p_id1;
+    private TextField pPrescribedBy, pAddress, pBillNo, p_id1;
 
     private Connection connection;
     private PreparedStatement preparedStatement;
@@ -115,7 +115,8 @@ public class SalesController implements Initializable {
             pBatch.getItems().clear();
             batchList.clear();
             qLeftInStore.setText("0");
-            resultSet = DatabaseOperations.simpleSelect("store", "product_id,batch", "product_name='" + pName.getValue() + "' AND quantity>=1");
+            resultSet = DatabaseOperations.simpleSelect("store", "product_id,batch", "product_name='"
+                    + pName.getValue() + "' AND quantity>=1");
             try {
                 while (resultSet.next()) {
                     pIdd = resultSet.getString("product_id");
@@ -130,7 +131,8 @@ public class SalesController implements Initializable {
 
         pBatch.valueProperty().addListener((observable1, oldValue1, newValue1) -> {
             if (pBatch.getValue() != null) {
-                resultSet = DatabaseOperations.simpleSelect("store", "quantity,mRP,expire", "product_name='" + pName.getValue() + "' AND batch=" + pBatch.getValue());
+                resultSet = DatabaseOperations.simpleSelect("store", "quantity,mRP,expire", "product_name='"
+                        + pName.getValue() + "' AND batch=" + pBatch.getValue());
                 try {
                     while (resultSet.next()) {
                         qLeftInStore.setText(resultSet.getString("quantity"));
@@ -213,7 +215,6 @@ public class SalesController implements Initializable {
 //            preparedStatement = connection.prepareStatement(sql1);
 //            preparedStatement.executeUpdate();
             DatabaseOperations.simpleUpdate(sql1);
-            sql1 = "SELECT quantity FROM store WHERE product_name ='" + pName.getValue() + "'";
 
             resultSet = DatabaseOperations.simpleSelect("store", "quantity", "product_name ='" + pName.getValue() + "'");
             while (resultSet.next()) {
@@ -234,7 +235,8 @@ public class SalesController implements Initializable {
         SalesInfo si = new SalesInfo();
         CustomerBill cb = new CustomerBill();
 
-        resultSet = DatabaseOperations.simpleSelect("customer_info", "customer_id", "customer_name='" + searchCustomer.getValue() + "'");
+        resultSet = DatabaseOperations.simpleSelect("customer_info", "customer_id", "customer_name='"
+                + searchCustomer.getValue() + "'");
         try {
             while (resultSet.next()) {
                 si.setCustomerId(resultSet.getString("customer_id"));
@@ -265,8 +267,8 @@ public class SalesController implements Initializable {
 
         generator.NewID("BID");
 
-
-        String query = "INSERT into sales_info(customer_id, sales_bill, sales_party, customer_address, prescribed_by, product_name, sales_date, sales_amount, product_quantity) VALUES (?,?,?,?,?,?,?,?,?) ";
+        String query = "INSERT into sales_info(customer_id, sales_bill, sales_party, customer_address, " +
+                "prescribed_by, product_name, sales_date, sales_amount, product_quantity) VALUES (?,?,?,?,?,?,?,?,?) ";
         for (SalesInfo salesInfo : salesInfoList) {
             try {
                 connection = DatabaseConnection.getConnection();

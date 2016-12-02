@@ -1,9 +1,8 @@
 package com.phar.controller;
 
 import com.phar.custom.CustomAlert;
-import com.phar.database.DatabaseConnection;
-import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.CustomComboBox;
+import com.phar.extraFunctionality.DatabaseOperations;
 import com.phar.interfaceImplement.SupplierPaymentIntImplement;
 import com.phar.model.SupplierPayment;
 import com.phar.model.Transactions;
@@ -14,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -29,6 +29,9 @@ import java.util.ResourceBundle;
  * Created by Sam on 11/22/2016.
  */
 public class SupplierPaymentController implements Initializable {
+
+    @FXML
+    private AnchorPane anchorPane;
 
     @FXML
     private DatePicker tDate;
@@ -69,17 +72,12 @@ public class SupplierPaymentController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //for the today's Date
         tDate.setValue(LocalDate.now());
-
         //For Supplier's Name
         new CustomComboBox<String>(sNameCBox);
-        try {
-            connection = DatabaseConnection.getConnection();
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
         String sQuery = "SELECT supplier_name from supplier";
-        resultSet = CFunctions.executeQuery(preparedStatement, connection, sQuery, resultSet);
+//        resultSet = CFunctions.executeQuery(preparedStatement, connection, sQuery, resultSet);
+        resultSet = DatabaseOperations.simpleSelect("supplier", "supplier_name", "null");
         try {
             while (resultSet.next()) {
                 supplierList.add(resultSet.getString("supplier_name"));
@@ -87,60 +85,43 @@ public class SupplierPaymentController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        //For supplier's Id
         sNameCBox.getItems().addAll(supplierList);
-        sNameCBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+        onLoad();
+    }
 
-            supplierPurchaseList.clear();
-            String idQuery = "SELECT supplier_id from supplier WHERE supplier_name= '" + sNameCBox.getValue() + "'";
-            resultSet = CFunctions.executeQuery(preparedStatement, connection, idQuery, resultSet);
-            try {
-                while (resultSet.next()) {
-                    sId.setText(resultSet.getString("supplier_id"));
+    @FXML
+    void onSaveClicked(ActionEvent event) {
+        if (!amtPaid.getText().isEmpty()) {
+            SupplierPayment supplierPayment = new SupplierPayment();
+            supplierPayment.setSupplierId(sId.getText());
+            supplierPayment.setAmtToBePaid(Float.valueOf(amtToBePaid.getText()));
+            supplierPayment.setAmtPaid(Float.valueOf(amtPaid.getText()));
+            supplierPayment.setPaymentDate(String.valueOf(tDate.getValue()));
 
-                    String someQuery = "SELECT supplier_id, purchase_date, bill_no, total_amount, NULL AS payment_date, NULL AS amt_paid FROM bill WHERE supplier_id = '" +  sId.getText() + "'UNION SELECT supplier_id, NULL, NULL, NULL, payment_date, amt_paid FROM supplier_payment WHERE supplier_id = '" + sId.getText() + "'";
-                    rs = CFunctions.executeQuery(preparedStatement, connection, someQuery, rs);
-                    while (rs.next()) {
-                        Transactions t = new Transactions();
-                        if (rs.getString("purchase_date") == null) {
-                            t.setDate(rs.getString("payment_date"));
-                        } else {
-                            t.setDate(rs.getString("purchase_date"));
-                        }
-                        if (rs.getFloat("total_amount") == 0) {
-                            t.setCr("-");
-                        } else {
-                            t.setCr(String.valueOf(rs.getFloat("total_amount")));
-                        }
-                        if (rs.getString("bill_no") == null) {
-                            t.setDescription("Payment");
-                        } else {
-                            t.setDescription(rs.getString("bill_no"));
-                        }
-                        if (rs.getFloat("amt_paid") == 0) {
-                            t.setDr("-");
-                        } else {
-                            t.setDr(String.valueOf(rs.getFloat("amt_paid")));
-                        }
+            Float newValue = Float.valueOf(amtToBePaid.getText()) - Float.valueOf(amtPaid.getText());
+            amtRemaining.setText(String.valueOf(newValue));
 
-                        supplierPurchaseList.add(t);
-                    }
+            SupplierPaymentIntImplement suppIntImp = new SupplierPaymentIntImplement();
 
-                    tDescription.setCellValueFactory(new PropertyValueFactory<Transactions, String>("description"));
-                    tCrAmt.setCellValueFactory(new PropertyValueFactory<Transactions, String>("cr"));
-                    tdrAmt.setCellValueFactory(new PropertyValueFactory<Transactions, String>("dr"));
-                    tableDate.setCellValueFactory(new PropertyValueFactory<Transactions, String>("date"));
-                }
-                tableTrans.setItems(supplierPurchaseList);
-
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (suppIntImp.addSupplierPayment(supplierPayment)) {
+                CustomAlert alert = new CustomAlert("Info", "Save Successful");
+                alert.withoutHeader();
             }
+            amtPaid.setText("");
+            amtToBePaid.setText(amtRemaining.getText());
+            onLoad();
+            listTableView();
+        } else {
+            CustomAlert alert = new CustomAlert("Amount Field Empty", "Enter The amount ");
+            alert.withoutHeader();
+        }
+    }
 
+    private void onLoad() {
+        sNameCBox.valueProperty().addListener((observable, oldValue, newValue) -> {
+            listTableView();
             //Billed amount
-            String querybill = "SELECT supplier_id, sum(total_amount) from bill WHERE supplier_id = '" +sId.getText() + "'";
-            resultSet = CFunctions.executeQuery(preparedStatement, connection, querybill, resultSet);
+            resultSet = DatabaseOperations.simpleSelect("bill", "supplier_id, SUM(total_amount)", "supplier_id='" + sId.getText() + "'");
             try {
                 while (resultSet.next()) {
                     billTotal = resultSet.getFloat("sum(total_amount)");
@@ -150,8 +131,7 @@ public class SupplierPaymentController implements Initializable {
                 e.printStackTrace();
             }
             //Paid Amount
-            String queryPaid = "SELECT supplier_id, sum(amt_paid) from supplier_payment WHERE supplier_id = '" + sId.getText() + "'";
-            resultSet = CFunctions.executeQuery(preparedStatement, connection, queryPaid, resultSet);
+            resultSet = DatabaseOperations.simpleSelect("supplier_payment", "supplier_id, SUM(amt_paid)", "supplier_id = '" + sId.getText() + "'");
             try {
                 if (!resultSet.isBeforeFirst()) {
                     paidTotal = 0;
@@ -168,22 +148,50 @@ public class SupplierPaymentController implements Initializable {
         });
     }
 
-    @FXML
-    void onSaveClicked(ActionEvent event) {
-        SupplierPayment supplierPayment = new SupplierPayment();
-        supplierPayment.setSupplierId(sId.getText());
-        supplierPayment.setAmtToBePaid(Float.valueOf(amtToBePaid.getText()));
-        supplierPayment.setAmtPaid(Float.valueOf(amtPaid.getText()));
-        supplierPayment.setPaymentDate(String.valueOf(tDate.getValue()));
+    private void listTableView() {
+        supplierPurchaseList.clear();
+        tableTrans.getItems().clear();
+        resultSet = DatabaseOperations.simpleSelect("supplier", "supplier_id", "supplier_name= '" + sNameCBox.getValue() + "'");
+        try {
+            while (resultSet.next()) {
+                sId.setText(resultSet.getString("supplier_id"));
+                rs = DatabaseOperations.simpleSelect("bill", "supplier_id, purchase_date, bill_no, total_amount, NULL AS payment_id, NULL AS payment_date, NULL AS amt_paid", "supplier_id = '" + sId.getText() + "'UNION SELECT supplier_id, NULL, NULL, NULL, payment_id, payment_date, amt_paid FROM supplier_payment WHERE supplier_id = '" + sId.getText() + "'");
+                while (rs.next()) {
+                    Transactions t = new Transactions();
+                    if (rs.getString("purchase_date") == null) {
+                        t.setDate(rs.getString("payment_date"));
+                    } else {
+                        t.setDate(rs.getString("purchase_date"));
+                    }
+                    if (rs.getFloat("total_amount") == 0) {
+                        t.setCr("-");
+                    } else {
+                        t.setCr(String.valueOf(rs.getFloat("total_amount")));
+                    }
+                    if (rs.getString("bill_no") == null) {
+                        t.setDescription("Payment");
+                    } else {
+                        t.setDescription(rs.getString("bill_no"));
+                    }
+                    if (rs.getFloat("amt_paid") == 0) {
+                        t.setDr("-");
+                    } else {
+                        t.setDr(String.valueOf(rs.getFloat("amt_paid")));
+                    }
 
-        Float newValue = Float.valueOf(amtToBePaid.getText()) - Float.valueOf(amtPaid.getText());
-        amtRemaining.setText(String.valueOf(newValue));
+                    supplierPurchaseList.add(t);
+                }
 
-        SupplierPaymentIntImplement suppIntImp = new SupplierPaymentIntImplement();
+                tDescription.setCellValueFactory(new PropertyValueFactory<Transactions, String>("description"));
+                tCrAmt.setCellValueFactory(new PropertyValueFactory<Transactions, String>("cr"));
+                tdrAmt.setCellValueFactory(new PropertyValueFactory<Transactions, String>("dr"));
+                tableDate.setCellValueFactory(new PropertyValueFactory<Transactions, String>("date"));
+            }
+            tableTrans.setItems(supplierPurchaseList);
 
-        if (suppIntImp.addSupplierPayment(supplierPayment)) {
-            CustomAlert alert = new CustomAlert("Info", "Save Successful");
-            alert.withoutHeader();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
+
 }

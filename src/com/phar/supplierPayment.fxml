@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SupplierPaymentController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SupplierPaymentController">
    <children>
       <DatePicker fx:id="tDate" layoutX="76.0" layoutY="52.0" prefHeight="26.0" prefWidth="180.0" />
       <Label layoutX="37.0" layoutY="57.0" text="Date:" />
@@ -17,7 +17,7 @@
       <ComboBox fx:id="sNameCBox" layoutX="139.0" layoutY="130.0" prefHeight="25.0" prefWidth="161.0" />
       <TextField fx:id="amtToBePaid" layoutX="311.0" layoutY="130.0" />
       <Label layoutX="312.0" layoutY="106.0" text="Amount to be Paid:" />
-      <TextField fx:id="amtPaid" layoutX="469.0" layoutY="130.0" prefHeight="25.0" prefWidth="137.0" />
+      <TextField fx:id="amtPaid" layoutX="482.0" layoutY="130.0" prefHeight="25.0" prefWidth="137.0" />
       <Label layoutX="470.0" layoutY="106.0" text="Amount Paid:" />
       <TextField fx:id="amtRemaining" layoutX="623.0" layoutY="130.0" />
       <Label layoutX="624.0" layoutY="106.0" text="Amount Remaining:" />
