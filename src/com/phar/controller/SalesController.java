@@ -176,6 +176,7 @@ public class SalesController implements Initializable {
             if (Integer.valueOf(qEntered.getText()) > Integer.valueOf(qLeftInStore.getText())) {
                 qEntered.setText(qLeftInStore.getText());
                 qEntered.getStyleClass().add("redd");
+                //com ent
             }
         });
 
