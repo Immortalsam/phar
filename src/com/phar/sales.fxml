@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1147.0" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SalesController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1147.0" stylesheets="@css/style.css" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SalesController">
     <children>
         <GridPane layoutX="100.0" layoutY="25.0" prefHeight="114.0" prefWidth="167.0">
             <columnConstraints>
@@ -57,7 +57,7 @@
         <Label layoutX="169.0" layoutY="159.0" text="Product Id:" />
         <Label layoutX="625.0" layoutY="126.0" text="Qty Left:" />
         <Label layoutX="541.0" layoutY="159.0" text="MRP:" />
-        <Label layoutX="759.0" layoutY="157.0" text="Discount:" />
+        <Label layoutX="759.0" layoutY="157.0" text="Discount (%):" />
         <Label layoutX="894.0" layoutY="159.0" text="Amount:" />
         <TableView fx:id="pTableStore" layoutX="14.0" layoutY="208.0" prefHeight="342.0" prefWidth="1013.0">
             <columns>
@@ -67,7 +67,7 @@
                 <TableColumn fx:id="proExpDate" prefWidth="136.0" text="Expire Date:" />
                 <TableColumn fx:id="proMrp" prefWidth="88.0" text="MRP" />
                 <TableColumn fx:id="proQuantity" prefWidth="135.0" text="Quantity" />
-                <TableColumn fx:id="proDiscount" prefWidth="135.0" text="Discount" />
+                <TableColumn fx:id="proDiscount" prefWidth="135.0" text="Discount (%)" />
                 <TableColumn fx:id="proAmount" prefWidth="134.0" text="Amount" />
             </columns>
         </TableView>

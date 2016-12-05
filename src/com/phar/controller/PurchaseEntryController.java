@@ -107,7 +107,7 @@ public class PurchaseEntryController implements Initializable {
         p.setProductMrp(Float.valueOf(pmrp.getText()));
         p.setExpYear(yearComboBox.getValue());
         p.setExpMonth(monthComboBox.getValue());
-        p.setExpCombined(yearComboBox.getValue().concat(" / ").concat(monthComboBox.getValue().toUpperCase()));
+        p.setExpCombined(yearComboBox.getValue().concat("/").concat(monthComboBox.getValue().toUpperCase()));
 
         productList.add(p);
 

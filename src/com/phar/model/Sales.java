@@ -4,6 +4,7 @@ package com.phar.model;
  * Created by somecuitears on 11/18/16.
  */
 public class Sales {
+
     private Integer storeID;
     private String productID;
     private String productName;
@@ -20,98 +21,9 @@ public class Sales {
     private String billNo;
     private String address;
     private String party;
-    private float total;
-
+    private Double total;
     private String customerId;
-    private float salesAmount;
-
-    public String getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(String customerId) {
-        this.customerId = customerId;
-    }
-
-    public float getSalesAmount() {
-        return salesAmount;
-    }
-
-    public void setSalesAmount(float salesAmount) {
-        this.salesAmount = salesAmount;
-    }
-
-    public String getPayment() {
-        return payment;
-    }
-
-    public void setPayment(String payment) {
-        this.payment = payment;
-    }
-
-    public float getTotal() {
-        return total;
-    }
-
-    public void setTotal(float total) {
-        this.total = total;
-    }
-
-    public String getParty() {
-        return party;
-    }
-
-    public void setParty(String party) {
-        this.party = party;
-    }
-
-    public String getProductDate() {
-        return productDate;
-    }
-
-    public void setProductDate(String productDate) {
-        this.productDate = productDate;
-    }
-
-    public String getPrescribedBy() {
-        return prescribedBy;
-    }
-
-    public void setPrescribedBy(String prescribedBy) {
-        this.prescribedBy = prescribedBy;
-    }
-
-    public String getBillNo() {
-        return billNo;
-    }
-
-    public void setBillNo(String billNo) {
-        this.billNo = billNo;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public Double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(Double discount) {
-        this.discount = discount;
-    }
-
-    public Double getAmount() {
-        return amount;
-    }
-
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
+    private Double salesAmount;
 
     public Integer getStoreID() {
         return storeID;
@@ -176,4 +88,93 @@ public class Sales {
     public void setRackNumber(String rackNumber) {
         this.rackNumber = rackNumber;
     }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
+    }
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
+
+    public Double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Double amount) {
+        this.amount = amount;
+    }
+
+    public String getProductDate() {
+        return productDate;
+    }
+
+    public void setProductDate(String productDate) {
+        this.productDate = productDate;
+    }
+
+    public String getPrescribedBy() {
+        return prescribedBy;
+    }
+
+    public void setPrescribedBy(String prescribedBy) {
+        this.prescribedBy = prescribedBy;
+    }
+
+    public String getBillNo() {
+        return billNo;
+    }
+
+    public void setBillNo(String billNo) {
+        this.billNo = billNo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getParty() {
+        return party;
+    }
+
+    public void setParty(String party) {
+        this.party = party;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
+    }
+
+    public Double getSalesAmount() {
+        return salesAmount;
+    }
+
+    public void setSalesAmount(Double salesAmount) {
+        this.salesAmount = salesAmount;
+    }
+
 }

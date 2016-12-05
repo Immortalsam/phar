@@ -7,7 +7,7 @@ public class CustomerBill {
     private String customerId;
     private String salesDate;
     private String customerBillNo;
-    private Float totalAmount;
+    private Double totalAmount;
 
     public String getCustomerId() {
         return customerId;
@@ -33,11 +33,11 @@ public class CustomerBill {
         this.customerBillNo = customerBillNo;
     }
 
-    public Float getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Float totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 }

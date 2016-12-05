@@ -5,31 +5,27 @@ package com.phar.model;
  */
 
 public class SalesReturn {
-
     private String billNo;
-    private String comBill;
+    private String salesReturnDate;
     private String productName;
-    private String productId;
-    private String batch;
-    private String expDate;
-    private float rate;
+    private String productBatch;
     private int quantityReceived;
-    private float total;
+    private Double total;
 
     public String getBillNo() {
         return billNo;
     }
 
-    public String getComBill() {
-        return comBill;
-    }
-
-    public void setComBill(String comBill) {
-        this.comBill = comBill;
-    }
-
     public void setBillNo(String billNo) {
         this.billNo = billNo;
+    }
+
+    public String getSalesReturnDate() {
+        return salesReturnDate;
+    }
+
+    public void setSalesReturnDate(String salesReturnDate) {
+        this.salesReturnDate = salesReturnDate;
     }
 
     public String getProductName() {
@@ -40,36 +36,12 @@ public class SalesReturn {
         this.productName = productName;
     }
 
-    public String getProductId() {
-        return productId;
+    public String getProductBatch() {
+        return productBatch;
     }
 
-    public void setProductId(String productId) {
-        this.productId = productId;
-    }
-
-    public String getBatch() {
-        return batch;
-    }
-
-    public void setBatch(String batch) {
-        this.batch = batch;
-    }
-
-    public String getExpDate() {
-        return expDate;
-    }
-
-    public void setExpDate(String expDate) {
-        this.expDate = expDate;
-    }
-
-    public float getRate() {
-        return rate;
-    }
-
-    public void setRate(float rate) {
-        this.rate = rate;
+    public void setProductBatch(String productBatch) {
+        this.productBatch = productBatch;
     }
 
     public int getQuantityReceived() {
@@ -80,11 +52,11 @@ public class SalesReturn {
         this.quantityReceived = quantityReceived;
     }
 
-    public float getTotal() {
+    public Double getTotal() {
         return total;
     }
 
-    public void setTotal(float total) {
+    public void setTotal(Double total) {
         this.total = total;
     }
 }

@@ -33,7 +33,7 @@ public class CustomerBillImplement implements CustomerBillInterface{
             preparedStatement.setString(1, customerBill.getCustomerId());
             preparedStatement.setString(2, customerBill.getSalesDate());
             preparedStatement.setString(3, customerBill.getCustomerBillNo());
-            preparedStatement.setFloat(4, customerBill.getTotalAmount());
+            preparedStatement.setDouble(4, customerBill.getTotalAmount());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
