@@ -37,6 +37,8 @@ public class NavigationHandler {
                     stage1.setTitle(onExitTitle);
                     stage1.setScene(new Scene(root1));
                     stage1.show();
+//                    stage1.setMaximized(true);
+//                    stage1.setResizable(false);
                 }
             });
             ((Node) (event.getSource())).getScene().getWindow().hide();

@@ -4,6 +4,10 @@
     -fx-background-color: #CCFF99;
 }
 
+#TextField {
+    -fx-background-color: white;
+}
+
 .redd {
     -fx-background-color: #ffd9cc;
 }

@@ -23,6 +23,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,7 @@ public class SalesController implements Initializable {
     @FXML
     private ComboBox<String> pName, pBatch, searchCustomer, paymentMode;
     @FXML
-    private Label qLeftInStore;
+    private Label qLeftInStore, total, toBeReturned;
     @FXML
     private TextField qEntered, pmrp, pDiscount, pAmount, pExpire, cashReceived;
     @FXML
@@ -49,8 +50,6 @@ public class SalesController implements Initializable {
     private TableColumn<Sales, Integer> proQuantity;
     @FXML
     private TableColumn<Sales, Double> proDiscount, proMrp, proAmount;
-    @FXML
-    private Label total, toBeReturned;
     @FXML
     private DatePicker tDate;
     @FXML
@@ -73,8 +72,12 @@ public class SalesController implements Initializable {
     private String customer_id;
     private CustomerBill cb;
 
+    private DecimalFormat decimalFormat = new DecimalFormat("#.00");
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        CFunctions.restrictTxtField(qEntered, "[0-9]*");
+//        CFunctions.restrictTxtField(pAmount, "\\d+(\\.\\d{1,2})?");
         pBillNo.setText(generator.CurrentID("BID"));
         tDate.setValue(LocalDate.now());
         try {
@@ -148,15 +151,20 @@ public class SalesController implements Initializable {
         CFunctions.restrictTxtField(pDiscount, "[0-9]*");
 
         pDiscount.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (pDiscount.getText() == null || pDiscount.getText().trim().isEmpty()) {
-                pDiscount.setText("");
-            } else {
-                double tempAmt = (Double.valueOf(pmrp.getText()) * Double.valueOf(qEntered.getText())) - Double.valueOf(pDiscount.getText());
-                pAmount.setText(String.valueOf(tempAmt));
+            try {
+                if (pDiscount.getText() == null || pDiscount.getText().trim().isEmpty()) {
+                    pDiscount.setText("");
+                } else {
+                    double tempAmt = (Double.valueOf(pmrp.getText()) * Double.valueOf(qEntered.getText())) - Double.valueOf(pDiscount.getText());
+                    pAmount.setText(decimalFormat.format(tempAmt));
+                }
+            } catch (NumberFormatException ex) {
+                qEntered.getStyleClass().add("redd");
             }
         });
 
         cashReceived.textProperty().addListener((observable, oldValue, newValue) -> {
+
             if (cashReceived.getText().trim().isEmpty() || cashReceived.getText() == null) {
                 cashReceived.setText("");
                 toBeReturned.setText("0.00");
@@ -164,19 +172,25 @@ public class SalesController implements Initializable {
                 Double d = Math.abs(Double.valueOf(total.getText()) - Double.valueOf(cashReceived.getText()));
                 toBeReturned.setText(d.toString());
             }
+
         });
 
         qEntered.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (qEntered.getText() == null || qEntered.getText().trim().isEmpty()) {
-                qEntered.setText("0");
-            } else {
-                double tempAmt = (Double.valueOf(pmrp.getText()) * Double.valueOf(qEntered.getText()));
-                pAmount.setText(String.valueOf(tempAmt));
-            }
-            if (Integer.valueOf(qEntered.getText()) > Integer.valueOf(qLeftInStore.getText())) {
-                qEntered.setText(qLeftInStore.getText());
+            try {
+                if (qEntered.getText() == null || qEntered.getText().trim().isEmpty() || qEntered.getText().startsWith("0")) {
+//                    qEntered.getStyleClass().add("clear");
+
+                } else {
+                    double tempAmt = (Double.valueOf(pmrp.getText()) * Double.valueOf(qEntered.getText()));
+                    pAmount.setText(decimalFormat.format(tempAmt));
+                }
+                if (Integer.valueOf(qEntered.getText()) > Integer.valueOf(qLeftInStore.getText())) {
+                    qEntered.setText(qLeftInStore.getText());
+                    qEntered.getStyleClass().add("redd");
+                    //com ent
+                }
+            } catch (NumberFormatException ex) {
                 qEntered.getStyleClass().add("redd");
-                //com ent
             }
         });
 
@@ -197,6 +211,7 @@ public class SalesController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
 
         s.setProductID(pIdd);
         s.setProductName(pName.getValue());
@@ -227,7 +242,7 @@ public class SalesController implements Initializable {
 
         pTableStore.setItems(productTableList);
 
-        float total1 = Float.valueOf(String.valueOf(s.getAmount()));
+        Double total1 = Double.valueOf(s.getAmount());
 
         //getAmountValue.add(total1);
         newTotal += total1;
