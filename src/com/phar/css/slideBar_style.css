@@ -1,0 +1,20 @@
+.button {
+    -fx-pref-width: 250px;
+    -fx-alignment: center-left;
+    -fx-label-padding: 0 0 0 20;
+    -fx-pref-height: 50px;
+    -fx-font-size: 16px;
+    -fx-text-fill: white;
+}
+
+.button:hover {
+    -fx-background-color: darkcyan;
+}
+
+.label {
+    -fx-pref-width: 251px;
+    -fx-font-size: 20px;
+    -fx-label-padding: 0 0 0 10;
+    -fx-text-fill: white;
+
+}

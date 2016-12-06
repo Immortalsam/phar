@@ -21,7 +21,7 @@ public class PurchaseReturnController implements Initializable {
 
 
     @FXML
-    private ComboBox<String> pName ,pBatch , searchSupplierName;
+    private ComboBox<String> pName, pBatch, searchSupplierName;
 
     @FXML
     private TextField pId;
@@ -80,7 +80,6 @@ public class PurchaseReturnController implements Initializable {
     private List<String> batchList = new ArrayList<>();
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         returnDate.setValue(LocalDate.now());
@@ -119,26 +118,26 @@ public class PurchaseReturnController implements Initializable {
             pName.getItems().addAll(productList);
             pName.valueProperty().addListener((((observable1, oldValue1, newValue1) -> {
                 rs1 = DatabaseOperations.simpleSelect("new_purchase_entry", "product_id, product_batch", "product_name='" + pName.getValue() + "'AND product_quantity>=1");
-                try{
-                    while (rs1.next()){
+                try {
+                    while (rs1.next()) {
                         batchList.add(rs1.getString("product_batch"));
                         pId.setText(rs1.getString("product_id"));
                     }
-                }catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
                 pBatch.getItems().addAll(batchList);
             })));
             pBatch.valueProperty().addListener((((observable1, oldValue1, newValue1) -> {
-                rs1 = DatabaseOperations.simpleSelect("new_purchase_entry","product_rate, product_quantity,product_expdate,product_cccharge", "product_batch='" + pBatch.getValue()+ "'");
-                try{
-                    while (rs1.next()){
+                rs1 = DatabaseOperations.simpleSelect("new_purchase_entry", "product_rate, product_quantity,product_expdate,product_cccharge", "product_batch='" + pBatch.getValue() + "'");
+                try {
+                    while (rs1.next()) {
                         pRate.setText(rs1.getString("product_rate"));
                         pQuantity.setText(rs1.getString("product_quantity"));
                         pExpiry.setText(rs1.getString("product_expdate"));
                         pCCCharge.setText(rs1.getString("product_cccharge"));
                     }
-                }catch (SQLException e){
+                } catch (SQLException e) {
                     e.printStackTrace();
                 }
             })));

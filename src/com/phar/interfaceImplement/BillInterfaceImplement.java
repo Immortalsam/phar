@@ -5,7 +5,6 @@ import com.phar.interfaces.BillInterface;
 import com.phar.model.Bill;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
@@ -18,11 +17,10 @@ public class BillInterfaceImplement implements BillInterface {
     private PreparedStatement preparedStatement;
     private Connection connection;
 
-    public BillInterfaceImplement(){
-        try{
+    public BillInterfaceImplement() {
+        try {
             connection = DatabaseConnection.getConnection();
-        }
-        catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -31,7 +29,7 @@ public class BillInterfaceImplement implements BillInterface {
     public boolean addBill(Bill bill) {
         this.bill = bill;
         String query = "INSERT into bill (purchase_date, bill_no, supplier_id, total_amount) values (?,?,?,?)";
-        try{
+        try {
             preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setString(1, bill.getPurchaseDate());
@@ -40,8 +38,7 @@ public class BillInterfaceImplement implements BillInterface {
             preparedStatement.setFloat(4, bill.getTotalAmount());
             preparedStatement.executeUpdate();
             return true;
-        }
-        catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;

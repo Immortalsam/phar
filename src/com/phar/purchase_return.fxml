@@ -1,58 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/8.0.45" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseReturnController">
-   <children>
-      <Label layoutX="32.0" layoutY="24.0" prefHeight="28.0" prefWidth="126.0" text="Purcahse Return">
-         <font>
-            <Font size="17.0" />
-         </font>
-      </Label>
-      <ComboBox fx:id="searchSupplierName" layoutX="128.0" layoutY="63.0" prefWidth="150.0" />
-      <Label layoutX="39.0" layoutY="67.0" text="Supplier Name:" />
-      <DatePicker fx:id="returnDate" layoutX="688.0" layoutY="26.0" />
-      <Label layoutX="39.0" layoutY="115.0" text="Product Name:" />
-      <ComboBox fx:id="pName" layoutX="32.0" layoutY="132.0" prefHeight="25.0" prefWidth="118.0" />
-      <Label layoutX="257.0" layoutY="115.0" text="Product Id:" />
-      <TextField fx:id="pId" layoutX="256.0" layoutY="132.0" prefHeight="25.0" prefWidth="109.0" />
-      <Label layoutX="158.0" layoutY="115.0" text="Batch:" />
-      <Label layoutX="366.0" layoutY="115.0" text="Expiry Date:" />
-      <TextField fx:id="pExpiry" layoutX="366.0" layoutY="132.0" prefHeight="25.0" prefWidth="92.0" />
-      <Label layoutX="457.0" layoutY="115.0" text="Rate:" />
-      <TextField fx:id="pRate" layoutX="458.0" layoutY="132.0" prefHeight="25.0" prefWidth="92.0" />
-      <Label layoutX="548.0" layoutY="115.0" text="Quantity:" />
-      <TextField fx:id="pQuantity" layoutX="550.0" layoutY="132.0" prefHeight="25.0" prefWidth="92.0" />
-      <Label layoutX="643.0" layoutY="115.0" text="CC Charge (%):" />
-      <TextField fx:id="pCCCharge" layoutX="643.0" layoutY="132.0" prefHeight="25.0" prefWidth="118.0" />
-      <Label layoutX="760.0" layoutY="115.0" text="Total:" />
-      <TextField fx:id="pTotal" layoutX="761.0" layoutY="132.0" prefHeight="25.0" prefWidth="109.0" />
-      <TableView fx:id="ptTabelView" layoutX="28.0" layoutY="165.0" prefHeight="307.0" prefWidth="844.0">
-        <columns>
-          <TableColumn fx:id="ptName" prefWidth="124.0" text="Product Name" />
-          <TableColumn fx:id="ptId" prefWidth="111.0" text="Product Id" />
-            <TableColumn fx:id="ptBatch" prefWidth="99.0" text="Batch" />
-            <TableColumn fx:id="ptExpiry" prefWidth="93.0" text="Expiry Date" />
-            <TableColumn fx:id="ptRate" prefWidth="93.0" text="Rate" />
-            <TableColumn fx:id="ptQuantity" prefWidth="94.0" text="Quantity" />
-            <TableColumn fx:id="ptCcharge" prefWidth="118.0" text="CC Charge (%)" />
-            <TableColumn fx:id="ptTotal" prefWidth="111.0" text="Total" />
-        </columns>
-      </TableView>
-      <Label fx:id="supplierId" layoutX="301.0" layoutY="60.0" prefHeight="28.0" prefWidth="71.0" />
-      <ComboBox fx:id="pBatch" layoutX="152.0" layoutY="132.0" prefHeight="25.0" prefWidth="102.0" />
-      <Label layoutX="597.0" layoutY="513.0" prefHeight="36.0" prefWidth="102.0" text="Returned:">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <TextField layoutX="700.0" layoutY="505.0" prefHeight="48.0" prefWidth="174.0" />
-   </children>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="580.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/8.0.45"
+            fx:controller="com.phar.controller.PurchaseReturnController">
+    <children>
+        <Label layoutX="32.0" layoutY="24.0" prefHeight="28.0" prefWidth="126.0" text="Purcahse Return">
+            <font>
+                <Font size="17.0"/>
+            </font>
+        </Label>
+        <ComboBox fx:id="searchSupplierName" layoutX="128.0" layoutY="63.0" prefWidth="150.0"/>
+        <Label layoutX="39.0" layoutY="67.0" text="Supplier Name:"/>
+        <DatePicker fx:id="returnDate" layoutX="688.0" layoutY="26.0"/>
+        <Label layoutX="39.0" layoutY="115.0" text="Product Name:"/>
+        <ComboBox fx:id="pName" layoutX="32.0" layoutY="132.0" prefHeight="25.0" prefWidth="118.0"/>
+        <Label layoutX="257.0" layoutY="115.0" text="Product Id:"/>
+        <TextField fx:id="pId" layoutX="256.0" layoutY="132.0" prefHeight="25.0" prefWidth="109.0"/>
+        <Label layoutX="158.0" layoutY="115.0" text="Batch:"/>
+        <Label layoutX="366.0" layoutY="115.0" text="Expiry Date:"/>
+        <TextField fx:id="pExpiry" layoutX="366.0" layoutY="132.0" prefHeight="25.0" prefWidth="92.0"/>
+        <Label layoutX="457.0" layoutY="115.0" text="Rate:"/>
+        <TextField fx:id="pRate" layoutX="458.0" layoutY="132.0" prefHeight="25.0" prefWidth="92.0"/>
+        <Label layoutX="548.0" layoutY="115.0" text="Quantity:"/>
+        <TextField fx:id="pQuantity" layoutX="550.0" layoutY="132.0" prefHeight="25.0" prefWidth="92.0"/>
+        <Label layoutX="643.0" layoutY="115.0" text="CC Charge (%):"/>
+        <TextField fx:id="pCCCharge" layoutX="643.0" layoutY="132.0" prefHeight="25.0" prefWidth="118.0"/>
+        <Label layoutX="760.0" layoutY="115.0" text="Total:"/>
+        <TextField fx:id="pTotal" layoutX="761.0" layoutY="132.0" prefHeight="25.0" prefWidth="109.0"/>
+        <TableView fx:id="ptTabelView" layoutX="28.0" layoutY="165.0" prefHeight="307.0" prefWidth="844.0">
+            <columns>
+                <TableColumn fx:id="ptName" prefWidth="124.0" text="Product Name"/>
+                <TableColumn fx:id="ptId" prefWidth="111.0" text="Product Id"/>
+                <TableColumn fx:id="ptBatch" prefWidth="99.0" text="Batch"/>
+                <TableColumn fx:id="ptExpiry" prefWidth="93.0" text="Expiry Date"/>
+                <TableColumn fx:id="ptRate" prefWidth="93.0" text="Rate"/>
+                <TableColumn fx:id="ptQuantity" prefWidth="94.0" text="Quantity"/>
+                <TableColumn fx:id="ptCcharge" prefWidth="118.0" text="CC Charge (%)"/>
+                <TableColumn fx:id="ptTotal" prefWidth="111.0" text="Total"/>
+            </columns>
+        </TableView>
+        <Label fx:id="supplierId" layoutX="301.0" layoutY="60.0" prefHeight="28.0" prefWidth="71.0"/>
+        <ComboBox fx:id="pBatch" layoutX="152.0" layoutY="132.0" prefHeight="25.0" prefWidth="102.0"/>
+        <Label layoutX="597.0" layoutY="513.0" prefHeight="36.0" prefWidth="102.0" text="Returned:">
+            <font>
+                <Font name="System Bold" size="20.0"/>
+            </font>
+        </Label>
+        <TextField layoutX="700.0" layoutY="505.0" prefHeight="48.0" prefWidth="174.0"/>
+    </children>
 </AnchorPane>

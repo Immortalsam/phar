@@ -23,22 +23,19 @@ import java.util.ResourceBundle;
  */
 public class LoginMainController implements Initializable {
 
+    @FXML
+    private TextField admin_username;
+    @FXML
+    private PasswordField admin_password;
+    @FXML
+    private TextField sales_username;
+    @FXML
+    private PasswordField sales_password;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
-
-    @FXML
-    private TextField admin_username;
-
-    @FXML
-    private PasswordField admin_password;
-
-    @FXML
-    private TextField sales_username;
-
-    @FXML
-    private PasswordField sales_password;
 
     @FXML
     void sales_login(ActionEvent event) {

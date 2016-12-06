@@ -1,9 +1,12 @@
 package com.phar.extraFunctionality;
 
 import javafx.collections.ObservableList;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -55,4 +58,15 @@ public class CFunctions {
         return m.matches();
     }
 
+
+    //
+    public void openAnchor(AnchorPane mainAnchorPane, String location) {
+        try {
+
+            mainAnchorPane.getChildren().clear();
+            AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(location));
+            mainAnchorPane.getChildren().add(anchorPane);
+        } catch (IOException ee) {
+        }
+    }
 }

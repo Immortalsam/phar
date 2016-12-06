@@ -8,5 +8,6 @@ import com.phar.model.CustomerPayment;
  */
 public interface CustomerInterface {
     public boolean addCustomer(CustomerInfo customerInfo);
+
     public boolean addCustomerPayment(CustomerPayment customerPayment);
 }

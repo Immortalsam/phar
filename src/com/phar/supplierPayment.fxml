@@ -1,37 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="870.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SupplierPaymentController">
-   <children>
-      <DatePicker fx:id="tDate" layoutX="76.0" layoutY="52.0" prefHeight="26.0" prefWidth="180.0" />
-      <Label layoutX="37.0" layoutY="57.0" text="Date:" />
-      <Label layoutX="43.0" layoutY="106.0" text="Suppiler Id:" />
-      <ComboBox fx:id="sNameCBox" layoutX="139.0" layoutY="130.0" prefHeight="25.0" prefWidth="161.0" />
-      <TextField fx:id="amtToBePaid" layoutX="311.0" layoutY="130.0" />
-      <Label layoutX="312.0" layoutY="106.0" text="Amount to be Paid:" />
-      <TextField fx:id="amtPaid" layoutX="482.0" layoutY="130.0" prefHeight="25.0" prefWidth="137.0" />
-      <Label layoutX="470.0" layoutY="106.0" text="Amount Paid:" />
-      <TextField fx:id="amtRemaining" layoutX="623.0" layoutY="130.0" />
-      <Label layoutX="624.0" layoutY="106.0" text="Amount Remaining:" />
-      <TextField fx:id="sId" layoutX="42.0" layoutY="130.0" prefHeight="25.0" prefWidth="72.0" />
-      <Label layoutX="140.0" layoutY="106.0" text="Suppiler Name:" />
-      <Button layoutX="802.0" layoutY="130.0" mnemonicParsing="false" onAction="#onSaveClicked" text="Save" />
-      <TableView fx:id="tableTrans" layoutX="45.0" layoutY="214.0" prefHeight="364.0" prefWidth="729.0">
-        <columns>
-          <TableColumn fx:id="tableDate" prefWidth="136.99998474121094" text="Date" />
-            <TableColumn fx:id="tDescription" prefWidth="207.99996948242188" text="Description" />
-            <TableColumn fx:id="tdrAmt" minWidth="0.0" prefWidth="219.0" text="Payment" />
-            <TableColumn fx:id="tCrAmt" prefWidth="164.0" text="Purchase" />
-        </columns>
-      </TableView>
-      <Label layoutX="43.0" layoutY="189.0" text="Transaction History:" />
-   </children>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="600.0" prefWidth="870.0"
+            xmlns="http://javafx.com/javafx/8.0.65" fx:controller="com.phar.controller.SupplierPaymentController">
+    <children>
+        <DatePicker fx:id="tDate" layoutX="76.0" layoutY="52.0" prefHeight="26.0" prefWidth="180.0"/>
+        <Label layoutX="37.0" layoutY="57.0" text="Date:"/>
+        <Label layoutX="43.0" layoutY="106.0" text="Suppiler Id:"/>
+        <ComboBox fx:id="sNameCBox" layoutX="139.0" layoutY="130.0" prefHeight="25.0" prefWidth="161.0"/>
+        <TextField fx:id="amtToBePaid" layoutX="311.0" layoutY="130.0"/>
+        <Label layoutX="312.0" layoutY="106.0" text="Amount to be Paid:"/>
+        <TextField fx:id="amtPaid" layoutX="482.0" layoutY="130.0" prefHeight="25.0" prefWidth="137.0"/>
+        <Label layoutX="470.0" layoutY="106.0" text="Amount Paid:"/>
+        <TextField fx:id="amtRemaining" layoutX="623.0" layoutY="130.0"/>
+        <Label layoutX="624.0" layoutY="106.0" text="Amount Remaining:"/>
+        <TextField fx:id="sId" layoutX="42.0" layoutY="130.0" prefHeight="25.0" prefWidth="72.0"/>
+        <Label layoutX="140.0" layoutY="106.0" text="Suppiler Name:"/>
+        <Button layoutX="802.0" layoutY="130.0" mnemonicParsing="false" onAction="#onSaveClicked" text="Save"/>
+        <TableView fx:id="tableTrans" layoutX="45.0" layoutY="214.0" prefHeight="364.0" prefWidth="729.0">
+            <columns>
+                <TableColumn fx:id="tableDate" prefWidth="136.99998474121094" text="Date"/>
+                <TableColumn fx:id="tDescription" prefWidth="207.99996948242188" text="Description"/>
+                <TableColumn fx:id="tdrAmt" minWidth="0.0" prefWidth="219.0" text="Payment"/>
+                <TableColumn fx:id="tCrAmt" prefWidth="164.0" text="Purchase"/>
+            </columns>
+        </TableView>
+        <Label layoutX="43.0" layoutY="189.0" text="Transaction History:"/>
+    </children>
 </AnchorPane>

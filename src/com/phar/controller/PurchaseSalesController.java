@@ -32,7 +32,7 @@ public class PurchaseSalesController implements Initializable {
     private TableView tableView;
 
     @FXML
-    private TableColumn<PurchaseSales, String> tableDate,tableBill,tablePurchase,tableSales;
+    private TableColumn<PurchaseSales, String> tableDate, tableBill, tablePurchase, tableSales;
 
 
     private ObservableList<PurchaseSales> forTableList = FXCollections.observableArrayList();

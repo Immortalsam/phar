@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="747.0" prefWidth="1280.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SalesController">
+    <children>
+      <AnchorPane layoutX="24.0" layoutY="23.0" prefHeight="670.0" prefWidth="1240.0" AnchorPane.bottomAnchor="57.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <children>
+              <JFXComboBox fx:id="sParty" layoutX="18.0" layoutY="64.0" prefHeight="35.0" prefWidth="250.0" promptText="Party">
+                  <effect>
+                      <InnerShadow />
+                  </effect>
+              </JFXComboBox>
+              <JFXTextField fx:id="sPrescribedBy" focusColor="#000000" labelFloat="true" layoutX="339.0" layoutY="6.0" prefHeight="35.0" prefWidth="250.0" promptText="Prescribed By" unFocusColor="#2c3557">
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+                  <effect>
+                      <InnerShadow />
+                  </effect>
+              </JFXTextField>
+              <JFXComboBox fx:id="sPaymentMode" layoutX="339.0" layoutY="64.0" prefHeight="35.0" prefWidth="250.0" promptText="Payment Mode">
+                  <items>
+                      <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Cash" />
+                          <String fx:value="Credit" />
+                      </FXCollections>
+                  </items>
+                  <value>
+                      <String fx:value="Cash" />
+                  </value>
+                  <effect>
+                      <InnerShadow />
+                  </effect>
+              </JFXComboBox>
+              <JFXTextField fx:id="sAddress" focusColor="#000000" labelFloat="true" layoutX="17.0" layoutY="122.0" prefHeight="35.0" prefWidth="250.0" promptText="Address" unFocusColor="#132451">
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+                  <effect>
+                      <InnerShadow />
+                  </effect>
+              </JFXTextField>
+              <JFXComboBox fx:id="sProductName" layoutX="17.0" layoutY="182.0" prefHeight="35.0" prefWidth="314.0" promptText="Product Name">
+                  <effect>
+                      <InnerShadow />
+                  </effect>
+              </JFXComboBox>
+              <JFXComboBox fx:id="sBatch" layoutX="437.0" layoutY="181.0" prefHeight="35.0" prefWidth="116.0" promptText="Batch">
+                  <effect>
+                      <InnerShadow />
+                  </effect>
+              </JFXComboBox>
+              <JFXTextField fx:id="sQuantityEntered" focusColor="#000000" labelFloat="true" layoutX="840.0" layoutY="187.0" maxWidth="124.0" minWidth="103.0" prefHeight="35.0" prefWidth="110.0" promptText="Quantity">
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+                  <effect>
+                      <InnerShadow />
+                  </effect>
+              </JFXTextField>
+              <JFXTextField fx:id="sAmount" focusColor="#000000" labelFloat="true" layoutX="951.0" layoutY="187.0" minWidth="110.0" prefHeight="35.0" prefWidth="175.0" promptText="Amount">
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+                  <effect>
+                      <InnerShadow />
+                  </effect>
+              </JFXTextField>
+              <JFXButton buttonType="RAISED" layoutX="1148.0" layoutY="186.0" onAction="#onClickAddButton" prefHeight="31.0" prefWidth="70.0" ripplerFill="#faf9fb" style="-fx-background-color: grey;" text="Add" textFill="WHITE" />
+              <JFXTextField fx:id="cashReceived" focusColor="#000000" labelFloat="true" layoutX="811.0" layoutY="562.0" maxWidth="149.0" minWidth="149.0" prefHeight="36.0" prefWidth="149.0" promptText="Received">
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+                  <effect>
+                      <InnerShadow />
+                  </effect>
+              </JFXTextField>
+              <GridPane layoutX="978.0" layoutY="501.0" prefHeight="164.0" prefWidth="151.0">
+                  <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+                  </columnConstraints>
+                  <rowConstraints>
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                      <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  </rowConstraints>
+                  <children>
+                      <JFXTextField fx:id="sTotal" editable="false" focusTraversable="false" labelFloat="true" maxWidth="161.0" minWidth="151.0" prefHeight="36.0" prefWidth="151.0" promptText="Total">
+                          <font>
+                              <Font size="14.0" />
+                          </font>
+                          <effect>
+                              <InnerShadow />
+                          </effect>
+                      </JFXTextField>
+                      <JFXTextField fx:id="sDiscount" focusColor="#000000" labelFloat="true" maxWidth="151.0" minWidth="151.0" prefHeight="36.0" prefWidth="151.0" promptText="Discount" GridPane.rowIndex="1">
+                          <font>
+                              <Font size="14.0" />
+                          </font>
+                          <effect>
+                              <InnerShadow />
+                          </effect>
+                      </JFXTextField>
+                      <JFXTextField fx:id="sNetTotal" editable="false" focusColor="#000000" focusTraversable="false" labelFloat="true" maxWidth="161.0" minWidth="149.0" prefHeight="36.0" prefWidth="149.0" promptText="Net Total " GridPane.rowIndex="2">
+                          <font>
+                              <Font size="14.0" />
+                          </font>
+                          <effect>
+                              <InnerShadow />
+                          </effect>
+                      </JFXTextField>
+                  </children>
+              </GridPane>
+              <JFXButton buttonType="RAISED" layoutX="1139.0" layoutY="518.0" onAction="#onClickPrintButton" prefHeight="31.0" prefWidth="78.0" style="-fx-background-color: grey;" text="Print Bill" textFill="WHITE" />
+              <JFXButton buttonType="RAISED" layoutX="1139.0" layoutY="569.0" onAction="#onClickSaveButton" prefHeight="31.0" prefWidth="78.0" style="-fx-background-color: grey;" text="Save" textFill="WHITE" />
+              <JFXTextField fx:id="sBillNo" focusColor="#000000" focusTraversable="false" labelFloat="true" layoutX="18.0" layoutY="6.0" minWidth="181.0" prefHeight="35.0" prefWidth="250.0" promptText="Bill No." unFocusColor="#103246">
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+              </JFXTextField>
+              <JFXTextField fx:id="sProductId" editable="false" focusColor="#000000" focusTraversable="false" labelFloat="true" layoutX="332.0" layoutY="188.0" maxWidth="131.0" minWidth="105.0" prefHeight="35.0" prefWidth="105.0" promptText="Product Id">
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+              </JFXTextField>
+              <JFXTextField fx:id="sExpireDate" editable="false" focusColor="#000000" focusTraversable="false" labelFloat="true" layoutX="554.0" layoutY="187.0" maxWidth="161.0" minWidth="146.0" prefHeight="35.0" prefWidth="145.0" promptText="Expire Date">
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+              </JFXTextField>
+              <JFXTextField fx:id="sMrp" editable="false" focusColor="#000000" focusTraversable="false" labelFloat="true" layoutX="702.0" layoutY="187.0" maxWidth="137.0" minWidth="110.0" prefHeight="35.0" prefWidth="135.0" promptText="MRP">
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+              </JFXTextField>
+              <TableView fx:id="pTable" focusTraversable="false" layoutX="16.0" layoutY="234.0" prefHeight="240.0" prefWidth="1113.0">
+                  <columns>
+                      <TableColumn fx:id="tProductName" prefWidth="313.4902000427246" text="Product Name" />
+                      <TableColumn fx:id="tProductId" minWidth="6.0" prefWidth="104.50973510742188" text="Product Id" />
+                      <TableColumn fx:id="tBatch" prefWidth="120.78433227539062" text="Batch" />
+                      <TableColumn fx:id="tExpireDate" prefWidth="143.46078491210938" text="Expire Date" />
+                      <TableColumn fx:id="tMrp" prefWidth="137.1763916015625" text="MRP" />
+                      <TableColumn fx:id="tQuantity" prefWidth="120.02606201171875" text="Quantity" />
+                      <TableColumn fx:id="tAmount" prefWidth="169.97393798828125" text="Amount" />
+                  </columns>
+              </TableView>
+              <JFXTextField fx:id="sReturn" editable="false" focusColor="#000000" focusTraversable="false" labelFloat="true" layoutX="808.0" layoutY="621.0" maxWidth="149.0" minWidth="149.0" prefHeight="36.0" prefWidth="149.0" promptText="Return">
+                  <font>
+                      <Font size="14.0" />
+                  </font>
+                  <effect>
+                      <InnerShadow />
+                  </effect>
+              </JFXTextField>
+              <JFXTextField fx:id="sQuantityLeft" editable="false" focusTraversable="false" labelFloat="true" layoutX="827.0" layoutY="119.0" maxWidth="124.0" minWidth="110.0" prefHeight="43.0" prefWidth="117.0" promptText="Quantity Left">
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+                  <effect>
+                      <InnerShadow />
+                  </effect>
+              </JFXTextField>
+              <JFXDatePicker fx:id="tDate" layoutX="1011.0" layoutY="14.0" />
+         </children>
+      </AnchorPane>
+    </children>
+</AnchorPane>

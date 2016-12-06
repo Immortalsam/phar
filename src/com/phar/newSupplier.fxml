@@ -1,24 +1,68 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SupplierController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="563.0" prefWidth="618.0" xmlns="http://javafx.com/javafx/8.0.60"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SupplierController">
     <children>
-        <TextField fx:id="supplierId" editable="false" layoutX="203.0" layoutY="85.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Id" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
-        <TextField fx:id="supplierName" layoutX="203.0" layoutY="128.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Name" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
-        <TextField fx:id="supplierAddress" layoutX="203.0" layoutY="169.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Address" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
-        <TextField fx:id="supplierContact" layoutX="203.0" layoutY="210.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Contact" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
-        <TextField fx:id="supplierEmail" layoutX="203.0" layoutY="253.0" prefHeight="25.0" prefWidth="234.0" promptText="Supplier Email" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
-        <TextField fx:id="supplierPanNo" layoutX="203.0" layoutY="289.0" prefHeight="25.0" prefWidth="234.0" promptText="Pan no" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
-        <Label layoutX="249.0" layoutY="37.0" prefHeight="28.0" prefWidth="142.0" text="New Supplier" AnchorPane.leftAnchor="249.0" AnchorPane.rightAnchor="209.0" AnchorPane.topAnchor="37.0">
-            <font>
-                <Font size="22.0" />
-            </font>
-        </Label>
-        <Button fx:id="suppSaveButton" layoutX="203.0" layoutY="332.0" mnemonicParsing="false" onAction="#onClickSave" prefHeight="34.0" prefWidth="234.0" text="Save Supplier" AnchorPane.leftAnchor="203.0" AnchorPane.rightAnchor="163.0" />
+        <Pane fx:id="pane2" layoutX="26.0" layoutY="88.0" prefHeight="435.0" prefWidth="552.0"
+              style="-fx-background-color: white;">
+            <children>
+                <GridPane layoutX="144.0" layoutY="36.0" prefHeight="343.0" prefWidth="268.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <JFXTextField fx:id="sId" focusColor="#606472" labelFloat="true" maxWidth="283.0"
+                                      minWidth="229.0" prefHeight="21.0" prefWidth="268.0" promptText="Supplier Id"/>
+                        <JFXTextField fx:id="sName" focusColor="#606472" labelFloat="true" maxWidth="269.0"
+                                      minWidth="230.0" prefHeight="24.0" prefWidth="268.0" promptText="Supplier Name"
+                                      GridPane.rowIndex="1"/>
+                        <JFXTextField fx:id="sAddress" focusColor="#606472" labelFloat="true" maxWidth="276.0"
+                                      minWidth="229.0" prefHeight="17.0" prefWidth="276.0" promptText="Supplier Address"
+                                      GridPane.rowIndex="2"/>
+                        <JFXTextField fx:id="sContact" focusColor="#606472" labelFloat="true" maxWidth="298.0"
+                                      minWidth="229.0" prefHeight="20.0" prefWidth="268.0" promptText="Supplier Contact"
+                                      GridPane.rowIndex="3"/>
+                        <JFXTextField fx:id="sEmail" focusColor="#606472" labelFloat="true" maxWidth="277.0"
+                                      minWidth="229.0" prefHeight="18.0" prefWidth="268.0" promptText="Supplier Email"
+                                      GridPane.rowIndex="4"/>
+                        <JFXTextField fx:id="sPanNo" focusColor="#606472" labelFloat="true" maxWidth="275.0"
+                                      minWidth="229.0" prefHeight="25.0" prefWidth="275.0" promptText="Pan Number"
+                                      GridPane.rowIndex="5"/>
+                    </children>
+                </GridPane>
+                <JFXButton fx:id="saveButton" buttonType="RAISED" layoutX="152.0" layoutY="387.0"
+                           onAction="#onClickSaveButton" prefHeight="32.0" prefWidth="257.0"
+                           style="-fx-background-color: grey;" text="Save" textFill="WHITE"/>
+            </children>
+            <effect>
+                <DropShadow blurType="GAUSSIAN"/>
+            </effect>
+        </Pane>
+        <Pane layoutX="28.0" layoutY="14.0" prefHeight="57.0" prefWidth="552.0" style="-fx-background-color: white;">
+            <children>
+                <Label layoutX="167.0" layoutY="5.0" prefHeight="47.0" prefWidth="245.0" text="INSERT SUPPLIER INFO">
+                    <font>
+                        <Font name="System Bold" size="22.0"/>
+                    </font>
+                </Label>
+            </children>
+            <effect>
+                <DropShadow blurType="GAUSSIAN"/>
+            </effect>
+        </Pane>
     </children>
 </AnchorPane>

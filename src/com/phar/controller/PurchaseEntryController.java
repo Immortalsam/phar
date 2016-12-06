@@ -10,8 +10,6 @@ import com.phar.interfaceImplement.InventoryImplement;
 import com.phar.model.Bill;
 import com.phar.model.ProductEntry;
 import com.phar.testCases.TestCases;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
