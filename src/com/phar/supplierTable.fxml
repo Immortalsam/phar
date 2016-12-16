@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="supplier" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="400.0" prefWidth="968.0"
-            xmlns="http://javafx.com/javafx/8.0.65" fx:controller="com.phar.controller.SupplierTableController">
-    <TextField fx:id="searchField" layoutX="14.0" layoutY="33.0" onKeyReleased="#searchSupplier" prefHeight="25.0"
-               prefWidth="209.0" promptText="Search Supplier"/>
-    <TableView fx:id="supplierTable" layoutX="13.0" layoutY="68.0" prefHeight="298.0" prefWidth="703.0">
-        <columns>
-            <TableColumn fx:id="supplierId" prefWidth="75.0" text="SupplierID"/>
-            <TableColumn fx:id="supplierName" prefWidth="125.0" text="Supplier Name"/>
-            <TableColumn fx:id="supplierAddress" prefWidth="125.0" text="Supplier Address"/>
-            <TableColumn fx:id="supplierContact" prefWidth="125.0" text="Supplier Contact"/>
-            <TableColumn fx:id="supplierEmail" prefWidth="125.0" text="Supplier Email"/>
-            <TableColumn fx:id="supplierPanNo" prefWidth="125.0" text="Supplier Pan No."/>
-        </columns>
-    </TableView>
+
+
+<AnchorPane prefHeight="700.0" prefWidth="1240.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SupplierTableController">
+   <children>
+      <AnchorPane fx:id="supplier" layoutX="15.0" layoutY="41.0" maxHeight="600.0" maxWidth="1208.0" minHeight="600.0" minWidth="725.0" prefHeight="600.0" prefWidth="1208.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="41.0">
+          <TextField fx:id="searchField" layoutX="14.0" layoutY="33.0" onKeyReleased="#searchSupplier" prefHeight="27.0" prefWidth="328.0" promptText="Search Supplier" />
+          <TableView fx:id="supplierTable" layoutX="13.0" layoutY="68.0" prefHeight="525.0" prefWidth="1190.0">
+              <columns>
+                  <TableColumn fx:id="supplierId" prefWidth="75.0" text="SupplierID" />
+                  <TableColumn fx:id="supplierName" prefWidth="291.24300384521484" text="Supplier Name" />
+                  <TableColumn fx:id="supplierAddress" prefWidth="218.24868774414062" text="Supplier Address" />
+                  <TableColumn fx:id="supplierContact" prefWidth="175.36163330078125" text="Supplier Contact" />
+                  <TableColumn fx:id="supplierEmail" prefWidth="266.63836669921875" text="Supplier Email" />
+                  <TableColumn fx:id="supplierPanNo" prefWidth="160.00506591796875" text="Supplier Pan No." />
+              </columns>
+          </TableView>
+      </AnchorPane>
+   </children>
 </AnchorPane>

@@ -79,17 +79,35 @@ public class MainController implements Initializable {
 //                            mainAnchor.toFront();
                             break;
                         case "vBoxSalesEntry":
-
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/newsales.fxml", drawer);
+                            break;
                         case "vBoxSalesReturn":
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/newsales.fxml", drawer);
+                            break;
                         case "vBoxPurchaseReturn":
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/purchase_return.fxml", drawer);
+                            break;
                         case "vBoxSupplierPayment":
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/supplierPayment.fxml", drawer);
+                            break;
                         case "vBoxCustomerPayment":
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/customer_payment.fxml", drawer);
+                            break;
                         case "vBoxPurchaseVsSales":
                             forAnchorPane.openAnchor(mainAnchor, "/com/phar/purchaseVSsales.fxml", drawer);
 //                            drawer.close();
                             break;
                         case "vBoxCustomerDetails":
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/customer_info.fxml", drawer);
+                            break;
                         case "vBoxRecord":
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/newsales.fxml", drawer);
+                            break;
+                        case "vBoxExpenses":
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/newsales.fxml", drawer);
+                            break;
+                        case "vBoxIncome":
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/Income.fxml", drawer);
                             break;
                         default:
                             drawer.close();

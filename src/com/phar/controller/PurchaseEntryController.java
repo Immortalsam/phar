@@ -1,6 +1,5 @@
 package com.phar.controller;
 
-import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DatabaseOperations;
@@ -27,6 +26,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -247,36 +247,54 @@ public class PurchaseEntryController implements Initializable {
 
         InventoryImplement inventoryImplement = new InventoryImplement();
         String insertQuery = "INSERT INTO new_purchase_entry VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        for (ProductEntry p : productList) {
-            try {
-                connection = DatabaseConnection.getConnection();
-            } catch (ClassNotFoundException e) {
-                e.printStackTrace();
-            }
-            preparedStatement = connection.prepareStatement(insertQuery);
-            preparedStatement.setInt(1, 0);
-            preparedStatement.setString(2, p.getFisalYear());
-            preparedStatement.setString(3, p.getProductId());
-            preparedStatement.setString(4, p.getSupplierId());
-            preparedStatement.setString(5, p.getProductName());
-            preparedStatement.setString(6, p.getProductBatch());
-            preparedStatement.setString(7, p.getExpCombined());
-            preparedStatement.setFloat(8, p.getProductCcCharge());
-            preparedStatement.setInt(9, p.getProductQuFoR());
-            preparedStatement.setFloat(10, p.getProductRate());
-            preparedStatement.setInt(11, p.getProductQuantity());
-            preparedStatement.setFloat(12, p.getProductMrp());
-            preparedStatement.setString(13, p.getTodayDate());
-            preparedStatement.setString(14, p.getProductCashCredit());
-            preparedStatement.setString(15, p.getProductVat());
-            preparedStatement.setString(16, p.getBillNo());
-            preparedStatement.executeUpdate();
-            inventoryImplement.addtoDb(p);
-        }
-        supplierSearchName.setDisable(false);
-        bNo.setDisable(false);
 
-        CustomAlert alert = new CustomAlert("Insert to database Info", "Save successful");
-        alert.withoutHeader();
+
+//        CustomAlert alert = new CustomAlert("Insert to database Info", "Save successful");
+//        alert.withoutHeader();
+
+        Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+        alert1.setTitle("Please Choose an Option.");
+        alert1.setHeaderText(null);
+        alert1.setContentText("Please Choose Payment to make payment right now. Press Save for credit");
+        ButtonType makePayment = new ButtonType("Make Payment");
+        ButtonType saveToDb = new ButtonType("Save to Database");
+
+        alert1.getButtonTypes().clear();
+        alert1.getButtonTypes().addAll(makePayment,saveToDb);
+        Optional<ButtonType> result = alert1.showAndWait();
+        if (result.get() == makePayment) {
+            System.out.println("Payment Made");
+        } else if (result.get() == saveToDb) {
+            System.out.println("Saved to DB");
+            for (ProductEntry p : productList) {
+                try {
+                    connection = DatabaseConnection.getConnection();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+                preparedStatement = connection.prepareStatement(insertQuery);
+                preparedStatement.setInt(1, 0);
+                preparedStatement.setString(2, p.getFisalYear());
+                preparedStatement.setString(3, p.getProductId());
+                preparedStatement.setString(4, p.getSupplierId());
+                preparedStatement.setString(5, p.getProductName());
+                preparedStatement.setString(6, p.getProductBatch());
+                preparedStatement.setString(7, p.getExpCombined());
+                preparedStatement.setFloat(8, p.getProductCcCharge());
+                preparedStatement.setInt(9, p.getProductQuFoR());
+                preparedStatement.setFloat(10, p.getProductRate());
+                preparedStatement.setInt(11, p.getProductQuantity());
+                preparedStatement.setFloat(12, p.getProductMrp());
+                preparedStatement.setString(13, p.getTodayDate());
+                preparedStatement.setString(14, p.getProductCashCredit());
+                preparedStatement.setString(15, p.getProductVat());
+                preparedStatement.setString(16, p.getBillNo());
+                preparedStatement.executeUpdate();
+                inventoryImplement.addtoDb(p);
+            }
+            supplierSearchName.setDisable(false);
+            bNo.setDisable(false);
+        }
+
     }
 }
