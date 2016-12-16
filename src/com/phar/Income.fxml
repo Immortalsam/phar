@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="618.0" prefWidth="954.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.IncomeController">
+   <children>
+      <Label layoutX="282.0" layoutY="21.0" prefHeight="25.0" prefWidth="129.0" text="Indirect Income">
+         <font>
+            <Font name="System Bold Italic" size="15.0" />
+         </font></Label>
+      <JFXTextField fx:id="enterIncome" layoutX="35.0" layoutY="253.0" maxWidth="230.0" minWidth="212.0" prefHeight="31.0" prefWidth="212.0" promptText="Enter New Income Source" />
+      <JFXButton buttonType="RAISED" layoutX="269.0" layoutY="246.0" onAction="#onClickAddButton" prefHeight="31.0" prefWidth="57.0" style="-fx-background-color: grey;" text="Add" textFill="WHITE" />
+      <JFXComboBox fx:id="listIncome" layoutX="43.0" layoutY="321.0" prefHeight="25.0" prefWidth="197.0" promptText="List of Old Incomes" />
+      <JFXTextField fx:id="enterRupees" layoutX="37.0" layoutY="393.0" maxWidth="212.0" minWidth="197.0" prefHeight="31.0" prefWidth="212.0" promptText="Enter Rupees" />
+      <DatePicker fx:id="tDate" layoutX="669.0" layoutY="55.0" />
+      <JFXButton buttonType="RAISED" layoutX="41.0" layoutY="471.0" onAction="#onClickSaveButton" prefHeight="25.0" prefWidth="197.0" style="-fx-background-color: grey;" text="Save " textFill="WHITE" />
+      <TableView fx:id="iTable" layoutX="389.0" layoutY="202.0" prefHeight="302.0" prefWidth="454.0">
+         <columns>
+            <TableColumn fx:id="iDate" prefWidth="155.0" text="Date" />
+            <TableColumn fx:id="iIncomeSource" prefWidth="169.0" text="Income Source" />
+            <TableColumn fx:id="iRupees" prefWidth="132.0" text="Rupees" />
+         </columns>
+      </TableView>
+      <Label layoutX="389.0" layoutY="158.0" prefHeight="31.0" prefWidth="180.0" text="List of preivous Incomes from:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="incomeLabel" layoutX="578.0" layoutY="158.0" prefHeight="31.0" prefWidth="153.0">
+         <font>
+            <Font name="System Bold Italic" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="679.0" layoutY="538.0" prefHeight="31.0" prefWidth="39.0" text="Total:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="labelTotal" contentDisplay="CENTER" layoutX="727.0" layoutY="514.0" prefHeight="70.0" prefWidth="116.0" style="-fx-background-color: light silver;" textAlignment="CENTER">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

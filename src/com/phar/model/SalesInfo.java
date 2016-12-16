@@ -13,15 +13,7 @@ public class SalesInfo {
     private String productName;
     private int productQuantity;
     private String salesDate;
-    private float salesAmount;
-
-    public int getProductQuantity() {
-        return productQuantity;
-    }
-
-    public void setProductQuantity(int productQuantity) {
-        this.productQuantity = productQuantity;
-    }
+    private Double salesAmount;
 
     public String getSalesBill() {
         return salesBill;
@@ -63,6 +55,14 @@ public class SalesInfo {
         this.productName = productName;
     }
 
+    public int getProductQuantity() {
+        return productQuantity;
+    }
+
+    public void setProductQuantity(int productQuantity) {
+        this.productQuantity = productQuantity;
+    }
+
     public String getSalesDate() {
         return salesDate;
     }
@@ -71,11 +71,11 @@ public class SalesInfo {
         this.salesDate = salesDate;
     }
 
-    public float getSalesAmount() {
+    public Double getSalesAmount() {
         return salesAmount;
     }
 
-    public void setSalesAmount(float salesAmount) {
+    public void setSalesAmount(Double salesAmount) {
         this.salesAmount = salesAmount;
     }
 }

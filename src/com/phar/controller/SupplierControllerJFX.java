@@ -21,7 +21,7 @@ import java.util.ResourceBundle;
 /**
  * Created by Sam on 12/5/2016.
  */
-public class SalesControllerJFX implements Initializable {
+public class SupplierControllerJFX implements Initializable {
 
     @FXML
     private JFXTextField sId;
@@ -62,7 +62,6 @@ public class SalesControllerJFX implements Initializable {
         CFunctions.restrictTxtField(sAddress, Constants.Atoz);
         CFunctions.restrictTxtField(sContact, Constants.ZerotoNine);
         CFunctions.restrictTxtField(sPanNo, Constants.ZerotoNine);
-
     }
 
     @FXML
