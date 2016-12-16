@@ -1,5 +1,6 @@
 package com.phar.extraFunctionality;
 
+import com.jfoenix.controls.JFXDrawer;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -60,12 +61,14 @@ public class CFunctions {
 
 
     //
-    public void openAnchor(AnchorPane mainAnchorPane, String location) {
+    public void openAnchor(AnchorPane mainAnchorPane, String location, JFXDrawer drawer) {
         try {
 
             mainAnchorPane.getChildren().clear();
             AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(location));
             mainAnchorPane.getChildren().add(anchorPane);
+            drawer.close();
+            mainAnchorPane.toFront();
         } catch (IOException ee) {
         }
     }

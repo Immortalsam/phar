@@ -11,10 +11,10 @@ public class PurchaseReturn {
     private String productId;
     private String productBatch;
     private String productExpiryDate;
-    private float productRate;
+    private Double productRate;
     private int productQuantity;
-    private float productCCCharge;
-    private float totalAmount;
+    private Double productCCCharge;
+    private Double totalAmount;
 
     public String getReturnDate() {
         return returnDate;
@@ -64,11 +64,11 @@ public class PurchaseReturn {
         this.productExpiryDate = productExpiryDate;
     }
 
-    public float getProductRate() {
+    public Double getProductRate() {
         return productRate;
     }
 
-    public void setProductRate(float productRate) {
+    public void setProductRate(Double productRate) {
         this.productRate = productRate;
     }
 
@@ -80,19 +80,19 @@ public class PurchaseReturn {
         this.productQuantity = productQuantity;
     }
 
-    public float getProductCCCharge() {
+    public Double getProductCCCharge() {
         return productCCCharge;
     }
 
-    public void setProductCCCharge(float productCCCharge) {
+    public void setProductCCCharge(Double productCCCharge) {
         this.productCCCharge = productCCCharge;
     }
 
-    public float getTotalAmount() {
+    public Double getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(float totalAmount) {
+    public void setTotalAmount(Double totalAmount) {
         this.totalAmount = totalAmount;
     }
 }

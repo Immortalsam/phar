@@ -1,20 +1,22 @@
 .button {
     -fx-pref-width: 250px;
-    -fx-alignment: center-left;
-    -fx-label-padding: 0 0 0 20;
     -fx-pref-height: 50px;
-    -fx-font-size: 16px;
-    -fx-text-fill: white;
+    -fx-background-color: aliceblue;
 }
 
 .button:hover {
-    -fx-background-color: darkcyan;
+    -fx-background-color: cornflowerblue;
+    -fx-text-fill: white;
 }
 
-.label {
-    -fx-pref-width: 251px;
-    -fx-font-size: 20px;
-    -fx-label-padding: 0 0 0 10;
-    -fx-text-fill: white;
+.menu_btn {
+    -fx-pref-width: 60px;
+    -fx-pref-height: 20px;
+    -fx-background-color: white;
+}
 
+.menu_btn:hover {
+    -fx-pref-width: 60px;
+    -fx-pref-height: 20px;
+    -fx-background-color: lightgrey;
 }

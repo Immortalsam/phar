@@ -1,26 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.control.Label?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.VBox?>
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="250.0" style="-fx-background-color: dimgrey;" stylesheets="@css/slideBar_style.css" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      stylesheets="@css/slideBar_style.css"
+      xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <Label text="Supplier" textFill="WHITE" />
-        <JFXButton accessibleText="vOldSupplier" text="Old Supplier" />
-        <JFXButton accessibleText="vNewSupplier" text="New Supplier" />
-        <Label text="Purchase" />
-        <JFXButton accessibleText="vNewPurchase" text="New Purchase" />
-        <JFXButton accessibleText="vNewProduct" text="New Product Entry" />
-        <JFXButton accessibleText="vProductDetails" text="Product Details" />
-        <Label text="Sales" />
-        <JFXButton accessibleText="vNewSales" text="New Sales" />
-        <Label text="Records" />
-        <JFXButton accessibleText="vViewRecord" text="View Record" />
-        <Label text="Billing" />
-        <JFXButton accessibleText="vBilling" text="Billing" />
-        <Label text="Payment" />
-        <JFXButton accessibleText="vPay" text="Pay" />
-        <JFXButton accessibleText="vRecieve" text="Receive" />
+        <Separator prefWidth="200.0"/>
+        <JFXButton accessibleText="vBoxNewSupplier" text="New Supplier"/>
+        <JFXButton accessibleText="vBoxOldSupplier" text="Old Supplier"/>
+        <Separator prefWidth="200.0"/>
+        <JFXButton accessibleText="vBoxNewPurchase" text="New Purchase"/>
+        <JFXButton accessibleText="vBoxNewProduct" text="New Product"/>
+        <JFXButton accessibleText="vBoxProductDetails" text="Product Details"/>
+        <JFXButton accessibleText="vBoxAddtoStore" text="Add to Store"/>
+        <Separator prefWidth="200.0"/>
+        <JFXButton accessibleText="vBoxSalesEntry" text="Sales Entry"/>
+        <JFXButton accessibleText="vBoxSalesReturn" text="Sales Return"/>
+        <JFXButton accessibleText="vBoxPurchaseReturn" text="Purchase Return"/>
+        <Separator prefWidth="200.0"/>
+        <JFXButton accessibleText="vBoxSupplierPayment" text="Supplier Payment"/>
+        <JFXButton accessibleText="vBoxCustomerPayment" text="Customer Payment"/>
+        <Separator prefWidth="200.0"/>
+        <JFXButton accessibleText="vBoxPurchaseVsSales" text="Purchase Vs Sales"/>
+        <JFXButton accessibleText="vBoxCustomerDetails" text="Customer Details"/>
+        <Separator prefWidth="200.0"/>
+        <JFXButton accessibleText="vBoxRecord" text="Record"/>
+
+
     </children>
 </VBox>

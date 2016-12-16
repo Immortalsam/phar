@@ -1,5 +1,7 @@
 package com.phar.database;
 
+import com.phar.custom.CustomAlert;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -14,7 +16,13 @@ public class DatabaseConnection {
 
     public static Connection getConnection() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
-        Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pharmacy", "root", "");
+        try {
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/pharmacy", "root", "");
+        } catch (Exception e) {
+//            System.out.println("Server not Found");
+            CustomAlert customAlert = new CustomAlert("Server Error", "Cannot Establish Connection to Server ");
+            customAlert.withoutHeader();
+        }
         return conn;
     }
 }

@@ -82,7 +82,8 @@ public class PurchaseSalesController implements Initializable {
 
 
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+
         }
 
     }

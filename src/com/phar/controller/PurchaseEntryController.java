@@ -253,7 +253,7 @@ public class PurchaseEntryController implements Initializable {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            preparedStatement = connection.prepareStatement(insertQuery);
             preparedStatement.setInt(1, 0);
             preparedStatement.setString(2, p.getFisalYear());
             preparedStatement.setString(3, p.getProductId());
