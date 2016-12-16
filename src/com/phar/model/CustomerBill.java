@@ -8,6 +8,15 @@ public class CustomerBill {
     private String salesDate;
     private String customerBillNo;
     private Double totalAmount;
+    private Double discount;
+
+    public Double getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Double discount) {
+        this.discount = discount;
+    }
 
     public String getCustomerId() {
         return customerId;

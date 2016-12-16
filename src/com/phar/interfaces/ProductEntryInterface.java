@@ -8,5 +8,6 @@ import javafx.collections.ObservableList;
  */
 public interface ProductEntryInterface {
     public boolean addProduct(ProductEntry product);
+
     public ObservableList<ProductEntry> listProduct();
 }

@@ -7,7 +7,6 @@ import com.phar.model.CustomerInfo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
@@ -16,10 +15,10 @@ import java.util.ResourceBundle;
 /**
  * Created by Sam on 11/27/2016.
  */
-public class CustomerEntryController implements Initializable{
+public class CustomerEntryController implements Initializable {
 
     @FXML
-    private TextField cId, cName,cAddress,cPhoneNo,cEmail;
+    private TextField cId, cName, cAddress, cPhoneNo, cEmail;
 
     @FXML
     void onClickSaveButton(ActionEvent event) {
@@ -32,7 +31,7 @@ public class CustomerEntryController implements Initializable{
         ci.setCustomerEmail(cEmail.getText());
 
         CustomerInterfaceImplement cii = new CustomerInterfaceImplement();
-        if(cii.addCustomer(ci)){
+        if (cii.addCustomer(ci)) {
             CustomAlert ca = new CustomAlert("Insert Info.", "Saved Cutomer");
             ca.withoutHeader();
         }

@@ -11,15 +11,14 @@ import java.sql.SQLException;
 /**
  * Created by Sam on 11/29/2016.
  */
-public class CustomerBillImplement implements CustomerBillInterface{
+public class CustomerBillImplement implements CustomerBillInterface {
 
     private Connection connection;
 
-    public CustomerBillImplement(){
-        try{
+    public CustomerBillImplement() {
+        try {
             connection = DatabaseConnection.getConnection();
-        }
-        catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

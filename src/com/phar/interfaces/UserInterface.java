@@ -9,5 +9,6 @@ import com.phar.model.User;
 public interface UserInterface {
 
     public boolean checkUser(User user);
+
     public boolean checkSalesAdmin(SalesAdmin salesAdmin);
 }

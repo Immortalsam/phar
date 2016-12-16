@@ -4,6 +4,10 @@ package com.phar.controller;
  * Created by Sam on 11/10/2016.
  */
 
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.Constants;
 import com.phar.extraFunctionality.NavigationHandler;
 import javafx.event.ActionEvent;
@@ -11,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -21,12 +26,77 @@ public class MainMenuController implements Initializable {
     private NavigationHandler navigation = new NavigationHandler();
 
     @FXML
+    private AnchorPane mainAnchorPane;
+
+    @FXML
     private Button purchaseDepartmentBtn, billingBtn, purchaseEntryBtn, productDetailsBtn, productEntryBtn, inventoryBtn, salesBtn, oldSupplier, paymentReceiveBtn, paymentPayBtn, paymentBtn, newSupplier;
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-//        System.out.println("Username : " + CFunctions.session.get("userName", ""));
-//        System.out.println("Password : " + CFunctions.session.get("passWord", ""));
+    @FXML
+    private JFXHamburger menuHam;
+
+    @FXML
+    private JFXDrawer drawer;
+
+    private HamburgerSlideCloseTransition btask;
+    private CFunctions c = new CFunctions();
+
+//    @Override
+//    public void initialize(URL location, ResourceBundle resources) {
+//        try {
+//            VBox vBox = FXMLLoader.load(getClass().getResource("/com/phar/sideBar.fxml"));
+//            drawer.setSidePane(vBox);
+//            for (Node node : vBox.getChildren()) {
+//                if (node.getAccessibleText() != null) {
+//                    node.addEventHandler(MouseEvent.MOUSE_PRESSED, (e) -> {
+//                        switch (node.getAccessibleText()) {
+//                            case "vNewSupplier":
+//                                System.out.println("Supplier");
+//                                c.openAnchor(mainAnchorPane, "/com/phar/newSupplier.fxml");
+//                                drawer.close();
+//                                drawer.setVisible(false);
+//                                break;
+//                            case "vOldSupplier":
+//                                System.out.println("Purchase");
+//                                c.openAnchor(mainAnchorPane, "/com/phar/supplierTable.fxml");
+//                                drawer.close();
+//                                drawer.setVisible(false);
+//                                break;
+//                            case "vNewSales":
+//                                System.out.println("Purchase");
+//                                c.openAnchor(mainAnchorPane, "/com/phar/newSales.fxml");
+//                                drawer.close();
+//                                drawer.setVisible(false);
+//                                break;
+//
+//                            default:
+//                                drawer.close();
+//                                drawer.setVisible(false);
+//                                break;
+//                        }
+//                    });
+//                }
+//            }
+//
+//            btask = new HamburgerSlideCloseTransition(menuHam);
+//            btask.setRate(-1);
+//            menuHam.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
+//                drawer.setVisible(true);
+//                btask.setRate(btask.getRate() * -1);
+//                btask.play();
+//                if (drawer.isShown()) {
+//                    drawer.close();
+//                } else {
+//                    drawer.open();
+//                }
+//            });
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+    @FXML
+    void mouseExitOnDrawer(MouseEvent event) {
+        drawer.close();
 
     }
 
@@ -71,7 +141,7 @@ public class MainMenuController implements Initializable {
 
     @FXML
     void onProductsClick(ActionEvent actionEvent) {
-        navigation.frameNavigation(actionEvent,"/com/phar/product_table.fxml", Constants.MAIN_MENU_FXML, "Product Table", "Main Menu");
+        navigation.frameNavigation(actionEvent, "/com/phar/product_table.fxml", Constants.MAIN_MENU_FXML, "Product Table", "Main Menu");
 
     }
 
@@ -86,7 +156,7 @@ public class MainMenuController implements Initializable {
     }
 
     public void paymentReceiveBtnClick(ActionEvent actionEvent) {
-        navigation.frameNavigation(actionEvent,"/com/phar/supplierPayment.fxml", Constants.MAIN_MENU_FXML, "Product Table", "Main Menu");
+        navigation.frameNavigation(actionEvent, "/com/phar/supplierPayment.fxml", Constants.MAIN_MENU_FXML, "Product Table", "Main Menu");
 
     }
 
@@ -104,6 +174,11 @@ public class MainMenuController implements Initializable {
         newSupplier.setOpacity(0);
         paymentPayBtn.setOpacity(0);
         paymentReceiveBtn.setOpacity(0);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 }
 

@@ -107,7 +107,7 @@ public class CustomerPaymentController implements Initializable {
                 while (resultSet.next()) {
                     customerId.setText(resultSet.getString("customer_id"));
 
-                    String sQuery = "SELECT customer_id, sales_date, customer_billno, total_amount, NULL AS payment_date, NULL AS amount_paid FROM customer_bill WHERE customer_id ='" + customerId.getText() + "'UNION SELECT customer_id, NULL, NULL, NULL, payment_date, amount_paid FROM customer_payment WHERE customer_id='" + customerId.getText()+ "'";
+                    String sQuery = "SELECT customer_id, sales_date, customer_billno, total_amount, NULL AS payment_date, NULL AS amount_paid FROM customer_bill WHERE customer_id ='" + customerId.getText() + "'UNION SELECT customer_id, NULL, NULL, NULL, payment_date, amount_paid FROM customer_payment WHERE customer_id='" + customerId.getText() + "'";
                     rs = CFunctions.executeQuery(preparedStatement, connection, sQuery, rs);
                     while (rs.next()) {
                         CustomerTransactions ct = new CustomerTransactions();
@@ -142,7 +142,7 @@ public class CustomerPaymentController implements Initializable {
             }
 
 //            //Total sales amount
-            String querySales = "SELECT customer_id, sum(total_amount) from customer_bill WHERE customer_id='" + customerId.getText()+"'";
+            String querySales = "SELECT customer_id, sum(total_amount) from customer_bill WHERE customer_id='" + customerId.getText() + "'";
             resultSet = CFunctions.executeQuery(preparedStatement, connection, querySales, resultSet);
 //            resultSet = DatabaseOperations.simpleSelect("customer_bill", "customer_id, sum(total_amount)", "null");
             try {
@@ -155,7 +155,7 @@ public class CustomerPaymentController implements Initializable {
             }
 
             //Total paid amount
-            String queryPaid = "SELECT customer_id, sum(amount_paid) from customer_payment WHERE customer_id='" + customerId.getText()+ "'";
+            String queryPaid = "SELECT customer_id, sum(amount_paid) from customer_payment WHERE customer_id='" + customerId.getText() + "'";
             resultSet = CFunctions.executeQuery(preparedStatement, connection, queryPaid, resultSet);
             try {
                 if (!resultSet.isBeforeFirst()) {

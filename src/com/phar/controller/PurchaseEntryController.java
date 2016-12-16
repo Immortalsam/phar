@@ -10,8 +10,6 @@ import com.phar.interfaceImplement.InventoryImplement;
 import com.phar.model.Bill;
 import com.phar.model.ProductEntry;
 import com.phar.testCases.TestCases;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -255,7 +253,7 @@ public class PurchaseEntryController implements Initializable {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
-            PreparedStatement preparedStatement = connection.prepareStatement(insertQuery);
+            preparedStatement = connection.prepareStatement(insertQuery);
             preparedStatement.setInt(1, 0);
             preparedStatement.setString(2, p.getFisalYear());
             preparedStatement.setString(3, p.getProductId());
