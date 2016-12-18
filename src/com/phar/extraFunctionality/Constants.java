@@ -23,7 +23,7 @@ public class Constants {
 //    static final public String productIDUpdateQuery = "UPDATE idGen SET value ='";
 //    static final public String getProductIDUpdateQueryBack = "' WHERE ofID = 'productIdGen'";
 
-    static final public String insertToNewProductEntry = "INSERT INTO new_product_entry VALUES (?,?,?,?,?,?,?,?)";
+    static final public String insertToNewProductEntry = "INSERT INTO new_product_entry VALUES (?,?,?,?,?,?,?,?,?)";
     static final public String insertToProductFromSupplier = "INSERT INTO product_from_supplier VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
     //    static final public String selectCompanyNameFromNewProductEntry = "SELECT company_name FROM new_product_entry";

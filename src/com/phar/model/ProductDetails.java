@@ -11,9 +11,17 @@ public class ProductDetails {
     private String CompanyName;
     private String medicineGroup;
     private String medicineCategory;
+    private String productDescription;
     private int noOfPackPerUnit;
-
     private boolean vat;
+
+    public String getProductDescription() {
+        return productDescription;
+    }
+
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
+    }
 
     public String getProductId() {
         return productId;

@@ -1,28 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="211.0" prefWidth="529.0" xmlns="http://javafx.com/javafx/8.0.60"
-            fx:controller="com.phar.controller.InventoryController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="343.0" prefWidth="531.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.InventoryController">
     <children>
-        <ComboBox fx:id="inventoryProductList" editable="true" layoutX="21.0" layoutY="62.0" prefHeight="27.0"
-                  prefWidth="244.0" promptText="inventoryProductList"/>
-        <TextField fx:id="inventoryQty" layoutX="401.0" layoutY="62.0" prefHeight="27.0" prefWidth="115.0"/>
-        <TextField fx:id="inventoryMrp" editable="false" layoutX="143.0" layoutY="126.0" prefHeight="27.0"
-                   prefWidth="115.0"/>
-        <TextField fx:id="inventoryRackNo" layoutX="263.0" layoutY="126.0" prefHeight="27.0" prefWidth="115.0"/>
-        <Button fx:id="addToInventory" layoutX="402.0" layoutY="126.0" mnemonicParsing="false"
-                onAction="#addToInventoryClick" prefHeight="27.0" prefWidth="115.0" text="Add to Store"/>
-        <Label fx:id="qtyLbl" layoutX="401.0" layoutY="45.0" text="Quantity"/>
-        <Label layoutX="276.0" layoutY="45.0" text="Batch"/>
-        <Label layoutX="144.0" layoutY="109.0" text="Mrp"/>
-        <Label layoutX="264.0" layoutY="109.0" text="Rack Number"/>
-        <TextField fx:id="inventoryProductExpDate" editable="false" layoutX="23.0" layoutY="126.0" prefHeight="27.0"
-                   prefWidth="115.0"/>
-        <Text layoutX="21.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product Name"/>
-        <Text layoutX="24.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expire Date"/>
-        <ComboBox fx:id="inventoryBatch" layoutX="276.0" layoutY="62.0" prefHeight="27.0" prefWidth="115.0"/>
+        <ComboBox fx:id="inventoryProductList" editable="true" layoutX="21.0" layoutY="62.0" prefHeight="27.0" prefWidth="244.0" promptText="inventoryProductList" />
+        <TextField fx:id="inventoryQty" layoutX="401.0" layoutY="62.0" prefHeight="27.0" prefWidth="115.0" />
+        <TextField fx:id="inventoryMrp" editable="false" layoutX="143.0" layoutY="126.0" prefHeight="27.0" prefWidth="115.0" />
+        <TextField fx:id="inventoryRackNo" layoutX="263.0" layoutY="126.0" prefHeight="27.0" prefWidth="115.0" />
+        <Button fx:id="addToInventory" layoutX="402.0" layoutY="126.0" mnemonicParsing="false" onAction="#addToInventoryClick" prefHeight="27.0" prefWidth="115.0" text="Add to Store" />
+        <Label fx:id="qtyLbl" layoutX="401.0" layoutY="42.0" text="Quantity" />
+        <Label layoutX="276.0" layoutY="43.0" text="Batch" />
+        <Label layoutX="144.0" layoutY="108.0" text="Mrp:" />
+        <Label layoutX="264.0" layoutY="106.0" text="Rack Number" />
+        <TextField fx:id="inventoryProductExpDate" editable="false" layoutX="23.0" layoutY="126.0" prefHeight="27.0" prefWidth="115.0" />
+        <Text layoutX="21.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Product Name" />
+        <Text layoutX="24.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expire Date:" />
+        <ComboBox fx:id="inventoryBatch" layoutX="276.0" layoutY="62.0" prefHeight="27.0" prefWidth="115.0" />
+      <Label fx:id="pdeslabel" alignment="TOP_LEFT" layoutX="25.0" layoutY="188.0" prefHeight="120.0" prefWidth="487.0" style="-fx-background-color: white;">
+         <font>
+            <Font name="Calibri Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="25.0" layoutY="166.0" text="Product Description:">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

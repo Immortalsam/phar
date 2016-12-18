@@ -1,5 +1,6 @@
 package com.phar.controller;
 
+import com.jfoenix.controls.JFXTextArea;
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.*;
@@ -52,6 +53,8 @@ public class ProductEntryController implements Initializable {
     private ComboBox<String> newCompanyName, newProductVat, newProductCategory;
     @FXML
     private TextField newProductId, newProductName, newNumberOfPackPerUnit;
+    @FXML
+    private JFXTextArea pDescription;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,6 +77,7 @@ public class ProductEntryController implements Initializable {
         newProductCategory.setValue(Constants.productCategoryList[0]);
         newProductVat.getItems().addAll(Constants.yesNo);
         newProductVat.setValue(Constants.yesNo[1]);
+
 
         //Check box and List on Composition Combox Box
         CheckComboBox<String> newGenericComposition = new CheckComboBox<String>(compositionDropDownList);
@@ -113,6 +117,7 @@ public class ProductEntryController implements Initializable {
         } else {
             preparedStatement.setInt(8, 1);
         }
+        preparedStatement.setString(9, pDescription.getText());
         preparedStatement.executeUpdate();
         CustomAlert customAlert = new CustomAlert("Success", "Your Data is Saved!");
         customAlert.withoutHeader();

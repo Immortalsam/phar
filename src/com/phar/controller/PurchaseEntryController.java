@@ -4,6 +4,7 @@ import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DatabaseOperations;
 import com.phar.extraFunctionality.DateFormatter;
+import com.phar.extraFunctionality.GetTime;
 import com.phar.interfaceImplement.BillInterfaceImplement;
 import com.phar.interfaceImplement.InventoryImplement;
 import com.phar.model.Bill;
@@ -52,9 +53,6 @@ public class PurchaseEntryController implements Initializable {
     private TableView<ProductEntry> purchaseTable;
 
     @FXML
-    private Label fiscalYear;
-
-    @FXML
     private DatePicker purchaseDate;
 
     @FXML
@@ -98,7 +96,9 @@ public class PurchaseEntryController implements Initializable {
         p.setProductRate(Float.valueOf(prate.getText()));
         p.setProductQuantity(Integer.valueOf(pquantity.getText()));
         p.setProductAmount(Float.valueOf(prate.getText()) * Float.valueOf(pquantity.getText()));
-        p.setTodayDate(purchaseDate.getValue().toString());
+        //For Date With Time
+        GetTime gt = new GetTime();
+        p.setTodayDate(purchaseDate.getValue().toString().concat(" ").concat(gt.timeNow()));
         p.setBillNo(bNo.getText());
         p.setProductCashCredit(cashCredit.getValue().toString());
         p.setProductVat(vat.getValue().toString());
@@ -247,10 +247,6 @@ public class PurchaseEntryController implements Initializable {
 
         InventoryImplement inventoryImplement = new InventoryImplement();
         String insertQuery = "INSERT INTO new_purchase_entry VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-
-//        CustomAlert alert = new CustomAlert("Insert to database Info", "Save successful");
-//        alert.withoutHeader();
 
         Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
         alert1.setTitle("Please Choose an Option.");

@@ -2,8 +2,10 @@ package com.phar.controller;
 
 import com.phar.database.DatabaseConnection;
 import com.phar.model.IncomeExpense;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
@@ -27,7 +29,7 @@ import java.util.ResourceBundle;
  */
 public class IncomeVsExpenseController implements Initializable {
     @FXML
-    private DatePicker from_tdate,to_tdate;
+    private DatePicker from_tdate, to_tdate;
 
     @FXML
     private TableView<IncomeExpense> itable;
@@ -66,13 +68,13 @@ public class IncomeVsExpenseController implements Initializable {
     private Connection connection;
     private ObservableList<IncomeExpense> incomeList = FXCollections.observableArrayList();
     private ObservableList<IncomeExpense> expenseList = FXCollections.observableArrayList();
-    private ResultSet resultSet,resultSet1;
+    private ResultSet resultSet, resultSet1;
     private DecimalFormat decimalFormat = new DecimalFormat("#.00");
 
-    public IncomeVsExpenseController(){
+    public IncomeVsExpenseController() {
         try {
             connection = DatabaseConnection.getConnection();
-        }catch (SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -153,7 +155,6 @@ public class IncomeVsExpenseController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         iparticular.setCellValueFactory(new PropertyValueFactory<IncomeExpense, String>("iparticulars"));
         iamount.setCellValueFactory(new PropertyValueFactory<IncomeExpense, Double>("iamount"));
         eparticular.setCellValueFactory(new PropertyValueFactory<IncomeExpense, String>("eparticulars"));
@@ -217,7 +218,7 @@ public class IncomeVsExpenseController implements Initializable {
             iTotal.setText(String.valueOf(sum));
         }
 
-        TableColumn<IncomeExpense, Double> column1 =  eamount;
+        TableColumn<IncomeExpense, Double> column1 = eamount;
         List<Double> amountData = new ArrayList<>();
         for (IncomeExpense item : etable.getItems()) {
             amountData.add(column1.getCellObservableValue(item).getValue());
@@ -233,12 +234,11 @@ public class IncomeVsExpenseController implements Initializable {
             sTotal.setText(String.valueOf(sum1));
         }
 
-        if(incomeTotal > expenseTotal){
+        if (incomeTotal > expenseTotal) {
             double profitGained = incomeTotal - expenseTotal;
             profit.setText(String.valueOf(profitGained));
             loss.setText("-");
-        }
-        else{
+        } else {
             loss.setText(Double.valueOf(Math.abs(incomeTotal - expenseTotal)).toString());
             profit.setText("-");
         }

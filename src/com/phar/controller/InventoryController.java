@@ -33,10 +33,7 @@ public class InventoryController implements Initializable {
     private TextField inventoryQty, inventoryMrp, inventoryRackNo, inventoryProductExpDate;
 
     @FXML
-    private Button addToInventory;
-
-    @FXML
-    private Label qtyLbl;
+    private Label qtyLbl, pdeslabel;
 
     private Connection connection;
     private ResultSet resultSet;
@@ -59,6 +56,16 @@ public class InventoryController implements Initializable {
             inventoryProductList.valueProperty().addListener((observable, oldValue, newValue) -> {
                 inventoryBatch.getItems().clear();
                 batchList.clear();
+
+                resultSet = DatabaseOperations.simpleSelect("new_product_entry","product_description","product_name='"+ inventoryProductList.getValue() + "'");
+                try{
+                    while (resultSet.next()){
+                        pdeslabel.setText(resultSet.getString("product_description"));
+                    }
+                }catch (SQLException e){
+                    e.printStackTrace();
+                }
+
                 resultSet = DatabaseOperations.simpleSelect("inventory", "batch", "product_name='" + inventoryProductList.getValue() + "'");
                 try {
                     while (resultSet.next()) {

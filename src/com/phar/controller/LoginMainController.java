@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -77,13 +78,15 @@ public class LoginMainController implements Initializable {
 
         if (userImplement.checkUser(user)) {
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/phar/mainMenu.fxml"));
-                Parent root1 = (Parent) fxmlLoader.load();
-                Stage stage1 = new Stage();
-                stage1.setTitle("Main Menu");
-                stage1.setScene(new Scene(root1));
-                stage1.show();
-                ((Node) (event.getSource())).getScene().getWindow().hide();
+                Parent root = FXMLLoader.load(getClass().getResource("/com/phar/main.fxml"));
+                Stage primaryStage = new Stage();
+                primaryStage.setTitle("Main Menu");
+                Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds().getMaxX(), Screen.getPrimary().getVisualBounds().getMaxY());
+                System.out.println("X: " + Screen.getPrimary().getVisualBounds().getMaxX());
+                System.out.println("Y: " + Screen.getPrimary().getVisualBounds().getMaxY());
+                primaryStage.setScene(scene);
+                primaryStage.setResizable(false);
+                primaryStage.show();
             } catch (Exception e1) {
                 e1.printStackTrace();
             }

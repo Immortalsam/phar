@@ -5,6 +5,7 @@ import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DatabaseOperations;
+import com.phar.extraFunctionality.GetTime;
 import com.phar.interfaceImplement.IncomeExpImplement;
 import com.phar.model.Expenses;
 
@@ -24,8 +25,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -65,6 +69,7 @@ public class ExpenseController  implements Initializable {
     private Connection connection;
     private ResultSet resultSet1;
     private Double amountFromList = 0.0;
+    String dateWithTime = "";
 
     public ExpenseController(){
         try{
@@ -86,6 +91,10 @@ public class ExpenseController  implements Initializable {
 
     @FXML
     void onClickSaveButton(ActionEvent event) {
+        GetTime gt = new GetTime();
+        dateWithTime = tDate.getValue().toString().concat(" ").concat(gt.timeNow());
+        e.setDate(dateWithTime);
+        System.out.println(dateWithTime);
         e.setAmount(Double.valueOf(enterAmount.getText()));
         e.setExpenseFromList(listExpense.getValue());
         IncomeExpImplement iexi = new IncomeExpImplement();
@@ -98,7 +107,6 @@ public class ExpenseController  implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tDate.setValue(LocalDate.now());
-        e.setDate(tDate.getValue().toString());
         //For the amount entered is empty.
         enterAmount.textProperty().addListener((observable, oldValue, newValue) -> {
             if(enterAmount.getText() == null || enterAmount.getText().trim().isEmpty()){

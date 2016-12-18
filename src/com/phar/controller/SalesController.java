@@ -70,8 +70,8 @@ public class SalesController implements Initializable {
     int counter = 0;
     private AutoGenerator generator = new AutoGenerator();
     private ResultSet resultSet;
-    private List<String> productList = new ArrayList<String>();
-    private List<String> customerList = new ArrayList<String>();
+    private List<String> productList = new ArrayList<>();
+    private List<String> customerList = new ArrayList<>();
     private List<String> batchList = new ArrayList<>();
     private ObservableList<NewSales> salesInfoList = FXCollections.observableArrayList();
     private List<NewSales> productBill = new ArrayList<>();
