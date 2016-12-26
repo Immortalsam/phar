@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="420.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.BillPrintController">
+   <children>
+      <Label layoutX="143.0" layoutY="14.0" text="ABC Pharmacy PVt. Ltd">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="151.0" layoutY="32.0" text="PAN No: 123456789" />
+      <Label layoutX="143.0" layoutY="49.0" prefHeight="17.0" prefWidth="131.0" text="Baneshwor, Kathmandu" />
+      <Label layoutX="157.0" layoutY="66.0" text="Phone: 01-4253498" />
+      <Label layoutX="9.0" layoutY="104.0" prefHeight="17.0" prefWidth="43.0" text="Bill No:" />
+      <Label layoutX="285.0" layoutY="102.0" text="Date:" />
+      <Label layoutX="286.0" layoutY="120.0" text="Time:" />
+      <Label layoutX="9.0" layoutY="137.0" prefHeight="17.0" prefWidth="399.0" text="---------------------------------------------------------------------------------" />
+      <Label layoutX="9.0" layoutY="169.0" prefHeight="17.0" prefWidth="399.0" text="---------------------------------------------------------------------------------" />
+      <Label layoutX="180.0" layoutY="154.0" text="INVOICE">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label layoutX="12.0" layoutY="193.0" text="Name:" />
+      <Label layoutX="13.0" layoutY="212.0" text="Address:" />
+      <Label layoutX="12.0" layoutY="231.0" text="Prescribed By:" />
+      <Label layoutX="13.0" layoutY="251.0" text="Payment Mode:" />
+      <Label layoutX="9.0" layoutY="268.0" prefHeight="17.0" prefWidth="399.0" text="----------------------------------------------------------------------------------" />
+      <Label layoutX="9.0" layoutY="270.0" prefHeight="17.0" prefWidth="399.0" text="----------------------------------------------------------------------------------" />
+      <Label layoutX="10.0" layoutY="287.0" text="S.N." />
+      <Label layoutX="43.0" layoutY="287.0" text="Particulars" />
+      <Label layoutX="164.0" layoutY="287.0" text="Batch" />
+      <Label layoutX="210.0" layoutY="287.0" text="Expiry" />
+      <Label layoutX="263.0" layoutY="287.0" text="Qty." />
+      <Label layoutX="306.0" layoutY="287.0" text="Rate" />
+      <Label layoutX="359.0" layoutY="287.0" text="Amount" />
+      <Label layoutX="8.0" layoutY="301.0" prefHeight="17.0" prefWidth="399.0" text="----------------------------------------------------------------------------------" />
+      <Label layoutX="302.0" layoutY="443.0" text="Total:" />
+      <Label layoutX="279.0" layoutY="461.0" text="Rounding:" />
+      <Label layoutX="265.0" layoutY="479.0" text="Net Amount:" />
+      <Label layoutX="12.0" layoutY="496.0" text="In Words:" />
+      <Label layoutX="7.0" layoutY="513.0" prefHeight="17.0" prefWidth="399.0" text="-----------------------------------------------------------------------------------" />
+      <Label layoutX="8.0" layoutY="530.0" text="Thank You," />
+      <Label layoutX="9.0" layoutY="549.0" text="User:" />
+      <Label fx:id="billId" layoutX="57.0" layoutY="104.0" prefHeight="17.0" prefWidth="103.0" />
+      <Label fx:id="billdate" layoutX="317.0" layoutY="102.0" prefHeight="17.0" prefWidth="84.0" />
+      <Label fx:id="billtime" layoutX="320.0" layoutY="120.0" prefHeight="17.0" prefWidth="68.0" />
+      <Label fx:id="name" layoutX="83.0" layoutY="193.0" prefHeight="17.0" prefWidth="206.0" />
+      <Label fx:id="address" layoutX="83.0" layoutY="212.0" prefHeight="17.0" prefWidth="184.0" />
+      <Label fx:id="prescribedby" layoutX="95.0" layoutY="231.0" prefHeight="17.0" prefWidth="178.0" />
+      <Label fx:id="paymentmode" layoutX="109.0" layoutY="251.0" prefHeight="17.0" prefWidth="172.0" />
+      <Label fx:id="total" layoutX="340.0" layoutY="443.0" prefHeight="17.0" prefWidth="59.0" />
+      <Label fx:id="rouding" layoutX="340.0" layoutY="461.0" prefHeight="17.0" prefWidth="51.0" />
+      <Label fx:id="netamount" layoutX="340.0" layoutY="479.0" prefHeight="17.0" prefWidth="55.0" />
+      <Label fx:id="inwords" layoutX="72.0" layoutY="496.0" prefHeight="17.0" prefWidth="333.0" />
+      <Label fx:id="user" layoutX="41.0" layoutY="549.0" prefHeight="17.0" prefWidth="184.0" />
+   </children>
+</AnchorPane>

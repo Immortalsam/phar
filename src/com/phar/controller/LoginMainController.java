@@ -1,6 +1,10 @@
 package com.phar.controller;
 
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+import com.phar.custom.CustomAlert;
 import com.phar.extraFunctionality.CFunctions;
+import com.phar.extraFunctionality.GetTime;
 import com.phar.interfaceImplement.UserImplement;
 import com.phar.model.SalesAdmin;
 import com.phar.model.User;
@@ -17,7 +21,10 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by Sam on 12/1/2016.
@@ -25,13 +32,18 @@ import java.util.ResourceBundle;
 public class LoginMainController implements Initializable {
 
     @FXML
-    private TextField admin_username;
+    private JFXTextField admin_username;
     @FXML
-    private PasswordField admin_password;
+    private JFXPasswordField admin_password;
     @FXML
     private TextField sales_username;
     @FXML
     private PasswordField sales_password;
+
+    private String username;
+    private String password;
+    private final static Logger logger = Logger.getLogger(LoginController.class.getName());
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -68,27 +80,29 @@ public class LoginMainController implements Initializable {
     @FXML
     void admin_login(ActionEvent event) {
         User user = new User();
-        user.setUsername(admin_username.getText());
-        user.setUsername(admin_password.getText());
-
         UserImplement userImplement = new UserImplement();
-
-        CFunctions.session.put("userName", admin_username.getText());
-        CFunctions.session.put("passWord", admin_password.getText());
-
-        if (userImplement.checkUser(user)) {
-            try {
-                Parent root = FXMLLoader.load(getClass().getResource("/com/phar/main.fxml"));
-                Stage primaryStage = new Stage();
-                primaryStage.setTitle("Main Menu");
-                Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds().getMaxX(), Screen.getPrimary().getVisualBounds().getMaxY());
-                System.out.println("X: " + Screen.getPrimary().getVisualBounds().getMaxX());
-                System.out.println("Y: " + Screen.getPrimary().getVisualBounds().getMaxY());
-                primaryStage.setScene(scene);
-                primaryStage.setResizable(false);
-                primaryStage.show();
-            } catch (Exception e1) {
-                e1.printStackTrace();
+        if(userImplement.checkUser(user)){
+            username = admin_username.getText();
+            password = admin_password.getText();
+            if(username.equals(user.getUsername()) && password.equals(user.getPassword())){
+                GetTime gt = new GetTime();
+                logger.log(Level.INFO,"Logged in by '" + admin_username.getText()+ "'" + " at Date '" + LocalDate.now() + "'" + " & at Time '" + gt.timeNow() + "'");
+                try {
+                    Parent root = FXMLLoader.load(getClass().getResource("/com/phar/mainn.fxml"));
+                    Stage primaryStage = new Stage();
+                    primaryStage.setTitle("Main Menu");
+                    Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds().getMaxX(), Screen.getPrimary().getVisualBounds().getMaxY());
+                    primaryStage.setScene(scene);
+                    primaryStage.setResizable(false);
+                    primaryStage.show();
+                } catch (Exception e1)
+                {
+                    e1.printStackTrace();
+                }
+            }
+            else{
+                CustomAlert ca = new CustomAlert("Some information","Enter Correct Username/Password");
+                ca.withoutHeader();
             }
         }
     }

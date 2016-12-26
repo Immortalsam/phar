@@ -1,5 +1,6 @@
 package com.phar.controller;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
@@ -9,16 +10,16 @@ import com.phar.extraFunctionality.GetTime;
 import com.phar.interfaceImplement.IncomeExpImplement;
 import com.phar.model.Expenses;
 
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -28,10 +29,7 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Created by Sam on 12/12/2016.
@@ -45,7 +43,7 @@ public class ExpenseController  implements Initializable {
     private JFXComboBox<String> listExpense;
 
     @FXML
-    private DatePicker tDate;
+    private JFXDatePicker tDate;
 
     @FXML
     private TableView<Expenses> eTable;
@@ -66,12 +64,13 @@ public class ExpenseController  implements Initializable {
     private ResultSet resultSet;
     private List<String> expenseList = new ArrayList<>();
     private ObservableList<Expenses> infoList = FXCollections.observableArrayList();
-    private Connection connection;
+
     private ResultSet resultSet1;
     private Double amountFromList = 0.0;
     String dateWithTime = "";
 
     public ExpenseController(){
+         Connection connection;
         try{
             connection = DatabaseConnection.getConnection();
         }catch(SQLException | ClassNotFoundException e){
@@ -99,7 +98,7 @@ public class ExpenseController  implements Initializable {
         e.setExpenseFromList(listExpense.getValue());
         IncomeExpImplement iexi = new IncomeExpImplement();
         if(iexi.addExpense(e)){
-            CustomAlert alert = new CustomAlert("Save Info.", "Save Successful");
+            CustomAlert alert = new CustomAlert("Save Info.","Save Successful");
             alert.withoutHeader();
         }
     }
@@ -147,6 +146,7 @@ public class ExpenseController  implements Initializable {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+
             eDate.setCellValueFactory(new PropertyValueFactory<Expenses, String>("dateDb"));
             eExpenseList.setCellValueFactory(new PropertyValueFactory<Expenses, String>("expenseDb"));
             eAmount.setCellValueFactory(new PropertyValueFactory<Expenses, Double>("amountDb"));

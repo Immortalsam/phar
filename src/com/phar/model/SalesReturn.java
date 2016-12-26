@@ -1,16 +1,28 @@
 package com.phar.model;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
 /**
  * Created by Sam on 12/2/2016.
  */
 
-public class SalesReturn {
+public class SalesReturn extends RecursiveTreeObject<SalesReturn> {
+
     private String billNo;
     private String salesReturnDate;
     private String productName;
     private String productBatch;
     private int quantityReceived;
     private Double total;
+    private Double rate;
+
+    public Double getRate() {
+        return rate;
+    }
+
+    public void setRate(Double rate) {
+        this.rate = rate;
+    }
 
     public String getBillNo() {
         return billNo;

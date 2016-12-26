@@ -1,5 +1,7 @@
 package com.phar.model;
 
+import javafx.scene.control.Button;
+
 /**
  * Created by Sam on 12/12/2016.
  */
@@ -12,6 +14,7 @@ public class Expenses {
     private String date;
     private String dateDb;
     private String expenseFromList;
+
 
     public String getExpenseFromList() {
         return expenseFromList;

@@ -26,12 +26,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("newSales.fxml"));
         primaryStage.setTitle("Main Menu");
         Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds().getMaxX(), Screen.getPrimary().getVisualBounds().getMaxY());
-        System.out.println("X: " + Screen.getPrimary().getVisualBounds().getMaxX());
-        System.out.println("Y: " + Screen.getPrimary().getVisualBounds().getMaxY());
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.setResizable(false);
         primaryStage.show();
     }

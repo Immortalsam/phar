@@ -16,7 +16,6 @@ import java.sql.Statement;
 public class UserImplement implements UserInterface {
 
     static Connection conn;
-    private User user;
 
     public UserImplement() {
         try {
@@ -31,22 +30,17 @@ public class UserImplement implements UserInterface {
 
     @Override
     public boolean checkUser(User user) {
-        String query = "SELECT * from user ";
+        String query = "SELECT * from user";
         try (Statement stat = conn.createStatement()) {
             ResultSet res = stat.executeQuery(query);
-
             while (res.next()) {
                 user.setUsername(res.getString("user_name"));
                 user.setPassword(res.getString("pass_word"));
                 return true;
             }
-            res.close();
-            stat.close();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 

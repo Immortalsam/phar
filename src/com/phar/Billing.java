@@ -1,5 +1,6 @@
 package com.phar;
 
+import com.phar.model.NewSales;
 import com.phar.model.Sales;
 
 import java.text.DateFormat;
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by Manish on 11/19/2016.
  */
 public class Billing {
-    public static void bill(List<Sales> s, int counter) {
+    public static void bill(List<NewSales> s, int counter) {
         {
             //Sales s = new Sales();
             int billNo = 4321;
@@ -56,8 +57,7 @@ public class Billing {
                 String batch = s.get(i).getProductBatch();
                 String expiry = s.get(i).getExpireDate();
                 Integer qty = s.get(i).getProductQuantity();
-                double rate = s.get(i).getmRp();
-//                double amtt = qty * rate;
+                double rate = s.get(i).getMrp();
                 double amtt = s.get(i).getTotal();
                 if (pName.length() > 16) {
                     pName = pName.substring(0, 16) + "  ";

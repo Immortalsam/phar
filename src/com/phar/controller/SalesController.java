@@ -3,6 +3,7 @@ package com.phar.controller;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextField;
+import com.phar.Billing;
 import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.AutoGenerator;
@@ -10,6 +11,7 @@ import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.DatabaseOperations;
 import com.phar.interfaceImplement.CustomerBillImplement;
 import com.phar.interfaceImplement.CustomerInterfaceImplement;
+import com.phar.model.Bill;
 import com.phar.model.CustomerBill;
 import com.phar.model.CustomerPayment;
 import com.phar.model.NewSales;
@@ -17,13 +19,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -61,19 +70,29 @@ public class SalesController implements Initializable {
     @FXML
     private TableColumn<NewSales, Integer> tQuantity;
 
-//    @FXML
-//    private DatePicker tDate;
-
     @FXML
     private TableView<NewSales> pTable;
 
-    int counter = 0;
+    private Stage primaryStage;
+    private Parent root;
+
+    public static int getCounter() {
+        return counter;
+    }
+
+    static int counter = 0;
+
     private AutoGenerator generator = new AutoGenerator();
     private ResultSet resultSet;
     private List<String> productList = new ArrayList<>();
     private List<String> customerList = new ArrayList<>();
     private List<String> batchList = new ArrayList<>();
-    private ObservableList<NewSales> salesInfoList = FXCollections.observableArrayList();
+    private static ObservableList<NewSales> salesInfoList = FXCollections.observableArrayList();
+
+    public static ObservableList<NewSales> getSalesInfoList() {
+        return salesInfoList;
+    }
+
     private List<NewSales> productBill = new ArrayList<>();
     private ObservableList<NewSales> productDetailsTableList = FXCollections.observableArrayList();
     private DecimalFormat decimalFormat = new DecimalFormat("#.00");
@@ -267,7 +286,15 @@ public class SalesController implements Initializable {
 
     @FXML
     void onClickPrintButton(ActionEvent event) {
+        try {
 
+            Parent root = FXMLLoader.load(getClass().getResource("/com/phar/billing.fxml"));
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

@@ -18,11 +18,11 @@
                 <Font size="17.0" />
             </font>
         </Label>
-      <Group layoutX="138.0" layoutY="63.0">
-         <children>
-              <ComboBox fx:id="searchSupplierName" prefWidth="150.0" />
-         </children>
-      </Group>
+        <Group layoutX="138.0" layoutY="63.0">
+            <children>
+                <ComboBox fx:id="searchSupplierName" prefWidth="150.0" />
+            </children>
+        </Group>
         <Label layoutX="39.0" layoutY="67.0" text="Supplier Name:" />
         <DatePicker fx:id="returnDate" layoutX="688.0" layoutY="26.0" />
         <Label layoutX="39.0" layoutY="115.0" text="Product Name:" />
