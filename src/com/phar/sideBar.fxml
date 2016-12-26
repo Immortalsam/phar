@@ -23,7 +23,7 @@
         <JFXButton accessibleText="vBoxCustomerPayment" text="Customer Payment"/>
         <Separator prefWidth="200.0"/>
         <JFXButton accessibleText="vBoxPurchaseVsSales" text="Purchase Vs Sales"/>
-        <JFXButton accessibleText="vBoxPurchaseVsSales" text="Income Vs Expenses"/>
+        <JFXButton accessibleText="vBoxIncomeVsExpenses" text="Income Vs Expenses"/>
         <JFXButton accessibleText="vBoxCustomerDetails" text="Customer Details"/>
         <Separator prefWidth="200.0"/>
         <JFXButton accessibleText="vBoxIncome" text="Income"/>

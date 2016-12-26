@@ -109,6 +109,8 @@ public class MainController implements Initializable {
                         case "vBoxIncome":
                             forAnchorPane.openAnchor(mainAnchor, "/com/phar/Income.fxml", drawer);
                             break;
+                        case "vBoxIncomeVsExpenses":
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/IncomeVsExpense.fxml", drawer);
                         default:
                             drawer.close();
                             mainAnchor.toFront();
