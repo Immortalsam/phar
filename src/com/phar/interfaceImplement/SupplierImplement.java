@@ -30,8 +30,8 @@ public class SupplierImplement implements SupplierServices {
     @Override
     public boolean addSupplier(Supplier supplier) {
 
-        if (supplier.getPanNo().length() != 10) {
-            CustomAlert alert = new CustomAlert("PAN Length Invalid", "PAN no should be minimum of 10 length");
+        if (supplier.getPanNo().length() != 9) {
+            CustomAlert alert = new CustomAlert("PAN Length Invalid", "PAN no should be of 9 length");
             alert.withoutHeader();
         } else {
 

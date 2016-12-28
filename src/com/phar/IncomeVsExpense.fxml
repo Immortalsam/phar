@@ -26,16 +26,16 @@
          </font>
       </Label>
       <DatePicker fx:id="to_tdate" layoutX="682.0" layoutY="99.0" prefHeight="25.0" prefWidth="179.0" />
-      <TableView fx:id="itable" layoutX="82.0" layoutY="160.0" prefHeight="404.0" prefWidth="410.0">
+      <TableView fx:id="itable" layoutX="42.0" layoutY="160.0" prefHeight="404.0" prefWidth="450.0">
         <columns>
-          <TableColumn fx:id="iparticular" prefWidth="233.0" text="Income Particulars" />
-          <TableColumn fx:id="iamount" prefWidth="175.0" text="Amount" />
+          <TableColumn fx:id="iparticular" prefWidth="272.0" text="Income Particulars" />
+          <TableColumn fx:id="iamount" prefWidth="177.0" text="Amount" />
         </columns>
       </TableView>
-      <TableView fx:id="etable" layoutX="491.0" layoutY="160.0" prefHeight="404.0" prefWidth="361.0">
+      <TableView fx:id="etable" layoutX="491.0" layoutY="160.0" prefHeight="404.0" prefWidth="450.0">
         <columns>
-          <TableColumn fx:id="eparticular" prefWidth="233.0" text="Expense Particulars" />
-          <TableColumn fx:id="eamount" prefWidth="127.0" text="Amount" />
+          <TableColumn fx:id="eparticular" prefWidth="307.0" text="Expense Particulars" />
+          <TableColumn fx:id="eamount" prefWidth="142.0" text="Amount" />
         </columns>
       </TableView>
       <Label layoutX="345.0" layoutY="582.0" prefHeight="33.0" prefWidth="43.0" text="Total:">
@@ -53,14 +53,20 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="895.0" layoutY="268.0" prefHeight="25.0" prefWidth="54.0" text="Profit:" />
-      <Label fx:id="profit" layoutX="949.0" layoutY="264.0" prefHeight="33.0" prefWidth="164.0">
+      <Label fx:id="p_label" layoutX="949.0" layoutY="492.0" prefHeight="33.0" prefWidth="61.0" text="PROFIT:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
+      <Label fx:id="profit" layoutX="1010.0" layoutY="492.0" prefHeight="33.0" prefWidth="164.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
-      <Label layoutX="895.0" layoutY="327.0" prefHeight="25.0" prefWidth="54.0" text="Loss:" />
-      <Label fx:id="loss" layoutX="949.0" layoutY="323.0" prefHeight="33.0" prefWidth="164.0">
+      <Label fx:id="l_label" layoutX="949.0" layoutY="530.0" prefHeight="33.0" prefWidth="61.0" text="LOSS:">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font></Label>
+      <Label fx:id="loss" layoutX="1010.0" layoutY="530.0" prefHeight="33.0" prefWidth="164.0">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>

@@ -1,6 +1,7 @@
 package com.phar.controller;
 
 import com.phar.database.DatabaseConnection;
+import com.phar.model.Income;
 import com.phar.model.IncomeExpense;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -50,19 +51,16 @@ public class IncomeVsExpenseController implements Initializable {
     private TableColumn<IncomeExpense, Double> eamount;
 
     @FXML
-    private Label iTotal;
-
-    @FXML
-    private Label sTotal;
-
-    @FXML
-    private Label profit;
-
-    @FXML
-    private Label loss;
+    private Label loss, p_label, l_label,profit,sTotal,iTotal;
 
     private double incomeTotal;
     private double expenseTotal;
+    private double negValue;
+    private double finalAmount;
+    private double total;
+    private double expenseFromBill;
+    private double purchaseReturn;
+    private double purchaseReturnFinal;
 
 
     private Connection connection;
@@ -89,14 +87,35 @@ public class IncomeVsExpenseController implements Initializable {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 IncomeExpense ie = new IncomeExpense();
-                ie.setIparticulars("Sales".toUpperCase());
-                Double total = resultSet.getDouble("sum(total_amount)");
-                ie.setIamount(Double.valueOf(decimalFormat.format(total)));
+                total = resultSet.getDouble("sum(total_amount)");
+                ie.setIparticulars("Sales".toUpperCase().concat("     (").concat(String.valueOf(decimalFormat.format(total))).concat(") "));
+                ie.setIparticulars("Sales".toUpperCase().concat("     (").concat(String.valueOf(decimalFormat.format(total))).concat(") "));
                 incomeList.addAll(ie);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        String retrunQuery = "SELECT sum(total_amount) FROM sales_return";
+        try(PreparedStatement statement = connection.prepareStatement(retrunQuery)){
+            resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                IncomeExpense rei = new IncomeExpense();
+                negValue = resultSet.getDouble("sum(total_amount)");
+                finalAmount = (negValue * -1);
+                rei.setIparticulars("Less Sales Return".toUpperCase().concat("     (").concat(String.valueOf(finalAmount)).concat(") "));
+                incomeList.addAll(rei);
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        Double netAmount = (total + finalAmount);
+        IncomeExpense i0 = new IncomeExpense();
+        i0.setIparticulars("NET SALES");
+        i0.setIamount(netAmount);
+        incomeList.addAll(i0);
+
         IncomeExpense i1 = new IncomeExpense();
         i1.setIparticulars(" ");
         i1.setIamount(null);
@@ -126,13 +145,35 @@ public class IncomeVsExpenseController implements Initializable {
             resultSet1 = statement.executeQuery();
             while (resultSet1.next()) {
                 IncomeExpense ei = new IncomeExpense();
-                ei.setEamount(resultSet1.getDouble("sum(total_amount)"));
-                ei.setEparticulars("Purchase".toUpperCase());
+                 expenseFromBill = resultSet1.getDouble("sum(total_amount)");
+                ei.setEparticulars("Purchase".toUpperCase().concat("     (").concat(String.valueOf(expenseFromBill)).concat(") "));
                 expenseList.addAll(ei);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
+        String query3 = "SELECT sum(total) FROM purchase_return";
+        try (PreparedStatement statement = connection.prepareStatement(query3)) {
+            resultSet1 = statement.executeQuery();
+            while (resultSet1.next()) {
+                IncomeExpense pReturn = new IncomeExpense();
+                purchaseReturn = resultSet1.getDouble("sum(total)");
+                System.out.println(purchaseReturn);
+                purchaseReturnFinal = (purchaseReturn * -1);
+                pReturn.setEparticulars("Less Purchase Return".toUpperCase().concat("     (").concat(String.valueOf(purchaseReturnFinal)).concat(") "));
+                expenseList.addAll(pReturn);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        Double exNetAmount = (expenseFromBill + purchaseReturnFinal);
+        IncomeExpense ei4 = new IncomeExpense();
+        ei4.setEparticulars("NET PURCHASE");
+        ei4.setEamount(exNetAmount);
+        expenseList.addAll(ei4);
+
         IncomeExpense ei = new IncomeExpense();
         ei.setEparticulars(" ");
         ei.setEamount(null);
@@ -155,6 +196,7 @@ public class IncomeVsExpenseController implements Initializable {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println(expenseList.toString());
         iparticular.setCellValueFactory(new PropertyValueFactory<IncomeExpense, String>("iparticulars"));
         iamount.setCellValueFactory(new PropertyValueFactory<IncomeExpense, Double>("iamount"));
         eparticular.setCellValueFactory(new PropertyValueFactory<IncomeExpense, String>("eparticulars"));
@@ -167,11 +209,12 @@ public class IncomeVsExpenseController implements Initializable {
                     public void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
                         if (!isEmpty()) {
-                            if (item.contains("SALES") || item.contains("INDIRECT")) {
+                            if (item.contains("SALES")) {
+                                this.setStyle("-fx-font-weight: bold");
+                                this.setAlignment(Pos.CENTER_RIGHT);
+                            } else if (item.contains("INDIRECT")) {
                                 this.setStyle("-fx-font-weight: bold");
                                 this.setAlignment(Pos.CENTER);
-                            } else {
-                                this.setAlignment(Pos.CENTER_LEFT);
                             }
                             setText(item);
                         }
@@ -187,13 +230,54 @@ public class IncomeVsExpenseController implements Initializable {
                     public void updateItem(String item, boolean empty) {
                         super.updateItem(item, empty);
                         if (!isEmpty()) {
-                            if (item.contains("PURCHASE") || item.contains("INDIRECT")) {
+                            if (item.contains("PURCHASE")) {
                                 this.setStyle("-fx-font-weight: bold");
+                                this.setAlignment(Pos.CENTER_RIGHT);
+                            }else if(item.contains("INDIRECT") || item.contains("NET")){
+                                this.setStyle("-fx-font-weight:bold");
                                 this.setAlignment(Pos.CENTER);
-                            } else {
-                                this.setAlignment(Pos.CENTER_LEFT);
                             }
                             setText(item);
+                        }
+                    }
+                };
+            }
+        });
+        iamount.setCellFactory(new Callback<TableColumn<IncomeExpense, Double>, TableCell<IncomeExpense, Double>>() {
+            @Override
+            public TableCell<IncomeExpense, Double> call(TableColumn<IncomeExpense, Double> param) {
+                return new TableCell<IncomeExpense, Double>(){
+                  @Override
+                    public void updateItem(Double item, boolean empty){
+                      super.updateItem(item, empty);
+                      if(!isEmpty()){
+                          if(String.valueOf(item).contains("null")){
+                              setText(" ");
+                          }
+                          else{
+                              setText(String.valueOf(item));
+                              this.setAlignment(Pos.BASELINE_RIGHT);
+                          }
+                      }
+                  }
+                };
+            }
+        });
+        eamount.setCellFactory(new Callback<TableColumn<IncomeExpense, Double>, TableCell<IncomeExpense, Double>>() {
+            @Override
+            public TableCell<IncomeExpense, Double> call(TableColumn<IncomeExpense, Double> param) {
+                return new TableCell<IncomeExpense, Double>(){
+                    @Override
+                    public void updateItem(Double item, boolean empty){
+                        super.updateItem(item, empty);
+                        if(!isEmpty()){
+                            if(String.valueOf(item).contains("null")){
+                                setText(" ");
+                            }
+                            else{
+                                setText(String.valueOf(item));
+                                this.setAlignment(Pos.BASELINE_RIGHT);
+                            }
                         }
                     }
                 };
@@ -237,10 +321,12 @@ public class IncomeVsExpenseController implements Initializable {
         if (incomeTotal > expenseTotal) {
             double profitGained = incomeTotal - expenseTotal;
             profit.setText(String.valueOf(profitGained));
-            loss.setText("-");
+            loss.setText(" ");
+            l_label.setVisible(false);
         } else {
             loss.setText(Double.valueOf(Math.abs(incomeTotal - expenseTotal)).toString());
-            profit.setText("-");
+            profit.setText(" ");
+            p_label.setVisible(false);
         }
     }
 }

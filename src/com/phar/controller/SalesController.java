@@ -9,6 +9,7 @@ import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.AutoGenerator;
 import com.phar.extraFunctionality.CFunctions;
 import com.phar.extraFunctionality.DatabaseOperations;
+import com.phar.extraFunctionality.GetTime;
 import com.phar.interfaceImplement.CustomerBillImplement;
 import com.phar.interfaceImplement.CustomerInterfaceImplement;
 import com.phar.model.Bill;
@@ -69,6 +70,9 @@ public class SalesController implements Initializable {
 
     @FXML
     private TableColumn<NewSales, Integer> tQuantity;
+
+    @FXML
+    private JFXTextField rounding, finalamount;
 
     @FXML
     private TableView<NewSales> pTable;
@@ -172,17 +176,24 @@ public class SalesController implements Initializable {
 
         sDiscount.textProperty().addListener((observable, oldValue, newValue) -> {
             if (sDiscount.getText().trim().isEmpty() || sDiscount.getText() == null) {
-                sNetTotal.setText(newTotal.toString());
+                String rnTotal = decimalFormat.format(newTotal.toString());
+                sNetTotal.setText(rnTotal);
             } else {
                 Double dis = ((Double.valueOf(sDiscount.getText())) / 100) * (Double.valueOf(sTotal.getText()));
                 Double d = Math.abs(Double.valueOf(sTotal.getText()) - dis);
-                sNetTotal.setText(d.toString());
+                String rdTotal = decimalFormat.format(d);
+                sNetTotal.setText(rdTotal);
+                double x = Double.valueOf(sNetTotal.getText()) - Math.floor(Double.valueOf(sNetTotal.getText()));
+                String rx = decimalFormat.format(x);
+                rounding.setText(String.valueOf(rx));
+                double y = Math.round(Double.parseDouble(rdTotal));
+                finalamount.setText(String.valueOf(y));
             }
         });
 
         sBatch.valueProperty().addListener((observable1, oldValue1, newValue1) -> {
             if (sBatch.getValue() != null) {
-                resultSet = DatabaseOperations.simpleSelect("store", "quantity,mRP,expire", "product_name='" + sProductName.getValue() + "' AND batch=" + sBatch.getValue());
+                resultSet = DatabaseOperations.simpleSelect("store", "quantity,mRP,expire", "product_name='" + sProductName.getValue() + "' AND batch='" + sBatch.getValue() + "'");
                 try {
                     while (resultSet.next()) {
                         sQuantityLeft.setText(resultSet.getString("quantity"));
@@ -233,7 +244,9 @@ public class SalesController implements Initializable {
         }
 
         ns.setProductID(pIdd);
-        ns.setProductDate(tDate.getValue().toString());
+        //For date with time
+        GetTime gt = new GetTime();
+        ns.setProductDate(tDate.getValue().toString().concat(" ").concat(gt.timeNow()));
         ns.setProductName(sProductName.getValue());
         ns.setProductBatch(sBatch.getValue());
         ns.setMrp(Double.valueOf(sMrp.getText()));
@@ -301,9 +314,11 @@ public class SalesController implements Initializable {
     void onClickSaveButton(ActionEvent event) {
         //For customer bill
         cb.setCustomerBillNo(sBillNo.getText());
-        cb.setSalesDate(tDate.getValue().toString());
+        //For Date with time
+        GetTime gt = new GetTime();
+        cb.setSalesDate(tDate.getValue().toString().concat(" ").concat(gt.timeNow()));
         cb.setDiscount(Double.valueOf(sDiscount.getText()));
-        cb.setTotalAmount(Double.valueOf(sNetTotal.getText()));
+        cb.setTotalAmount(Double.valueOf(finalamount.getText()));
 
         CustomerBillImplement cbi = new CustomerBillImplement();
         cbi.addCustomerBill(cb);

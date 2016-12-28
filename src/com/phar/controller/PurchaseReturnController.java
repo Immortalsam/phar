@@ -2,6 +2,7 @@ package com.phar.controller;
 
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DatabaseOperations;
+import com.phar.extraFunctionality.GetTime;
 import com.phar.model.PurchaseReturn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -49,6 +50,7 @@ public class PurchaseReturnController implements Initializable {
 
     @FXML
     private Label supplierId;
+
 
     @FXML
     private AnchorPane purchaseReturnAnchor;
@@ -133,7 +135,9 @@ public class PurchaseReturnController implements Initializable {
 
     public void addBtnClick(ActionEvent actionEvent) {
         PurchaseReturn purchaseReturn = new PurchaseReturn();
-        purchaseReturn.setReturnDate(String.valueOf(returnDate.getValue()));
+        //For Date with time
+        GetTime gt = new GetTime();
+        purchaseReturn.setReturnDate(String.valueOf(returnDate.getValue()).concat(" ").concat(gt.timeNow()));
         purchaseReturn.setSupplierName(searchSupplierName.getValue());
         purchaseReturn.setProductName(pName.getValue());
         purchaseReturn.setProductId(pId.getText());

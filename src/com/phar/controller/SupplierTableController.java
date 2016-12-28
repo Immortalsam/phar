@@ -41,7 +41,6 @@ public class SupplierTableController implements Initializable {
 
     }
 
-
     public void searchSupplier(KeyEvent keyEvent) {
         FilteredList<Supplier> filteredList = new FilteredList<>(customerList, e -> true);
         searchField.setOnKeyReleased(e -> {

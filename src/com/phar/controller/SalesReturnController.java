@@ -229,7 +229,6 @@ public class SalesReturnController implements Initializable {
 //        }
     }
 
-
     public String printBill(){
 
     return "Something";

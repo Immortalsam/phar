@@ -82,10 +82,10 @@ public class MainController implements Initializable {
                             forAnchorPane.openAnchor(mainAnchor, "/com/phar/newsales.fxml", drawer);
                             break;
                         case "vBoxSalesReturn":
-                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/newsales.fxml", drawer);
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/sales_return.fxml", drawer);
                             break;
                         case "vBoxPurchaseReturn":
-                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/purchase_return.fxml", drawer);
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/purchase_return_new.fxml", drawer);
                             break;
                         case "vBoxSupplierPayment":
                             forAnchorPane.openAnchor(mainAnchor, "/com/phar/supplierPayment.fxml", drawer);
@@ -101,10 +101,10 @@ public class MainController implements Initializable {
                             forAnchorPane.openAnchor(mainAnchor, "/com/phar/customer_info.fxml", drawer);
                             break;
                         case "vBoxRecord":
-                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/newsales.fxml", drawer);
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/IncomeVsExpense.fxml", drawer);
                             break;
                         case "vBoxExpenses":
-                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/newsales.fxml", drawer);
+                            forAnchorPane.openAnchor(mainAnchor, "/com/phar/expense.fxml", drawer);
                             break;
                         case "vBoxIncome":
                             forAnchorPane.openAnchor(mainAnchor, "/com/phar/Income.fxml", drawer);

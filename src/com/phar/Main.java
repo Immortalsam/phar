@@ -26,7 +26,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("newSales.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("IncomeVsExpense.fxml"));
         primaryStage.setTitle("Main Menu");
         Scene scene = new Scene(root, Screen.getPrimary().getVisualBounds().getMaxX(), Screen.getPrimary().getVisualBounds().getMaxY());
         primaryStage.setScene(scene);

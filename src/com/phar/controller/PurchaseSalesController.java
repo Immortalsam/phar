@@ -56,6 +56,7 @@ public class PurchaseSalesController implements Initializable {
             String query = "SELECT purchase_date,bill_no,total_amount AS purchase_Total,NULL AS sales_date, NULL AS customer_billno,NULL AS sales_total FROM bill UNION SELECT NULL AS purchase_date, NULL AS bill_no, NULL AS purchase_Total, sales_date,customer_billno,total_amount FROM customer_bill";
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()) {
                 PurchaseSales ps = new PurchaseSales();
                 if (resultSet.getString("purchase_date") == null) {

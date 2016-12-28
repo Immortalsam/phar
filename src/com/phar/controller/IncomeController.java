@@ -6,6 +6,7 @@ import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.CustomComboBox;
 import com.phar.extraFunctionality.DatabaseOperations;
+import com.phar.extraFunctionality.GetTime;
 import com.phar.interfaceImplement.IncomeExpImplement;
 import com.phar.model.Income;
 import com.phar.model.ProductEntry;
@@ -97,7 +98,9 @@ public class IncomeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         tDate.setValue(LocalDate.now());
-        i.setDate(tDate.getValue().toString());
+        //Date with time
+        GetTime gt = new GetTime();
+        i.setDate(tDate.getValue().toString().concat(" ").concat(gt.timeNow()));
         enterIncome.textProperty().addListener((observable, oldValue, newValue) -> {
             if(enterIncome.getText() == null || enterIncome.getText().trim().isEmpty()){
                     enterIncome.setText("");

@@ -58,11 +58,9 @@ public class SupplierController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         AutoGenerator generator = new AutoGenerator();
         sId.setText(generator.CurrentID("SID"));
-        CFunctions.restrictTxtField(sName, Constants.Atoz);
         CFunctions.restrictTxtField(sAddress, Constants.Atoz);
         CFunctions.restrictTxtField(sContact, Constants.ZerotoNine);
         CFunctions.restrictTxtField(sPanNo, Constants.ZerotoNine);
-
     }
 
     @FXML

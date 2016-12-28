@@ -1,5 +1,6 @@
 package com.phar.controller;
 
+import com.phar.custom.CustomAlert;
 import com.phar.database.DatabaseConnection;
 import com.phar.extraFunctionality.DatabaseOperations;
 import com.phar.model.Sales;
@@ -48,14 +49,13 @@ public class InventoryController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
-            resultSet = DatabaseOperations.simpleSelect("inventory", "DISTINCT product_name", "quantity >= 1");
+            resultSet = DatabaseOperations.simpleSelect("inventory", "DISTINCT product_name","null");
             while (resultSet.next()) {
                 productList.add(resultSet.getString("product_name"));
             }
             inventoryProductList.getItems().addAll(productList);
             inventoryProductList.valueProperty().addListener((observable, oldValue, newValue) -> {
                 inventoryBatch.getItems().clear();
-                batchList.clear();
 
                 resultSet = DatabaseOperations.simpleSelect("new_product_entry","product_description","product_name='"+ inventoryProductList.getValue() + "'");
                 try{
@@ -75,9 +75,10 @@ public class InventoryController implements Initializable {
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
+                inventoryBatch.getItems().clear();
                 inventoryBatch.getItems().addAll(batchList);
                 inventoryBatch.valueProperty().addListener((observable1, oldValue1, newValue1) -> {
-                    resultSet = DatabaseOperations.simpleSelect("inventory", "product_id,expire_date,quantity,mRP", "batch=" + inventoryBatch.getValue());
+                    resultSet = DatabaseOperations.simpleSelect("inventory", "product_id,expire_date,quantity,mRP", "batch='" + inventoryBatch.getValue() + "'");
                     try {
                         while (resultSet.next()) {
                             productIDD = resultSet.getString("product_id");
@@ -109,7 +110,7 @@ public class InventoryController implements Initializable {
         sales.setRackNumber(inventoryRackNo.getText());
 
         Double newQuantity = qtyLeft - Double.valueOf(inventoryQty.getText());
-        query = "UPDATE inventory SET quantity='" + newQuantity + "' WHERE product_name = '" + inventoryProductList.getValue() + "' AND batch=" + inventoryBatch.getValue();
+        query = "UPDATE inventory SET quantity='" + newQuantity + "' WHERE product_name = '" + inventoryProductList.getValue() + "' AND batch='" + inventoryBatch.getValue() + "'";
         System.out.println(query);
         try {
             connection = DatabaseConnection.getConnection();
@@ -125,7 +126,10 @@ public class InventoryController implements Initializable {
             preparedStatement.setDouble(6, sales.getmRp());
             preparedStatement.setString(7, sales.getExpireDate());
             preparedStatement.setString(8, sales.getRackNumber());
-            preparedStatement.executeUpdate();
+            if(preparedStatement.executeUpdate() == 1){
+                CustomAlert ca = new CustomAlert("Save Information","Save Successful");
+                ca.withoutHeader();
+            }
             preparedStatement.close();
         } catch (SQLException | ClassNotFoundException e) {
             e.printStackTrace();

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="purchaseReturnAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseReturnController">
+<AnchorPane fx:id="purchaseReturnAnchor" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="580.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.PurchaseReturnController">
     <children>
         <Label layoutX="32.0" layoutY="24.0" prefHeight="28.0" prefWidth="135.0" text="Purcahse Return">
             <font>
@@ -54,7 +54,7 @@
         </TableView>
         <Label fx:id="supplierId" layoutX="301.0" layoutY="60.0" prefHeight="28.0" prefWidth="71.0" />
         <ComboBox fx:id="pBatch" layoutX="152.0" layoutY="132.0" prefHeight="25.0" prefWidth="102.0" />
-        <JFXButton fx:id="addBtn" buttonType="RAISED" layoutX="883.0" layoutY="165.0" onAction="#addBtnClick" ripplerFill="#d3d3d3" text="Add" />
-        <JFXButton fx:id="toDatabase" layoutX="805.0" layoutY="485.0" onAction="#toDatabaseClick" text="Confirm" />
+        <JFXButton fx:id="addBtn" buttonType="RAISED" layoutX="883.0" layoutY="131.0" onAction="#addBtnClick" prefHeight="25.0" prefWidth="63.0" ripplerFill="#d3d3d3" style="-fx-background-color: grey;" text="Add" textFill="WHITE" />
+        <JFXButton fx:id="toDatabase" layoutX="784.0" layoutY="485.0" onAction="#toDatabaseClick" prefHeight="28.0" prefWidth="92.0" style="-fx-background-color: grey;" text="Confirm" textFill="WHITE" />
     </children>
 </AnchorPane>
