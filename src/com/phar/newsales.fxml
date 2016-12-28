@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="747.0" prefWidth="1280.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SalesController">
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="747.0" prefWidth="1280.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.phar.controller.SalesController">
     <children>
         <JFXComboBox fx:id="sParty" layoutX="38.0" layoutY="84.0" prefHeight="35.0" prefWidth="250.0" promptText="Party">
             <effect>
@@ -173,7 +173,5 @@
             </effect>
         </JFXTextField>
         <JFXDatePicker fx:id="tDate" layoutX="1031.0" layoutY="34.0" />
-      <JFXTextField fx:id="rounding" layoutX="999.0" layoutY="685.0" promptText="Rounding" />
-      <JFXTextField fx:id="finalamount" layoutX="831.0" layoutY="685.0" promptText="Final Amount" />
     </children>
 </AnchorPane>
