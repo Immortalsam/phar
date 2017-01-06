@@ -6,6 +6,7 @@ import com.phar.model.IncomeExpense;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -51,7 +52,7 @@ public class IncomeVsExpenseController implements Initializable {
     private TableColumn<IncomeExpense, Double> eamount;
 
     @FXML
-    private Label loss, p_label, l_label,profit,sTotal,iTotal;
+    private Label loss, p_label, l_label, profit, sTotal, iTotal;
 
     private double incomeTotal;
     private double expenseTotal;
@@ -79,10 +80,22 @@ public class IncomeVsExpenseController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        from_tdate.setValue(LocalDate.now());
+        from_tdate.setValue(LocalDate.now().minusMonths(1));
         to_tdate.setValue(LocalDate.now());
+        populateTable();
+    }
 
-        String cquery = "SELECT sum(total_amount) FROM customer_bill";
+    @FXML
+    void onCLickSearch(ActionEvent event) {
+        populateTable();
+    }
+
+    private void populateTable() {
+        etable.getItems().clear();
+        itable.getItems().clear();
+
+        String cquery = "SELECT sum(total_amount) FROM customer_bill where sales_date >='" + from_tdate.getValue() + "' AND sales_date <='" + to_tdate.getValue() + "' ORDER BY sales_date";
+        System.out.println(cquery);
         try (PreparedStatement statement = connection.prepareStatement(cquery)) {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -96,17 +109,17 @@ public class IncomeVsExpenseController implements Initializable {
             e.printStackTrace();
         }
 
-        String retrunQuery = "SELECT sum(total_amount) FROM sales_return";
-        try(PreparedStatement statement = connection.prepareStatement(retrunQuery)){
+        String retrunQuery = "SELECT sum(total_amount) FROM sales_return where sales_return_date >='" + from_tdate.getValue() + "' AND sales_return_date <='" + to_tdate.getValue() + "' ORDER BY sales_return_date";
+        try (PreparedStatement statement = connection.prepareStatement(retrunQuery)) {
             resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 IncomeExpense rei = new IncomeExpense();
                 negValue = resultSet.getDouble("sum(total_amount)");
                 finalAmount = (negValue * -1);
                 rei.setIparticulars("Less Sales Return".toUpperCase().concat("     (").concat(String.valueOf(finalAmount)).concat(") "));
                 incomeList.addAll(rei);
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -127,7 +140,7 @@ public class IncomeVsExpenseController implements Initializable {
 
         incomeList.addAll(i2);
 
-        String query = "SELECT DISTINCT income_source, sum(price) FROM income GROUP BY income_source";
+        String query = "SELECT DISTINCT income_source, sum(price) FROM income where date >= '"+ from_tdate.getValue() + "' AND date<= '" + to_tdate.getValue()+ "' GROUP BY income_source ORDER BY date";
         try (PreparedStatement statement = connection.prepareStatement(query)) {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -140,12 +153,13 @@ public class IncomeVsExpenseController implements Initializable {
             e.printStackTrace();
         }
 
-        String query2 = "SELECT sum(total_amount) FROM bill";
+        String query2 = "SELECT sum(total_amount) FROM bill where purchase_date >='" + from_tdate.getValue() + "' AND purchase_date <='" + to_tdate.getValue() + "' ORDER BY purchase_date";
+        System.out.println(cquery);
         try (PreparedStatement statement = connection.prepareStatement(query2)) {
             resultSet1 = statement.executeQuery();
             while (resultSet1.next()) {
                 IncomeExpense ei = new IncomeExpense();
-                 expenseFromBill = resultSet1.getDouble("sum(total_amount)");
+                expenseFromBill = resultSet1.getDouble("sum(total_amount)");
                 ei.setEparticulars("Purchase".toUpperCase().concat("     (").concat(String.valueOf(expenseFromBill)).concat(") "));
                 expenseList.addAll(ei);
             }
@@ -153,7 +167,8 @@ public class IncomeVsExpenseController implements Initializable {
             e.printStackTrace();
         }
 
-        String query3 = "SELECT sum(total) FROM purchase_return";
+        String query3 = "SELECT sum(total) FROM purchase_return where return_date >='" + from_tdate.getValue() + "' AND return_date <='" + to_tdate.getValue() + "' ORDER BY return_date";
+        System.out.println(cquery);
         try (PreparedStatement statement = connection.prepareStatement(query3)) {
             resultSet1 = statement.executeQuery();
             while (resultSet1.next()) {
@@ -184,7 +199,7 @@ public class IncomeVsExpenseController implements Initializable {
         e1.setEamount(null);
         expenseList.addAll(e1);
 
-        String query1 = "SELECT DISTINCT expense_source, sum(amount) FROM expense GROUP BY expense_source";
+        String query1 = "SELECT DISTINCT expense_source, sum(amount) FROM expense where date >= '"+ from_tdate.getValue() + "' AND date<= '" + to_tdate.getValue()+ "' GROUP BY expense_source";
         try (PreparedStatement statement = connection.prepareStatement(query1)) {
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -233,7 +248,7 @@ public class IncomeVsExpenseController implements Initializable {
                             if (item.contains("PURCHASE")) {
                                 this.setStyle("-fx-font-weight: bold");
                                 this.setAlignment(Pos.CENTER_RIGHT);
-                            }else if(item.contains("INDIRECT") || item.contains("NET")){
+                            } else if (item.contains("INDIRECT") || item.contains("NET")) {
                                 this.setStyle("-fx-font-weight:bold");
                                 this.setAlignment(Pos.CENTER);
                             }
@@ -246,35 +261,33 @@ public class IncomeVsExpenseController implements Initializable {
         iamount.setCellFactory(new Callback<TableColumn<IncomeExpense, Double>, TableCell<IncomeExpense, Double>>() {
             @Override
             public TableCell<IncomeExpense, Double> call(TableColumn<IncomeExpense, Double> param) {
-                return new TableCell<IncomeExpense, Double>(){
-                  @Override
-                    public void updateItem(Double item, boolean empty){
-                      super.updateItem(item, empty);
-                      if(!isEmpty()){
-                          if(String.valueOf(item).contains("null")){
-                              setText(" ");
-                          }
-                          else{
-                              setText(String.valueOf(item));
-                              this.setAlignment(Pos.BASELINE_RIGHT);
-                          }
-                      }
-                  }
+                return new TableCell<IncomeExpense, Double>() {
+                    @Override
+                    public void updateItem(Double item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!isEmpty()) {
+                            if (String.valueOf(item).contains("null")) {
+                                setText(" ");
+                            } else {
+                                setText(String.valueOf(item));
+                                this.setAlignment(Pos.BASELINE_RIGHT);
+                            }
+                        }
+                    }
                 };
             }
         });
         eamount.setCellFactory(new Callback<TableColumn<IncomeExpense, Double>, TableCell<IncomeExpense, Double>>() {
             @Override
             public TableCell<IncomeExpense, Double> call(TableColumn<IncomeExpense, Double> param) {
-                return new TableCell<IncomeExpense, Double>(){
+                return new TableCell<IncomeExpense, Double>() {
                     @Override
-                    public void updateItem(Double item, boolean empty){
+                    public void updateItem(Double item, boolean empty) {
                         super.updateItem(item, empty);
-                        if(!isEmpty()){
-                            if(String.valueOf(item).contains("null")){
+                        if (!isEmpty()) {
+                            if (String.valueOf(item).contains("null")) {
                                 setText(" ");
-                            }
-                            else{
+                            } else {
                                 setText(String.valueOf(item));
                                 this.setAlignment(Pos.BASELINE_RIGHT);
                             }
@@ -330,3 +343,4 @@ public class IncomeVsExpenseController implements Initializable {
         }
     }
 }
+
